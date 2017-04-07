@@ -1,0 +1,108 @@
+[15-Jul-2014 21:12:36 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[15-Jul-2014 21:12:36 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:12:36 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:12:36 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:12:36 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:12:36 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'alexl'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:13:17 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[15-Jul-2014 21:13:17 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:13:17 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:13:17 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:13:17 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:13:17 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'alexl'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:14:27 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[15-Jul-2014 21:14:27 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:14:27 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:14:27 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:14:27 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[15-Jul-2014 21:14:27 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'alexl'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[16-Jul-2014 03:04:31 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[16-Jul-2014 03:04:31 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[16-Jul-2014 03:04:31 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[16-Jul-2014 03:04:31 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[16-Jul-2014 03:04:31 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[16-Jul-2014 03:04:31 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'alexl'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[21-Jul-2014 00:47:46 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[21-Jul-2014 00:47:46 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[21-Jul-2014 00:47:46 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[21-Jul-2014 00:47:46 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[21-Jul-2014 00:47:46 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[21-Jul-2014 00:47:46 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'gcooper'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[24-Jul-2014 10:21:33 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[24-Jul-2014 10:21:33 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[24-Jul-2014 10:21:33 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[24-Jul-2014 10:21:33 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[24-Jul-2014 10:21:33 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[24-Jul-2014 10:21:33 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'nataylor'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 04:15:58 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[25-Jul-2014 04:15:58 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 04:15:58 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 04:15:58 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 04:15:58 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 04:15:58 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'nataylor'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 04:17:02 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[25-Jul-2014 04:17:02 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 04:17:02 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 04:17:02 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 04:17:02 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 04:17:02 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'nataylor'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 13:42:03 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[25-Jul-2014 13:42:03 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 13:42:03 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 13:42:03 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 13:42:03 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 13:42:03 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'nataylor'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 13:42:10 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[25-Jul-2014 13:42:10 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 13:42:10 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 13:42:10 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 13:42:10 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[25-Jul-2014 13:42:10 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'nataylor'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[27-Jul-2014 08:23:33 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[27-Jul-2014 08:23:33 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[27-Jul-2014 08:23:33 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[27-Jul-2014 08:23:33 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[27-Jul-2014 08:23:33 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[27-Jul-2014 08:23:33 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'dredington'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[22-Aug-2014 22:38:55 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[22-Aug-2014 22:38:55 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[22-Aug-2014 22:38:55 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[22-Aug-2014 22:38:55 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[22-Aug-2014 22:38:55 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[22-Aug-2014 22:38:55 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'chrisfio'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[02-Sep-2014 23:31:44 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[02-Sep-2014 23:31:44 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[02-Sep-2014 23:31:44 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[02-Sep-2014 23:31:44 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[02-Sep-2014 23:31:44 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[02-Sep-2014 23:31:44 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'chrisfio'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:36 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[09-Sep-2014 20:52:36 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:36 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:36 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:36 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:36 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'chrisfio'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:41 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[09-Sep-2014 20:52:41 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:41 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:41 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:41 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:41 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'chrisfio'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:44 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[09-Sep-2014 20:52:44 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:44 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:44 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:44 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[09-Sep-2014 20:52:44 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'chrisfio'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[21-Sep-2014 01:00:31 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[21-Sep-2014 01:00:31 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[21-Sep-2014 01:00:31 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[21-Sep-2014 01:00:31 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[21-Sep-2014 01:00:31 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[21-Sep-2014 01:00:31 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'chrisfio'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[10-Oct-2014 19:00:03 America/Denver] PHP Warning:  include(): Failed opening '/Volumes/Students/students/course/deaf_power/db_conn.php' for inclusion (include_path='.:/usr/php/54/usr/lib64:/usr/php/54/usr/share/pear') in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 3
+[10-Oct-2014 19:00:03 America/Denver] PHP Notice:  Undefined variable: db_host in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[10-Oct-2014 19:00:03 America/Denver] PHP Notice:  Undefined variable: db_user in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[10-Oct-2014 19:00:03 America/Denver] PHP Notice:  Undefined variable: db_pass in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[10-Oct-2014 19:00:03 America/Denver] PHP Notice:  Undefined variable: db_name in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7
+[10-Oct-2014 19:00:03 America/Denver] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'chrisfio'@'localhost' (using password: NO) in /home5/chrisfio/public_html/a_pauluncangco/portfolios/02/db_start.php on line 7

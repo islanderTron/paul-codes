@@ -1,0 +1,44 @@
+<!--#include virtual='header.inc.html' -->
+<script>
+	document.title="Activities | Guåhån";
+	document.getElementById("Activities").style.backgroundColor="#95dce2";
+</script>
+    <div id="content"> 
+        <img src="Media/Pictures/mainActivitiesPicture.jpg" alt="Guam Map">
+		<!--#include virtual='activitive.inc.html'-->
+        <h1> Scuba Diving</h1>
+        <p>Guam has at least fifty different places to go scuba diving with various diving groups such as <a target="_blank" href="http://www.mdaguam.com/">MDA</a>, GTDS and several others. The most popular places are Blue Hole, Crevice, Coral Gardens, Haps Reef, and Pete’s Reef where you could see more than 200 species of sea critters, fishes, sharks and rays. They have all the diving equipment that you need to rent so you don’t have to lug yours.</p>
+        <div id="centerImg">
+        	<div class="imgLeft">
+                <div class="figure">
+                    <img src="Media/Pictures/Activities/5.jpg" alt="Diving1">
+                    <p></p>
+                </div>
+            </div>
+            
+            <div class="imgRight">
+                <div class="figure">
+                    <img src="Media/Pictures/Activities/6.jpg" alt="Getting out">
+                    <p></p>
+                </div>
+            </div>
+            
+            <div class="imgLeft">
+                <div class="figure">
+                    <img src="Media/Pictures/Activities/7.jpg" alt="Diving2">
+                    <p></p>
+                </div>
+            </div>
+            
+            <div class="imgRight">
+                <div class="figure">
+                	<img src="Media/Pictures/Activities/8.jpg" alt="Diving3">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>  <!-- End Content -->
+	<script>
+        document.getElementById("ScubaDiving").style.backgroundColor="#95dce2";
+    </script>
+<!--#include virtual='footer.inc.html'-->

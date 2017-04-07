@@ -1,0 +1,1225 @@
+@charset "utf-8";
+
+@font-face {
+
+    font-family: 'pt_sansregular';
+
+    src: url('../Media/Font/PTS55F-webfont.eot');
+
+    src: url('../Media/Font/PTS55F-webfont.eot?#iefix') format('embedded-opentype'),
+
+         url('../Media/Font/PTS55F-webfont.woff') format('woff'),
+
+         url('../Media/Font/PTS55F-webfont.ttf') format('truetype'),
+
+         url('../Media/Font/PTS55F-webfont.svg#pt_sansregular') format('svg');
+
+    font-weight: normal;
+
+    font-style: normal;
+
+}
+
+
+
+/* CSS Document */
+
+body{
+
+    margin: 0 auto;
+
+    padding: 0;
+
+    /*background-color: #363435; /*black background*/
+
+    background-image: url('../Media/mainbackground.jpg');
+
+    background-attachment: fixed;
+
+    background-repeat: no-repeat;
+
+    background-size: 100% 100%;
+
+    width: 800px;
+
+    font-family: pt_sansregular;
+
+}
+
+
+
+p{
+
+    line-height: 23px;
+
+}
+
+h1{
+
+    text-decoration: underline;
+
+    letter-spacing: .2em;
+
+}
+
+
+
+#wrapper{
+
+    /*Not necessary*/
+
+    /*width: 850px;*/
+
+}
+
+
+
+#leftColumn {
+
+    float: left;
+
+    position: fixed;
+
+    /*left:165px;*/
+
+}
+
+
+
+#rightColumn {
+
+    /*margin-left: 110px;*/
+
+    /*padding-left: 110px;*/
+
+
+
+}
+
+#content{
+
+    background-color: #FFFFFF;
+
+    overflow: auto;
+
+    padding: 110px 10px 10px 10px;		/* Top Right Bottom Left */
+
+}
+
+
+
+#content:after{
+
+    clear: both;
+
+    display: table;
+
+}
+
+
+
+#footer{
+
+    /*
+
+    color: white;
+
+    text-align: center;
+
+    */
+
+    width: 800px;
+
+    height: 140px;
+
+    color: white;
+
+    background-color: rgb(35,35,35);
+
+    border-bottom-left-radius: 5px;
+
+    border-bottom-right-radius: 5px;
+
+}
+
+
+
+#team {
+
+    width: 300px;
+
+    float: left;
+
+}
+
+
+
+#team h3 {
+
+    padding-left: 15px;
+
+    height: 10px;
+
+    text-decoration: underline;
+
+}
+
+
+
+#team li {
+
+    list-style-type: none;
+
+    font-size: 10pt;
+
+}
+
+
+
+#back-to-top {
+
+    margin-top: 30px;
+
+    padding-bottom: 45px;
+
+    width: 200px;
+
+    background-color: rgb(35,35,35);
+
+    float: left;
+
+    text-align: center;
+
+    display: block;
+
+    position: relative;
+
+}
+
+
+
+#back-to-top p {
+
+    padding-top: 10px;
+
+}
+
+
+
+
+
+#back-to-top a {
+
+    font-weight: bold;
+
+    color: white;
+
+    text-decoration: none;
+
+}
+
+
+
+#back-to-top a:hover {
+
+    text-decoration: none;
+
+}
+
+
+
+#logoFooter {
+
+    padding-top: 32px;
+
+    text-align: center;
+
+}
+
+
+
+
+
+#logoFooter h6 {
+
+    text-align: center;
+
+    padding-bottom: 43px;
+
+}
+
+
+
+#logo{
+
+    text-align: center;
+
+    margin-bottom: -26px;
+
+    padding-top: 5px;
+
+    padding-bottom: 15px;
+
+}
+
+/*Main Images should be 450px width 
+
+ *Don't resize it using height and width in CSS. 
+
+ *---------Use Photoshop to resize it!-----------
+
+*/
+
+#mainImage{
+
+/*  width: 86%;
+
+    height: auto;
+
+    width: auto/9; /*IE8 fix
+
+    margin: 7%;*/
+
+
+
+    height: auto;
+
+/*    margin: 7%;
+
+    width: 86%;*/
+
+    margin-right: 5px;
+
+    padding-top: 5px;
+
+}
+
+#leftContent{
+
+    float: left;
+
+    margin-top: 10px;
+
+}
+
+#rightContent p{
+
+    margin: 30px;
+
+    text-align: justify;
+
+}
+
+
+
+#feedbackImg {
+
+	position: fixed;
+
+	right: 100px;
+
+}
+
+
+
+/*-------------------------Contact Form and Feedback Form------------------------------*/
+
+#contact-form span {
+
+    display: inline-block;
+
+    width: 150px;
+
+    font-weight: bold;
+
+    padding-left: 5px;
+
+}
+
+
+
+#feedback-form span {
+
+	display: inline-block;
+
+    width: 100px;
+
+    font-weight: bold;
+
+    padding-left: 5px;
+
+}
+
+
+
+/* ------------------ About Page ---------------*/
+
+
+
+.about {
+
+	text-align: center;	
+
+}
+
+.about a {
+
+	position: relative;
+
+	cursor: pointer;
+
+	font: normal normal 85% sans-serif;
+
+	color: white;
+
+	text-shadow: #090A0B 0 -1px;
+
+	display: inline-block;
+
+}
+
+
+
+.about a > div.bio {
+
+  font-style: normal;
+
+	text-align: center;
+
+	line-height: 150%;
+
+	color: black;
+
+	text-shadow: white 0 1px;
+
+	background: #DDD;
+
+	background-clip: padding-box;
+
+	box-shadow: 0 0px 2px rgba(0, 0, 0, 0.5);
+
+	border: 5px solid #111;
+
+	border: 5px solid rgba(0, 0, 0, 0.5);
+
+	border-radius: 3px;
+
+	position: absolute;
+
+	width: 400px;
+
+  margin-left: -200px; /* 50% of div width */
+
+	left: 50%;
+
+	padding: 10px 0;
+
+	bottom: 100%;
+
+	margin-bottom: 10px;
+
+	visibility:hidden;
+
+	opacity:0;
+
+	-webkit-transition: opacity 0.5s linear;
+
+	-moz-transition: opacity 0.5s linear;
+
+	-ms-transition: opacity 0.5s linear;
+
+	-o-transition: opacity 0.5s linear;
+
+	transition: opacity 0.5s linear;
+
+}
+
+
+
+.about a > div.bio:before, .about a > div.bio:after {
+
+	content: "";
+
+	position: absolute;
+
+	border-left: 10px solid transparent;
+
+	border-right: 10px solid transparent;
+
+	top: 100%;
+
+	left: 50%;
+
+	margin-left: -10px;
+
+}
+
+
+
+.about a > div.bio:before {
+
+	border-top: 10px solid #111;
+
+	border-top: 10px solid rgba(0, 0, 0, 0.5);
+
+	margin-top: 5px;
+
+}
+
+
+
+.about a > div.bio:after{
+
+	border-top: 10px #DDD;
+
+	margin-top: -2px;
+
+	z-index: 1;
+
+}
+
+
+
+.about a:hover > div.bio {
+
+	visibility: visible;
+
+	opacity: 1;
+
+}
+
+/*-------------------------Global navigation and Logo----------------*/
+
+#top{
+
+    position:fixed;
+
+    background-color: rgb(35,35,35);
+
+    box-shadow: 0px 2px 3px rgba(0,0,0,.4);
+
+    z-index: 1;
+
+}
+
+/*-------------------------Global Navigation-------------------------*/
+
+#globalNav {
+
+    height: 70px; 
+
+/*    background-color: rgb(35,35,35);
+
+    box-shadow: 0px 2px 3px rgba(0,0,0,.4);*/
+
+    width: 800px;
+
+}
+
+
+
+#globalNav ul, li, a { 
+
+    margin: 0; 
+
+    padding: 0;
+
+}
+
+
+
+#globalNav ul {
+
+    list-style: none;
+
+}
+
+
+
+#globalNav a {
+
+    text-decoration: none;
+
+    text-align: left;
+
+}
+
+
+
+#home {
+
+    /*padding-left: 100px;*/
+
+}
+
+#globalNav > ul > li {
+
+    float: left;
+
+    margin-left: 20px;
+
+    position: relative;
+
+}
+
+
+
+#globalNav > ul > li > a {
+
+    color: rgb(160,160,160);
+
+    font-size: 17px;
+
+    line-height: 70px;
+
+    padding: 15px 30px;                 /*before it was 15px and 20px*/
+
+    -webkit-transition: color .15s;
+
+    -moz-transition: color .15s;
+
+    -o-transition: color .15s;
+
+    transition: color .15s;
+
+}
+
+
+
+#globalNav > ul > li > a:hover {
+
+    color: white; 
+
+}
+
+
+
+#globalNav ul ul a:hover {
+
+    color: #F0F0F0;
+
+}
+
+#globalNav > ul > li > ul {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    padding: 16px 0 20px 0;
+
+    background-color: #FAFAFA;
+
+    text-align: left;
+
+    position: absolute;
+
+    top: 55px;
+
+    left: 50%;
+
+    margin-left: -90px;
+
+    width: 180px;
+
+-webkit-transition: all .3s .1s;
+
+   -moz-transition: all .3s .1s;
+
+     -o-transition: all .3s .1s;
+
+        transition: all .3s .1s;
+
+-webkit-border-radius: 5px;
+
+   -moz-border-radius: 5px;
+
+        border-radius: 5px;
+
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+
+   -moz-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+
+        box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+
+}
+
+
+
+#globalNav > ul > li:hover > ul {
+
+    opacity: 1;
+
+    top: 65px;
+
+    visibility: visible;
+
+}
+
+#globalNav > ul > li > ul:before {
+
+    content: '';
+
+    display: block;
+
+    border-color: transparent transparent rgb(250,250,250) transparent;
+
+    border-style: solid;
+
+    border-width: 10px;
+
+    position: absolute;
+
+    top: -20px;
+
+    left: 50%;
+
+    margin-left: -10px;
+
+}
+
+
+
+#globalNav > ul ul > li { 
+
+    position: relative;
+
+}
+
+
+
+#globalNav ul ul a {
+
+    color: #323232;
+
+    font-size: 13px;
+
+    background-color: #FAFAFA;
+
+    padding: 5px 8px 7px 16px;
+
+    display: block;
+
+-webkit-transition: background-color .1s;
+
+   -moz-transition: background-color .1s;
+
+     -o-transition: background-color .1s;
+
+        transition: background-color .1s;
+
+
+
+}
+
+#globalNav ul ul a:hover {
+
+    background-color: #2D2D2F;
+
+}
+
+
+
+#globalNav ul ul ul {
+
+    visibility: hidden;
+
+    opacity: 0;
+
+    position: absolute;
+
+    top: -16px;
+
+    left: 206px;
+
+    padding: 16px 0 20px 0;
+
+    background-color: #FAFAFA;
+
+    text-align: left;
+
+    width: 160px;
+
+-webkit-transition: all .3s;
+
+   -moz-transition: all .3s;
+
+     -o-transition: all .3s;
+
+        transition: all .3s;
+
+-webkit-border-radius: 5px;
+
+   -moz-border-radius: 5px;
+
+        border-radius: 5px;
+
+-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+
+   -moz-box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+
+        box-shadow: 0px 1px 3px rgba(0,0,0,.4);
+
+}
+
+#globalNav ul ul > li:hover > ul { 
+
+    opacity: 1; 
+
+    left: 181px; 
+
+    visibility: visible;
+
+}
+
+
+
+#globalNav ul ul ul > li:hover > ul { 
+
+    opacity: 1; 
+
+    left: 160px; 
+
+    visibility: visible;
+
+}
+
+/*-------------Show the raster and vector's files list------------*/
+
+.title{
+
+    float:left;
+
+    width:320px;
+
+    padding-right: 20px;
+
+}
+
+#tutorial, #quizColumn{
+
+    float: left;
+
+    width: 180px;
+
+    padding: 0 76px;
+
+}
+
+/*#tutorial h1, #quizColumn h1{
+
+    text-decoration: underline;
+
+    letter-spacing: .2em;
+
+}*/
+
+.rector a, .vector a{
+
+    color:black;
+
+    text-decoration: none;
+
+}
+
+.rector a:hover, .vector a:hover{
+
+    color: gray;
+
+}
+
+/*------- Local Navigation  ---------*/
+
+
+
+ /* Some stylesheet reset */
+
+#localNav  > ul {
+
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+    vertical-align: baseline;
+
+    line-height: 2;
+
+    display: block;
+
+    position: relative;
+
+    /*width: 150px;*/
+
+}/* The container */
+
+
+
+    /* The list elements which contain the links */
+
+    #localNav  > ul li {
+
+        display: block;
+
+        position: relative;
+
+        margin: 0;
+
+        padding: 0;
+
+        width: 110px;   
+
+    }
+
+    
+
+/*Local Navigation TESTING*/
+
+li ul{
+
+    position:absolute;
+
+    left:71.3px;
+
+    top:0;
+
+}
+
+ul#nav li:hover>a {
+
+    color:red;
+
+}
+
+
+
+ul#nav li ul{
+
+    display: none;
+
+}
+
+
+
+ul#nav li:hover>ul{
+
+    display: block;
+
+
+
+}
+
+/*------------------------*/
+
+
+
+/* General link styling */
+
+#localNav  > ul li a {
+
+    /* Layout */
+
+    display: block;
+
+    position: relative;
+
+    margin: 0;
+
+    border-top: 1px dotted #3a3a3a;
+
+    border-bottom: 1px dotted #1b1b1b;
+
+    padding: 11px 20px;
+
+    /*width: 110px;*/
+
+
+
+    /* Typography */
+
+    font-family: Helvetica, Arial, sans-serif;
+
+    color: #d8d8d8;
+
+    text-decoration: none;
+
+    text-transform: uppercase;
+
+    font-size: 11px;          
+
+
+
+    /* Background & effects */
+
+    background: #282828;
+
+}
+
+
+
+/* Rounded corners for the first link of the menu/submenus */
+
+#localNav  > ul li:first-child>a {
+
+    border-top: 0;
+
+}
+
+
+
+
+
+/* The hover state of the menu/submenu links */
+
+#localNav  > ul li>a:hover, #localNav  > ul li:hover>a {
+
+    color: #fff;
+
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .3);
+
+    background-color: #363435;        /* Hover when you move */
+
+    border-color: transparent;
+
+}
+
+.code_example{
+
+    width: 600px;
+
+    background-color:gray;
+
+    margin: 10px;
+
+    padding: 10px;
+
+    border-style:groove;
+
+}
+
+
+
+/*---------------------Table---------------------*/
+
+table.decoration{
+
+    margin: 3em 3em 2em 0;
+
+    width: 100%;
+
+    border-collapse: collapse; 
+
+}
+
+table.decoration th{
+
+    background-color: #363435;
+
+    color: white;
+
+    font-weight: bold;
+
+}
+
+table.decoration tr:nth-of-type(odd){
+
+    background-color: #E8E8E8;
+
+}
+
+table.decoration td, table.decoration th{
+
+    padding: 6px;
+
+    width: 0;
+
+    border: 1px solid silver;
+
+    text-align: left;
+
+}
+
+.vectorTQ, .rasterTQ{
+
+    float: left;
+
+    width: 100px;
+
+    padding: 0 76px;
+
+}
+
+.vectorTQ a, .rasterTQ a{
+
+    color: black;
+
+    text-decoration: none;
+
+}
+
+.vectorTQ a:hover, .rasterTQ a:hover{
+
+    color: gray;
+
+}
+
+/*---------Show list of Raster and Vector files----------------*/
+
+.link{
+
+    float: left;
+
+    padding: 10px 39px;
+
+}
+
+.link a{
+
+    color: black;
+
+    background-color:#727272;
+
+    padding:15px;
+
+    border-radius: 5px;
+
+    text-decoration: none;
+
+    transition: .5s;
+
+
+
+}
+
+.link a:hover{
+
+    background-color: #989898;
+
+}
+
+/*.bigLetter{
+
+    background-color: #232323;
+
+    color: #FFFFFF;
+
+    float: left;
+
+    font-size: 4em;
+
+    margin: -2px 0 0 -1px;
+
+    padding: 10px 3px 13px 3px;
+
+}*/
+
+.quotes{
+
+    font-size: 55px;
+
+    color:#0759B7;
+
+}
+
+.main_paragraph{
+
+    font-size: 32px;
+
+    line-height: 40px;
+
+/*    margin-top: 25px;
+
+    margin-left: 461px;*/
+
+    
+
+    /*color: #939292;*/
+
+}
+
+.wordColor{
+
+    color:#0759B7;
+
+    font-weight: bold;
+
+}
+
+/*.our_quotes{  
+
+    font-size: 55px;
+
+    color: #232323;
+
+}
+
+.our_main_paragraph{
+
+    color: #939292;
+
+    font-size: 32px;
+
+/*    margin-top: 25px;
+
+    margin-left: 461px;*/
+
+    /*line-height: 40px;*/
+
+/*}*/
+
+
+
+/*Box outside content*/
+
+.rightBox{
+
+    float: right;
+
+    background-color: gray;
+
+    color: #DDDDDD;
+
+    padding: 10px;
+
+    margin: 0 -10px 0 10px;
+
+    border-radius: 5px 0 0 5px;
+
+}
+
+.leftBox{
+
+    float: left;
+
+    background-color: gray;
+
+    color: #DDDDDD;
+
+    padding: 20px;
+
+    margin: 0 10px 0 -10px;
+
+    border-radius: 0 5px 5px 0;
+
+}
+
+/*Advantages and Disadvantage*/
+
+#adv, #disAdv{
+
+    float: left;
+
+    width: 350px;
+
+    padding: 10px;
+
+    margin: 10px;
+
+    /*background-color: gray;*/
+
+    border-radius: 5px;
+
+    /*color: #DDDDDD;*/
+
+}

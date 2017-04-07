@@ -1,0 +1,210 @@
+@charset "utf-8";
+/*-------------------------CSS Document -------------------------*/
+@font-face{
+	/*font-family:'OpenSans';
+	src:url('asset/Media/Font/OpenSans-Regular.ttf') format('truetype');*/
+    font-weight: normal;
+    font-style: normal;
+}
+body{
+	margin: 0;
+	padding: 0;
+	font-family: Open sans;
+	color: #393939;
+	background-color: black;
+	background-image: url(../Media/Patterns/Patterns1-12.png);
+	background-repeat: repeat;
+	background-attachment:fixed;
+}
+p{
+	font-size: 17px;
+}
+
+/*-------------Introduction title on Guahan page-------------*/
+#title {
+  font-size: 50px;
+  /*  shadows render better in certain browsers than text, first rule is for older browser support  */
+  color: #333;
+  color: transparent;
+  text-shadow: 0 0 #333, .08em 0 0 #fff, 0 0, -.08em 0 0 #fff;
+  /*  gradient background allows us to use css only & re-position it  */
+  background: -webkit-linear-gradient(#999, #999) center 1.09em no-repeat;
+  background: linear-gradient(#999, #999) center 1.09em no-repeat;
+  /*  can precisely control size in relation to the text  */
+  background-size: 85% 1px;
+  /*  now the underline supports transitions  */
+  -webkit-transition: .2s ease;
+  transition: .2s ease;
+  width: 100%;
+  text-align: center;
+}
+title:hover {
+  /*  backgrounds won't size larger than 100%  */
+  background-size: 95% 1px;
+}
+
+#content{
+	margin: 110px auto;
+    width: 780px;
+	border-radius: 5px 5px 5px 5px;
+    background-color: white;
+    padding: 20px;
+	overflow: auto;
+}
+/*-------------------------Global Navigation-------------------------*/
+#top{
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 75px;
+	background-color: white;
+}
+#nav{
+	width: 100%;
+	text-align: center;
+	font-size: 20px;
+	margin-top: -20px;
+}
+#logo{
+	position: relative;
+	top: 25px;
+}
+#top ul{
+	list-style: none;
+}
+#top #nav a{
+	text-decoration: none;	
+	font-weight: normal;
+	text-decoration: none;	
+	color: #393939;
+}
+#top ul li li a{
+	display: block;
+	font-weight: normal;
+	padding:0;
+	background-color: white;
+	transition: .3s;  
+	text-align: center;
+	font-size: 15px;
+}
+#top #nav li li a:hover{
+	padding:0px;
+	background-color: #95dce2;
+}
+#top #nav li{
+	display: inline-block;
+	position: relative;
+	width: 110px;
+	text-align: center; 
+	transition: .3s;
+}
+#top li>ul{
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	font-weight: normal;
+	padding: 5px 0 10px 0;
+	background-color: white;
+	display:none;
+	transition: all 0.3s;
+}
+#top li>ul>li{
+	font-size: 18px;
+}
+#top li:hover>ul{
+	display:block;
+}
+#top li li{
+	display: block;
+	float: none;
+	border: 0;
+	background-color: white;
+}
+#top li:hover{
+	background: #95dce2;
+}
+/*-------------------------Local Navigation-------------------------*/
+#content #localNav{
+	margin-top:0px;
+	padding:0;
+	width: 100%;
+	text-align:center;
+}
+#localNav a{
+	text-decoration:none;
+    padding: 0 5%;
+    color: #393939;
+    font-size:18px;
+    transition: .3s;
+}
+
+#localNav a:hover{
+	background-color: #95dce2;
+}
+.current{
+	background-color: #95dce2;
+}
+#localNav li:hover{
+	background-color: #95dce2;
+}
+
+/* -------------------------General-------------------------  */
+.imgLeft{
+	float: left;
+	padding-right: 10px;
+}
+.imgRight{
+	float: right;
+    padding-left: 10px;
+}
+#centerImg{
+    width: 750px;
+    margin:0 15px;	
+}
+.group{
+	padding: 0px 10px 50px 0;
+}
+.figure{
+    margin: 0 5px;
+    text-align: center;
+}
+.figure a{
+	text-decoration:none;
+	color:	#5f8689;
+}
+#GuamVillage{
+	width: 200px;
+    padding-left:  150px;
+    float:left;	
+}
+#footer{
+	text-align:center;	
+	color: #393939;
+	width:750px;
+	margin: 0 auto;
+	margin-top: -90px;
+}
+#copyright{
+	margin-top: -50px;
+}
+a{
+	text-decoration: none;
+	color: #5f8689;
+	font-size: 18px;
+}
+/*Contact Form*/
+span{
+	display: inline-block;
+	width:100px;
+	float: left;
+}
+/*image js!*/
+#gallery-center{
+	text-align: center;
+}
+#pic2, #pic3, #pic4 {
+	display: none;
+	opacity: 0.0;
+}
+
+/*testing*/

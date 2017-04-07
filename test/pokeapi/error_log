@@ -1,0 +1,12 @@
+[31-Aug-2016 03:09:41 UTC] PHP Fatal error:  Class 'danrovito\PokePHP\PokeApi' not found in /home/pjuncan93/public_html/test/pokeapi/index.php on line 3
+[31-Aug-2016 03:09:55 UTC] PHP Fatal error:  Class 'PokePHP\PokeApi' not found in /home/pjuncan93/public_html/test/pokeapi/index.php on line 3
+[31-Aug-2016 03:09:56 UTC] PHP Fatal error:  Class 'PokePHP\PokeApi' not found in /home/pjuncan93/public_html/test/pokeapi/index.php on line 3
+[31-Aug-2016 03:10:15 UTC] PHP Fatal error:  Class 'PokePHP\src\PokeApi' not found in /home/pjuncan93/public_html/test/pokeapi/index.php on line 3
+[31-Aug-2016 03:10:20 UTC] PHP Fatal error:  Class 'PokePHP\src\PokeApi' not found in /home/pjuncan93/public_html/test/pokeapi/index.php on line 3
+[31-Aug-2016 03:11:45 UTC] PHP Fatal error:  Class 'PokePHP\src\PokeApi' not found in /home/pjuncan93/public_html/test/pokeapi/index.php on line 3
+[31-Aug-2016 03:12:22 UTC] PHP Fatal error:  Class 'PokePHP\src\PokeApi' not found in /home/pjuncan93/public_html/test/pokeapi/index.php on line 3
+[18-Sep-2016 05:00:38 UTC] PHP Fatal error:  Function name must be a string in /home/pjuncan93/public_html/test/pokeapi/index.php on line 15
+[18-Sep-2016 05:00:58 UTC] PHP Fatal error:  Function name must be a string in /home/pjuncan93/public_html/test/pokeapi/index.php on line 15
+[18-Sep-2016 05:01:01 UTC] PHP Fatal error:  Function name must be a string in /home/pjuncan93/public_html/test/pokeapi/index.php on line 15
+[18-Sep-2016 05:01:49 UTC] PHP Fatal error:  Function name must be a string in /home/pjuncan93/public_html/test/pokeapi/index.php on line 15
+[18-Sep-2016 05:01:52 UTC] PHP Fatal error:  Function name must be a string in /home/pjuncan93/public_html/test/pokeapi/index.php on line 15

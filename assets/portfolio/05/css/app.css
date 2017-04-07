@@ -1,0 +1,30 @@
+body{
+    background-color: #EB612F;
+    margin: 0 auto;
+    font-family: 'Open Sans', sans-serif;
+}
+.block{
+	display: inline-block;
+	padding: 10px;
+}
+.img{
+	float: left;
+}
+.content{
+    margin-left: 245px;
+}
+.copyright{
+	text-align: center;
+	color: #FFFFFF;
+}
+#filetoupload, #option{
+	padding-left: 20px;
+}
+.title{
+    font-size: large;
+    font-style: italic;
+    font-weight: bolder;
+}
+.line-through{
+    text-decoration: line-through;
+}

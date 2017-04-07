@@ -1,0 +1,111 @@
+body{
+  background-image: url("../wow_wallpaper.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50%;
+  width: 100%;
+  margin: 0 auto;
+  font-family: 'Roboto Condensed', sans-serif;
+  background-size: cover;
+  background-position: center;
+}
+.wrapped{
+  width: 310px;
+  margin: 60px auto;
+}
+#name, #realm, #search{
+  width: 300px;
+  height: 20px;
+  margin: 10px 0;
+  padding: 5px;
+  color: white;
+}
+#name, #realm{
+  background-color: #0b122f;
+  border: #0b122f;
+  color: white;
+}
+#submitBox{
+  background: #0b122f;
+  background: -webkit-linear-gradient(#148980, #3d7b8b);
+  background: -o-linear-gradient(#148980, #3d7b8b);
+  background: -moz-linear-gradient(#148980, #3d7b8b);
+  background: linear-gradient(#148980, #3d7b8b);
+  border-style: none;
+  width: 100%;
+  height: 35px;
+  color: white;
+}
+.error-box{
+  background-color: #0b122f;
+  color: white;
+}
+.content{
+  background-color: rgba(11,18,47,0.50);
+  width: 100%;
+  color: #e8ae31;
+  overflow: auto;
+}
+.content{
+  display: none;
+}
+.col-center{
+  /*margin: 0 225px;*/
+}
+.col1, .col2{
+  background-color: rgba(14, 22, 48, 0.95);
+  float: left;
+  margin: 45px 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border-color: white;
+  font-size: small;
+}
+.col1{
+  width: 60%;
+}
+.col2{
+  width: 30%;
+}
+.subCol1{
+  float:left;
+  width: 33%;
+}
+.subCol3{
+  float: right;
+  width: 33%;
+}
+.subCol2{
+  display: inline-block;
+  width: 33%;
+}
+
+.attack, .spell, .enchancements{
+  margin: 40px 0;
+}
+/*#strength, #agility, #def, #power, #healthregen, #manaRegen, #armor, #dodge, #critStrike, #haste, #mastery, #leech{
+  margin: 0 30%;
+  color: white;
+}*/
+.acol1{
+  width: 100%;
+  margin: -15px 0;
+}
+.xcol1, .xcol2{
+  display:inline-block;
+}
+.xcol1{
+  width: 35%;
+}
+.xcol2{
+  width: 50%;
+  color:white;
+}
+@media (max-width: 1200px){
+  .col1, .col2{
+    float: none;
+    margin: 45px auto;
+    height: 380px;
+    width: 90%;
+  }
+}

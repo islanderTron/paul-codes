@@ -1,0 +1,12 @@
+<!--#include virtual='header.inc.html'-->
+<script>
+	document.title="Guåhån";
+	document.getElementById("Guam").style.backgroundColor="#95dce2";
+</script>
+	<div id="content"> 
+        <img src="Media/Pictures/mainHomePicture.jpg" alt="Palm Trees">
+        <h1> Welcome to Gu&aring;h&aring;n</h1>
+		<p>Gu&aring;h&aring;n is the Chamorro language word for Guam.  It’s the largest island of the Mariana Islands. This island is very popular area for tourists to visit to enjoy its weather, explore and learn their cultures, and the environment. The capital used to be Agana, but it is now called Hag&aring;t&ntilde;a. It was changed to reflect the Chamorro culture, language and history.</p>
+        <p>Here we will discover and learn about the island's history, culture, the many, many activities people can do there and be exposed to its vibrant lifestyle.</p>
+    </div>	<!-- End Content -->
+<!--#include virtual='footer.inc.html'-->

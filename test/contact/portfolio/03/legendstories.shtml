@@ -1,0 +1,48 @@
+<!--#include virtual='header.inc.html' -->
+<script>
+	document.title="History | Guåhån";
+	document.getElementById("History").style.backgroundColor="#95dce2";
+</script>
+    <div id="content"> <img src="Media/Pictures/mainHistoryPicture.jpg" alt="History Pictures">
+	<!--#include virtual='history.inc.html'-->
+      <h1> Legend Stories</h1>
+      <div class="group">
+        <h2>Taotaomona</h2>
+        
+        <div class="imgLeft">
+            <div class="figure">
+                <img src="Media/Pictures/History/taotaomona-tree.jpg" alt="Taotaomona">
+                <p><a target="_blank" href="http://www.pyrate-enterprises.com/wp-content/uploads/2013/03/fig.jpg">Taotaomona</a></p>
+            </div>
+        </div>
+        <p>Ancient Chamorro people believe that the Taotaomona was living on Guam before they came to live on the island.  Taotaomona are spirits or ghosts of the ancient people of Guam living in the banyan tree that give Chamorro assonance and protection with daily tasks.  They are considered family to Chamorro people and had their own names.  However, since the Spanish colonization and Christianization it slowly changed the Chamorro people’s belief to change the meaning of Taotaomona.  It slowly changed from good spirit to wily ghosts, devils, and demons that play trick or cause harm today.</p>
+      </div>
+      <div class="group">
+        <div class="imgRight">
+            <div class="figure">
+                <img src="Media/Pictures/History/santa-marian-kamalen.jpg" alt="Santa Marian Kamalen">
+                <p><a href="http://ns.gov.gu/icons/patrones.jpg">Santa Marian Kamalen</a></p>
+            </div>
+        </div>
+        <h2>Santa Marian Kamalen</h2>
+        <p>Santa Marian Kamalen is an important icon on Guam’s history and religion.</p>
+        <p>A fisherman from Merizo, a village in southern Guam, went fishing in the ocean and noticed there was a statue of the Virgin Mary.  He swam to get it and it kept moving away from him.  He tried again and could not get closer to it.  He went to village priest to get his advice and he said to wear Sunday clothes.  Then he wore Sunday clothes and didn’t have problem getting the statue.</p>
+      </div>
+      <br/><br/>
+      <div class="group">
+        <h2>Puntan Dos Amantes</h2>
+        <div class="imgLeft">
+            <div class="figure">
+                <img src="Media/Pictures/History/puntan-dos-amantes.jpg" alt="Puntan Dos Amantes">
+                <p><a href="http://farm3.staticflickr.com/2545/4156161241_15dc0e8b6f_z.jpg">Puntan Dos Amantes</a></p>
+            </div>
+        </div>
+        <p>There are many versions of this legend of which I will share two versions.</p>
+        <p>First Version: There were two Chamorro lovers that fell in love with each other.  However the Mataos said that was unacceptable because it’s forbidden for two people from two separate systems, the matao, high caste and the manachana, lower caste, to marry.  So, he was matao and she was manachana and they fell in love.  They tied their long, black hair, kissed for the last time, and jumped off the cliff to their death.</p>
+        <p>Second Version:  A Spanish businessman and mother, a daughter of Chamorro chief owned large land in Hagåtña where they lived.  He arranged their oldest daughter to marry powerful Spanish man on Guam.  His daughter was against this arrangement, but he demanded her to marry him.  She was so upset that she ran from Hagatna all the way to the northern part of Guam until she found a secluded and peaceful shore to hide.  There, on the shore, she met and fell in love with a young warrior, a Chamorro man, from a very modest Chamorro family. When her father soon found out about them, her father and all the Spanish soldiers chased the two lovers up to the high cliff above Tumon Bay.  The lovers found themselves trapped between the edge of the cliff and the approaching soldiers.  They tied their long, black hair, kissed for their last time and jumped to their death.</p>
+      </div>
+    </div>	<!-- End Content -->
+    <script>
+		document.getElementById("LegendStories").style.backgroundColor = "#95dce2";
+	</script>
+<!--#include virtual='footer.inc.html'-->

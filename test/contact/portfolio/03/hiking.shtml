@@ -1,0 +1,44 @@
+<!--#include virtual='header.inc.html' -->
+<script>
+	document.title="Activities | Guåhån";
+	document.getElementById("Activities").style.backgroundColor="#95dce2";
+</script>
+    <div id="content"> 
+        <img src="Media/Pictures/mainActivitiesPicture.jpg" alt="Guam Map">
+		<!--#include virtual='activitive.inc.html'-->
+        <h1> Hiking</h1>
+        <p>Guam Boonie Stomp is a group of hikers that meet every Saturday and anyone can join them at the center court of Chamorro Village at 9am.  It only cost $2 per hiker over the age of 12.  The cost covers t-shirts that one can earn after hiking with them ten times. However, the hikers have to be aware that they need to bring a lot of water depend on the difficulties of the hike.  Generally hiking is easy to hike, but they forewarn the level of difficulty before they embark.  Also, Boonie Stomp does not provide transportation so hikers would need their own transportation, which everyone follows each other to the hiking site.</p>
+        <div id="centerImg">
+        	<div class="imgLeft">
+                <div class="figure">
+                    <img  src="Media/Pictures/Activities/1.jpg" alt="1">
+                    <p></p>
+                </div>
+            </div>
+            
+            <div class="imgRight">
+                <div class="figure">
+                    <img  src="Media/Pictures/Activities/2.jpg" alt="2">
+                    <p></p>
+                </div>
+            </div>
+            
+            <div class="imgLeft">
+                <div class="figure">
+                    <img  src="Media/Pictures/Activities/3.jpg" alt="3">
+                    <p></p>
+                </div>
+            </div>
+            
+            <div class="imgRight">
+                <div class="figure">
+                    <img  src="Media/Pictures/Activities/4.jpg" alt="4">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>  <!-- End Content -->
+	<script>
+        document.getElementById("Hiking").style.backgroundColor="#95dce2";
+    </script>
+<!--#include virtual='footer.inc.html'-->

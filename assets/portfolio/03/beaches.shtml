@@ -1,0 +1,42 @@
+<!--#include virtual='header.inc.html' -->
+<script>
+	document.title="Activities | Guåhån";
+	document.getElementById("Activities").style.backgroundColor="#95dce2";
+</script>
+    <div id="content"> 
+        <img src="Media/Pictures/mainActivitiesPicture.jpg" alt="Guam Map">
+        <!--#include virtual='activitive.inc.html'-->
+                
+        <h1>Beaches</h1>
+        <p>Going to the beach is one of the best activities on Guam.  We can have small parties or BBQ's with friends or/and families.  We can go snorkeling, swimming, play the volleyball, or any other activities you choose to do.  Also, we can sit and lay down to enjoy the heat.  Guam's ocean waters maintains a tempature between 82-86&deg;F.  It’s really nice to go swim there while it’s sunny and humid during the afternoon.</p>
+        <div id="centerImg">
+        	<div class="imgLeft">
+                <div class="figure">
+               	 <img src="Media/Pictures/Activities/9.jpg" alt="Yipo1">
+                 <p></p>
+                </div>
+            </div>
+            <div class="imgRight">
+                <div class="figure">
+	                <img src="Media/Pictures/Activities/10.jpg" alt="Yipo2">
+                    <p></p>
+                </div>
+            </div>
+            <div class="imgLeft">
+                <div class="figure">
+	                <img src="Media/Pictures/Activities/11.jpg" alt="Yipo3">
+                    <p></p>
+                </div>
+            </div>
+            <div class="imgRight">
+                <div class="figure">
+	                <img src="Media/Pictures/Activities/12.jpg" alt="Yipo4">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>  <!-- End Content -->
+	<script>
+        document.getElementById("Beaches").style.backgroundColor="#95dce2";
+    </script>
+<!--#include virtual='footer.inc.html'-->

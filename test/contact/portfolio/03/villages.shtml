@@ -1,0 +1,39 @@
+<!--#include virtual='header.inc.html' -->
+<script>
+	document.title="Culture | Guåhån";
+	document.getElementById("Culture").style.backgroundColor="#95dce2";
+</script>
+    <div id="content"> 
+        <img src="Media/Pictures/mainCulturePicture.jpg" alt="Guam Map">
+		<!--#include virtual='culture.inc.html'-->
+        <h1> List of Guam's Villages</h1>
+        <ul id="GuamVillage">
+        	<li>Agana Heights</li>
+            <li>Agat</li>
+            <li>Asan-Maisna</li>
+            <li>Barrigada</li>
+            <li>Chalan-Pago-Ordot</li>
+            <li>Dededo</li>
+            <li>Hag&aring;t&ntilde;a</li>
+            <li>Iranajan</li>
+            <li>Mangilao</li>
+            <li>Merizo</li>
+            <li>Mongmong-Toto-Maite</li>
+            <li>Piti</li>
+            <li>Santa Rita</li>
+            <li>Sinajana</li>
+            <li>Talofofo</li>
+            <li>Tamuning (Tumon)</li>
+            <li>Umatac</li>
+            <li>Yigo</li>
+            <li>Yona</li>
+        </ul>
+        <div class="figure">
+        	<img src="Media/Pictures/Culture/villages1.jpg" alt="Guam Villages">
+            <p><a target="_blank" href="http://guamfoodguide.com/userfiles/map_big.jpg">Guam Villages</a></p>
+    	</div>
+    </div>  <!-- End Content -->
+	<script>
+        document.getElementById("Villages").style.backgroundColor="#95dce2";
+    </script>
+<!--#include virtual='footer.inc.html' -->

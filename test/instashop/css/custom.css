@@ -1,0 +1,232 @@
+/*
+ * Custom Stylesheet for InstaShop
+ * Author: Jaime Penzellna
+ * Date: 09/26/2014
+ * Generator: Brackets
+ * Framework: BootStrap v3.2.0
+ */
+
+.navbar-nav li a > span[class^="badge"]{ /* target a tag with span class name including 'badge' */
+    background-color: #fff;
+    color:#3f729b;
+}
+
+.navbar-nav li a:hover > span[class^="badge"]{ 
+    color:#25445d;
+}
+
+.navbar-inverse {
+    background-color: #3f729b; /* Instagram's hex oolor */
+    border-color: transparent;
+    color: #fff;
+}
+
+.navbar-inverse .navbar-brand {
+    font-family: 'Oleo Script', cursive, helvetica, arial, sans-serif; /* Instagram's font-like style */
+    font-size: 3em;
+    color: #fff;
+    text-shadow: 0 3px 3px rgba(37, 68, 93, 1);
+}
+
+/*.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    background-color: transparent;
+}*/
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    color: #fff;
+    background-color: #25445d;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: #25445d;
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color: #fff;
+}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+    background-color: #25445d;
+}
+
+.row{
+    margin:0;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.file-fieldset{
+    border:1px solid #ccc;
+    padding:10px;
+    border-radius: 4px;
+}
+
+.adminOptions, .userOptions{
+    padding: 10px 10px 10px;
+}
+
+.adminOptions > button:nth-of-type(2){
+    margin-top: 10px;
+}
+
+#thumbnail-container[class^="col"]{ /* target id thumbnail-container with class name including 'col' */
+    padding-left:0;
+}
+
+.center-x{
+    text-align:center;
+}
+
+.center-y{
+    vertical-align:middle;
+}
+
+.page-header {
+    padding-bottom:5px;
+    margin-top:0;
+}
+
+footer {
+    margin:30px 0;
+    color:#fff;
+    background-color:#3f729b; 
+    margin-left:auto;
+    margin-right:auto;
+    padding-left:80px;
+    padding-right:80px;
+}
+
+.container#footer{
+    background-color: #3f729b;
+    width:100%;
+    font-family: 'Oleo Script', cursive, helvetica, arial, sans-serif;
+}
+
+footer p{
+    display: inline;
+    font-size:1.5em;
+}
+
+footer p + p{
+    float:right;
+}
+
+#social-media-icons{
+    clear:both;
+    margin: 0 15px 0;
+    font-size: 2.5em;
+    color:inherit;
+    text-align: right;
+}
+
+#social-media-icons i{
+    color: #fff;
+    margin: 5px;
+    margin-right: 0;
+}
+
+.icon{ /* Spinning Icons - Source: http://codepen.io/ianfarb/pen/yqpmw */
+    -webkit-transform: rotate(0deg);
+    -webkit-transition: -webkit-transform 0.25s ease-in-out;
+    /*-moz-transform: rotate(0deg);
+    -moz-transition: -moz-transform 0.25s ease-in-out;
+    -ms-transform: rotate(0deg);
+    -ms-transition: -ms-transform 0.25s ease-in-out;
+    -o-transform: rotate(0deg);
+    -o-transition: -o-transform 0.25s ease-in-out;
+    transform: rotate(0deg);
+    transition: transform 0.25s ease-in-out;*/
+}
+
+.icon:hover{    
+    -webkit-transform: rotate(360deg);
+    -webkit-transition: -webkit-transform 0.25s ease-in-out;
+    /*-moz-transform: rotate(0deg);
+    -moz-transition: -moz-transform 0.25s ease-in-out;
+    -ms-transform: rotate(0deg);
+    -ms-transition: -ms-transform 0.25s ease-in-out;
+    -o-transform: rotate(0deg);
+    -o-transition: -o-transform 0.25s ease-in-out;
+    transform: rotate(0deg);
+    transition: transform 0.25s ease-in-out;*/
+}
+
+img{
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+
+h1{
+    display:inline;
+}
+
+#addButton{
+    float: right;
+    clear:both;
+}
+
+#cartButton, #editButton, #deleteButton{
+    width:100%;
+}
+
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+  background-color:#3f729b;
+  border-color:#3f729b;
+}
+
+a[title]{
+    color: #3f729b;
+}
+
+.btn-primary {
+  background-color:#3F729B;
+  border-color:#38668B;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background-color: #25445d;
+    border-color: #213d53;
+}
+
+/* STICKY FOOTER - If there's less content than the browser's height window, force footer to the bottom
+ * Source: http://stackoverflow.com/questions/21324395/bootstrap-3-flush-footer-to-bottom-not-fixed 
+ */
+* {
+    margin: 0;
+}
+html, body {
+    height: 100%;
+}
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -155px; /* the bottom margin is the negative value of the footer's height */
+}
+#footer, .push {
+    height: 155px; /* .push must be the same height as .footer */
+}
+
+/*{border:1px dotted blue;}*/

@@ -1,0 +1,2 @@
+[31-Aug-2016 03:11:58 UTC] PHP Fatal error:  Class 'PHPUnit_Framework_TestCase' not found in /home/pjuncan93/public_html/test/pokeapi/vendor/danrovito/pokephp/tests/ClientTest.php on line 6
+[01-Sep-2016 00:53:51 UTC] PHP Fatal error:  Class 'PHPUnit_Framework_TestCase' not found in /home/pjuncan93/public_html/test/pokeapi/vendor/danrovito/pokephp/tests/ClientTest.php on line 6

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="Icon_Logo/1.png">
+
+    <link rel="stylesheet" type="text/css" href="CSS/buynow.css">
+
+
+
+    <title>Buy Now | Epic Eye Tracker</title>
+
+
+
+    <!-- Bootstrap core CSS -->
+
+    <link href="CSS/bootstrap.min.css" rel="stylesheet">
+
+
+
+    <!-- Custom styles for this template -->
+
+    <link href="CSS/jumbotron-narrow.css" rel="stylesheet">
+
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+    <!--[if lt IE 9]>
+
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+
+    <script>
+
+      function next(name){
+
+        if((document.getElementsByName('same')[0].checked && name != 'ship') ||(document.getElementsByName('same')[1].checked && name == 'ship')){
+
+          var elements = document.getElementById(name).querySelectorAll("input, select");
+
+          for(var i = 0; i < elements.length; i++){
+
+            if(i != 3){
+
+              var check = (elements[i].value === "") ? 
+
+                     elements[i].className = "border" : 
+
+                     elements[i].className = "";    
+
+            }   
+
+          }
+
+        }
+
+        if(name == 'credit'){
+
+          var checkRadio = (!(document.getElementsByName("card-type")[0].checked
+
+                 || document.getElementsByName("card-type")[1].checked)) ? 
+
+                  document.getElementsByTagName("div")[4].className = "border" :
+
+                  document.getElementsByTagName("div")[4].className = ""; 
+
+          var checkRadioOne = (!(document.getElementsByName("card-company")[0].checked
+
+                    || document.getElementsByName("card-company")[1].checked)) ? 
+
+                       document.getElementsByTagName("div")[5].className = "border" :
+
+                       document.getElementsByTagName("div")[5].className = "";  
+
+        }
+
+        var check = (document.getElementsByClassName("border").length > 0) ? true : false;
+
+        if(!check){
+
+          document.getElementById(name).style.display = "none";
+
+          document.getElementById(name).nextElementSibling.style.display = "initial";
+
+        }
+
+      }
+
+      function hide( aa ){
+
+        if( aa === true){
+
+          document.getElementById("hidden").style.display = "none";
+
+        }
+
+        else{ 
+
+          document.getElementById("hidden").style.display = "initial";
+
+        } 
+
+      }
+
+    </script>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="header">
+
+        <ul class="nav nav-pills pull-right">
+
+          <li><a href="index.html">Home</a></li>
+
+          <li><a href="tutorial.html">Tutorial</a></li>
+
+          <li class="active"><a href="buynow.html">Buy Now</a></li>
+
+          <li><a href="about.html">About</a></li>
+
+        </ul>
+
+
+
+        <h3 class="text-muted"><a href="index.html">Epic Eye Tracker</a></h3>
+
+      </div>
+
+    <form id="contact-form" 
+
+          method="get"
+
+          action="buynow.html"
+
+          onsubmit="return validate();">    
+
+      <div id="bill">   
+
+        <h2>Billing Info</h2>
+
+        <span>Name:</span>
+
+        <input type="text" id="first-name" name="first-name"     
+
+             placeholder="Enter first name" autofocus/>
+
+        <input type="text" id="last-name" name="last-name"     
+
+             placeholder="Enter last name" autofocus/>
+
+        <br/><br/>
+
+        <span>Address:</span>
+
+        <input type="text" id="address-one" name="address-two" 
+
+             placeholder="Enter address"/>
+
+        <input type="text" id="address-two" name="address-two" 
+
+             placeholder="Enter Apt # or PO Box"/>
+
+        <br/><br/>
+
+        <span>City:</span>
+
+        <input type="text" id="city" name="city" 
+
+             placeholder="Enter city"/>
+
+        <br/><br/>
+
+        <span>State:</span>
+
+        <select name="state" size="1">
+
+            <option value=""></option>
+
+            <option value="AK">AK</option>
+
+            <option value="AL">AL</option>
+
+            <option value="AR">AR</option>
+
+            <option value="AZ">AZ</option>
+
+            <option value="CA">CA</option>
+
+            <option value="CO">CO</option>
+
+            <option value="CT">CT</option>
+
+            <option value="DC">DC</option>
+
+            <option value="DE">DE</option>
+
+            <option value="FL">FL</option>
+
+            <option value="GA">GA</option>
+
+            <option value="HI">HI</option>
+
+            <option value="IA">IA</option>
+
+            <option value="ID">ID</option>
+
+            <option value="IL">IL</option>
+
+            <option value="IN">IN</option>
+
+            <option value="KS">KS</option>
+
+            <option value="KY">KY</option>
+
+            <option value="LA">LA</option>
+
+            <option value="MA">MA</option>
+
+            <option value="MD">MD</option>
+
+            <option value="ME">ME</option>
+
+            <option value="MI">MI</option>
+
+            <option value="MN">MN</option>
+
+            <option value="MO">MO</option>
+
+            <option value="MS">MS</option>
+
+            <option value="MT">MT</option>
+
+            <option value="NC">NC</option>
+
+            <option value="ND">ND</option>
+
+            <option value="NE">NE</option>
+
+            <option value="NH">NH</option>
+
+            <option value="NJ">NJ</option>
+
+            <option value="NM">NM</option>
+
+            <option value="NV">NV</option>
+
+            <option value="NY">NY</option>
+
+            <option value="OH">OH</option>
+
+            <option value="OK">OK</option>
+
+            <option value="OR">OR</option>
+
+            <option value="PA">PA</option>
+
+            <option value="RI">RI</option>
+
+            <option value="SC">SC</option>
+
+            <option value="SD">SD</option>
+
+            <option value="TN">TN</option>
+
+            <option value="TX">TX</option>
+
+            <option value="UT">UT</option>
+
+            <option value="VA">VA</option>
+
+            <option value="VT">VT</option>
+
+            <option value="WA">WA</option>
+
+            <option value="WI">WI</option>
+
+            <option value="WV">WV</option>
+
+            <option value="WY">WY</option>
+
+        </select>
+
+        <br/><br/>
+
+        <span>Zip Code:</span>
+
+        <input type="text" id="zip" name="zip" 
+
+             placeholder="Enter Zip Code"/>
+
+        <br/><br/>
+
+        <span>Phone Number:</span>
+
+        <input type="text" id="phone" name="phone" 
+
+             placeholder="Enter Phone Number"/>
+
+        <br/><br/>
+
+        <span>Email:</span>
+
+        <input type="text" id="email" name="email" 
+
+             placeholder="Enter Email"/>
+
+        <br/><br/>  
+
+        <input type="button" id="button" value="next" onclick="next('bill')" /> 
+
+      </div>
+
+      <div id="credit">
+
+        <h2>Credit Info</h2>
+
+        <span>Select:</span>
+
+        <div id="radio" style="display: inline; padding: 5px;">
+
+          <input type="radio" name="card-type" value="credit" id="credita"><label for="credit">Credit</label>
+
+          <input type="radio" name="card-type" value="debit" id="debit"><label for="debit">Debit</label>
+
+        </div>
+
+        <br/><br/>
+
+        <span>Select:</span>
+
+        <div id="radio1" style="display: inline; padding: 5px;">
+
+          <input type="radio" name="card-company" value="visa" id="visa"><label for="visa">VISA</label>
+
+          <input type="radio" name="card-company" value="mastercard" id="master"><label for="master">MasterCard</label>
+
+        </div>
+
+        <br/><br/>
+
+        <span>Card Number:</span>
+
+        <input type="text" id="card-number" name="card-number" 
+
+             placeholder="Enter card number"/>
+
+        <br/><br/>
+
+        <span>Cardholder's Name:</span>
+
+        <input type="text" id="card-name" name="card-name" 
+
+             placeholder="Enter cardholder's name"/>
+
+        <br/><br/>
+
+        <span>Exp Date:</span>MM
+
+        <input type="text" id="exp-month" name="exp-month" size="2"/> / YY
+
+        <input type="text" id="exp-year" name="exp-year" size="2"/>
+
+        <br/><br/>
+
+        <input type="button" id="button" value="next" onclick="next('credit')" /> 
+
+      </div>
+
+      <div id="ship">
+
+        <h2>Shipping Info</h2>
+
+        <span>Same as billing info:</span>
+
+        <input type="radio" name="same" value="true" onclick="hide(true);" checked><div class="yesNo">Yes</div>
+
+        <input type="radio" name="same" value="false" onclick="hide(false);"><div class="yesNo">No</div>
+
+        <br/><br/>
+
+        <div id="hidden">
+
+          <span>Name:</span>
+
+          <input type="text" id="first-name1" name="first-name"      
+
+               placeholder="Enter first name" autofocus />
+
+          <input type="text" id="last-name1" name="last-name"      
+
+               placeholder="Enter last name" autofocus/>
+
+          <br/><br/>
+
+          <span>Address:</span>
+
+          <input type="text" id="address-one1" name="address-two" 
+
+               placeholder="Enter address"/>
+
+          <input type="text" id="address-two1" name="address-two" 
+
+               placeholder="Enter Apt # or PO Box"/>
+
+          <br/><br/>
+
+          <span>City:</span>
+
+          <input type="text" id="city1" name="city" 
+
+               placeholder="Enter city"/>
+
+          <br/><br/>
+
+          <span>State:</span>
+
+          <select name="state" size="1">
+
+              <option value=""></option>
+
+              <option value="AK">AK</option>
+
+              <option value="AL">AL</option>
+
+              <option value="AR">AR</option>
+
+              <option value="AZ">AZ</option>
+
+              <option value="CA">CA</option>
+
+              <option value="CO">CO</option>
+
+              <option value="CT">CT</option>
+
+              <option value="DC">DC</option>
+
+              <option value="DE">DE</option>
+
+              <option value="FL">FL</option>
+
+              <option value="GA">GA</option>
+
+              <option value="HI">HI</option>
+
+              <option value="IA">IA</option>
+
+              <option value="ID">ID</option>
+
+              <option value="IL">IL</option>
+
+              <option value="IN">IN</option>
+
+              <option value="KS">KS</option>
+
+              <option value="KY">KY</option>
+
+              <option value="LA">LA</option>
+
+              <option value="MA">MA</option>
+
+              <option value="MD">MD</option>
+
+              <option value="ME">ME</option>
+
+              <option value="MI">MI</option>
+
+              <option value="MN">MN</option>
+
+              <option value="MO">MO</option>
+
+              <option value="MS">MS</option>
+
+              <option value="MT">MT</option>
+
+              <option value="NC">NC</option>
+
+              <option value="ND">ND</option>
+
+              <option value="NE">NE</option>
+
+              <option value="NH">NH</option>
+
+              <option value="NJ">NJ</option>
+
+              <option value="NM">NM</option>
+
+              <option value="NV">NV</option>
+
+              <option value="NY">NY</option>
+
+              <option value="OH">OH</option>
+
+              <option value="OK">OK</option>
+
+              <option value="OR">OR</option>
+
+              <option value="PA">PA</option>
+
+              <option value="RI">RI</option>
+
+              <option value="SC">SC</option>
+
+              <option value="SD">SD</option>
+
+              <option value="TN">TN</option>
+
+              <option value="TX">TX</option>
+
+              <option value="UT">UT</option>
+
+              <option value="VA">VA</option>
+
+              <option value="VT">VT</option>
+
+              <option value="WA">WA</option>
+
+              <option value="WI">WI</option>
+
+              <option value="WV">WV</option>
+
+              <option value="WY">WY</option>
+
+          </select>
+
+          <br/><br/>
+
+          <span>Zip Code:</span>
+
+          <input type="text" id="zip1" name="zip" 
+
+               placeholder="Enter zip code"/>
+
+          <br/><br/>
+
+          <span>Phone Number:</span>
+
+          <input type="text" id="phone1" name="phone" 
+
+               placeholder="Enter phone number"/>
+
+          <br/><br/>
+
+          <span>Email:</span>
+
+          <input type="text" id="email1" name="email" 
+
+               placeholder="Enter email"/>
+
+          <br/><br/>
+
+        </div>  
+
+        <input type="button" value="next" onclick="next('ship')" />
+
+      </div>
+
+      <div id="price">
+
+        <span>Subtotal:</span>
+
+        <output name="subtotal"></output>$149.99
+
+        <br/><br/>
+
+        <span>Shipping:</span>
+
+        <output name="shipping"></output>$16.00
+
+        <br/><br/>
+
+        <span>Sales Tax:</span>
+
+        <output name="tax"></output>
+
+        <br/><br/>
+
+        <span>Total:</span>
+
+        <output name="total"></output>
+
+        <br/><br/>
+
+        <input id="button" type="submit" value="Submit" />
+
+      </div>
+
+    </form>
+
+      <div class="footer">
+
+        <p>&copy; Epic Eyes Tracker 2014</p>
+
+      </div>
+
+
+
+    </div> <!-- /container -->
+
+  </body>
+
+</html>

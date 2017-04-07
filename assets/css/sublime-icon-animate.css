@@ -1,0 +1,213 @@
+/*Credits by Alerto Jerez
+https://dribbble.com/pixelvisualization*/
+
+#ajerez {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 9999;
+}
+#ajerez img {
+  box-sizing: border-box;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid #7482A5;
+  -webkit-transition: border-radius 0.2s ease-in-out;
+          transition: border-radius 0.2s ease-in-out;
+}
+#ajerez img:hover {
+  border-radius: 30%;
+}
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.sublime-text {
+  opacity: 0;
+  margin: 0 auto;
+}
+.sublime-text .screen {
+  position: relative;
+  height: 220px;
+  background-color: #404041;
+  border-radius: 8px;
+  color: white;
+  font-size: 30px;
+}
+.sublime-text .screen .top-bar {
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  margin-top: 0;
+  background-color: #E6E7E8;
+  border-radius: 7px 7px 0 0;
+}
+.sublime-text .screen .top-bar .buttons {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  top: 12px;
+  background: #FF8F8F;
+  border-radius: 50%;
+  left: 22px;
+}
+.sublime-text .screen .top-bar .buttons:after, .sublime-text .screen .top-bar .buttons:before {
+  position: absolute;
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.sublime-text .screen .top-bar .buttons:after {
+  left: 12px;
+  background-color: #5EC3AF;
+}
+.sublime-text .screen .top-bar .buttons:before {
+  left: -12px;
+  background-color: #ff2929;
+}
+.sublime-text .screen .left-bar {
+  height: 100%;
+  width: 30px;
+  position: absolute;
+  padding-left: 8px;
+  background-color: #2e2e2f;
+  border-radius: 10px 0 0 7px;
+}
+.sublime-text .screen .left-bar:after {
+  position: absolute;
+  top: 24px;
+  content: ". . . . . . . . .";
+  color: #59595b;
+  font-size: 42px;
+  line-height: 20px;
+}
+.sublime-text .screen .code {
+  position: absolute;
+  margin: 10px 0 0 40px;
+}
+.sublime-text .screen .code .row {
+  position: relative;
+  padding: 8px;
+  height: 20px;
+}
+.sublime-text .screen .code .row p {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 8px;
+  background-color: white;
+  border-radius: 4px;
+}
+.sublime-text .screen .code .row p.green {
+  width: 20px;
+  background-color: #5EC3AF;
+}
+.sublime-text .screen .code .row p.orange {
+  width: 90px;
+  background-color: #FF8F8F;
+}
+.sublime-text .screen .code .row p.blue {
+  width: 93px;
+  background-color: #43C7F4;
+}
+.sublime-text .screen .code .row p.purple {
+  width: 33px;
+  background-color: #9E76B4;
+}
+.sublime-text .screen .code .row p.yellow {
+  width: 39px;
+  background-color: #FFCC4E;
+}
+.sublime-text .screen .code .row p.transparent {
+  background-color: transparent;
+  width: 30px;
+}
+.sublime-text .screen .code .row p.cursor {
+  border-radius: 0;
+  margin-left: 1px;
+  background-color: #E6E7E8;
+  width: 2px;
+  -webkit-animation: blink 1s ease 4.6s infinite;
+          animation: blink 1s ease 4.6s infinite;
+}
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes show-text {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes show-text {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes appear {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+  }
+  75% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes appear {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+  }
+  75% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 1000px){
+  .sublime-text{
+    width: 300px;
+  }
+@media screen and (max-width: 500px){
+  .sublime-text{
+    width: auto;
+  }
+}

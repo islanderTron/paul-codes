@@ -1,0 +1,71 @@
+<!--#include virtual='header.inc.html' -->
+<script>
+	document.title="Culture | Guåhån";
+	document.getElementById("Culture").style.backgroundColor="#95dce2";
+</script>
+    <div id="content"> 
+        <img src="Media/Pictures/mainCulturePicture.jpg" alt="Guam Map">
+		<!--#include virtual='culture.inc.html'-->
+        <h1> Chamorro Foods</h1>
+        <p>These Chamorro foods are very popular on Guam at fiesta or at home.  Every day the Chamorro people do eat rice and meat because it is part of tradition and habit that pretty much was started after the Spanish incursion from the 1500’s and World War II when the American soldiers introduced potted meat.  An interesting aspect of the Chamorro people is that they like to eat dinner while listening to the island songs to help them enjoy eating the foods.  It is very common to see that and you would be amazed how delicious the foods taste.  Without a doubt, you would love it!</p>
+        <div id="centerImg">
+        	<div class="imgLeft">
+            <div class="figure">
+                <img src="Media/Pictures/Foods/chamorrobbqmarinade.jpg" alt="Chamorro Bbq Marinado">
+                <p><a href="http://www.paulaq.com/chamorro_bbq_marinadeguambarbecuemarinade.html">Chamorro BBQ Marinado</a></p>
+            </div>
+            </div>
+            
+            <div class="imgRight">
+                <div class="figure">
+                    <img src="Media/Pictures/Foods/chamorrospamjam.jpg" alt="Chamorro Spam Jam">
+                    <p><a href="http://www.paulaq.com/spam_jamguamrecipe.html">Chamorro Spam Jam</a></p>
+                </div>
+            </div>
+            
+            <div class="imgLeft">
+                <div class="figure">
+                    <img src="Media/Pictures/Foods/champulado.jpg" alt="Champulado">
+                    <p><a href="http://www.paulaq.com/chamorrochampuladoguamrecipe.html">Champulado</a></p>
+                </div>
+            </div>
+            <div class="imgRight">
+                <div class="figure">
+                    <img src="Media/Pictures/Foods/daigo.jpg" alt="Daigo">
+                    <p><a href="http://www.paulaq.com/guamdaigorecipe.html">Daigo</a></p>
+                </div>
+            </div>
+            
+            <div class="imgLeft">
+                <div class="figure">
+                    <img src="Media/Pictures/Foods/guamfriedrice.jpg" alt="Guam Fried Rice">
+                    <p><a href="http://www.paulaq.com/guam_fried_ricerecipe.html">Guam Fried Rice</a></p>
+                </div>
+            </div>
+            
+            <div class="imgRight">
+                <div class="figure">
+                    <img src="Media/Pictures/Foods/redrice.JPG" alt="Red Rice">
+                    <p><a href="http://www.paulaq.com/guamredricerecipe.html">Red Rice</a></p>
+                </div>
+            </div>
+            
+            <div class="imgLeft">
+                <div class="figure">
+                    <img src="Media/Pictures/Foods/lumpia.jpg" alt="Lumpia">
+                    <p><a href="http://www.paulaq.com/lumpiaguamrecipe.html">Lumpia</a></p>
+                </div>
+            </div>
+            
+            <div class="imgRight">
+                <div class="figure">
+                    <img src="Media/Pictures/Foods/bagogi.jpg" alt="Bagogi">
+                    <p><a href="http://www.paulaq.com/bagogikoreanrecipe.html">Bagogi</a></p>
+                </div>
+            </div>
+        </div>
+    </div>  <!-- End Content --> 
+    <script>
+		document.getElementById("Foods").style.backgroundColor = "#95dce2";
+	</script>
+<!--#include virtual='footer.inc.html' -->

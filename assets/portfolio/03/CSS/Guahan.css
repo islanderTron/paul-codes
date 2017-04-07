@@ -1,0 +1,153 @@
+@charset "utf-8";
+/*-------------------------CSS Document -------------------------*/
+body{
+	margin: 0;
+	padding: 0;
+	font: Helvetica, Arial, Sans-Serif;
+	color: #393939;
+	background-color: black;
+	background-image: url(../Media/Patterns/Patterns1-12.png);
+	background-repeat: repeat;
+	background-attachment:fixed;
+}
+#content{
+	margin: 110px auto;
+    width: 780px;
+	border-radius: 5px 5px 5px 5px;
+    background-color: white;
+    padding: 20px;
+	overflow: auto;
+}
+/*-------------------------Global Navigation-------------------------*/
+#top{
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 75px;
+	background-color: white;
+}
+#nav{
+	width: 100%;
+	text-align: center;
+	font-size: 20px;
+	margin-top: -20px;
+}
+#logo{
+	position: relative;
+	top: 25px;
+}
+#top ul{
+	list-style: none;
+}
+#top #nav a{
+	text-decoration: none;	
+	font-weight: normal;
+	text-decoration: none;	
+	color: #393939;
+}
+#top ul li li a{
+	display: block;
+	font-weight: normal;
+	padding:0;
+	background-color: white;
+	transition: .3s;
+}
+#top #nav li li a:hover{
+	padding:0px;
+	background-color: #95dce2;
+}
+#top #nav li{
+	display: inline-block;
+	position: relative;
+	width: 110px;
+	text-align: center; 
+	transition: .3s;
+}
+#top li>ul{
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	font-weight: normal;
+	padding: 5px 0 10px 0;
+	background-color: white;
+	display:none;
+	transition: all 0.3s;
+}
+#top li>ul>li{
+	font-size: 18px;
+}
+#top li:hover>ul{
+	display:block;
+}
+#top li li{
+	display: block;
+	float: none;
+	border: 0;
+	background-color: white;
+}
+#top li:hover{
+	background: #95dce2;
+}
+/*-------------------------Local Navigation-------------------------*/
+#content #localNav{
+	margin-top:0px;
+	padding:0;
+	width: 100%;
+	text-align:center;
+}
+#localNav a{
+	text-decoration:none;
+    padding: 0 5%;
+    color: #393939;
+    font-size:18px;
+    transition: .3s;
+}
+
+#localNav a:hover{
+	background-color: #95dce2;
+}
+.current{
+	background-color: #95dce2;
+}
+#localNav li:hover{
+	background-color: #95dce2;
+}
+
+/* -------------------------General-------------------------  */
+.imgLeft{
+	float: left;
+	padding-right: 10px;
+}
+.imgRight{
+	float: right;
+    padding-left: 10px;
+}
+#centerImg{
+    width: 750px;
+    margin:0 15px;	
+}
+.group{
+	padding: 0px 10px 50px 0;
+}
+.figure{
+    margin: 0 5px;
+    text-align: center;
+}
+.figure a{
+	text-decoration:none;
+	color:	#5f8689;
+}
+#GuamVillage{
+	width: 200px;
+    padding-left:  150px;
+    float:left;	
+}
+#footer{
+	text-align:center;	
+	color: #393939;
+}
+a{
+	text-decoration: none;
+	color: #5f8689;
+	font-size: 18px;
+}

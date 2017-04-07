@@ -1,0 +1,18 @@
+<!--#include virtual='header.inc.html'-->
+<script>
+	document.title="Culture | Guåhån";
+	document.getElementById("Culture").style.backgroundColor="#95dce2";
+</script>
+    <div id="content"> 
+        <img src="Media/Pictures/mainCulturePicture.jpg" alt="Guam Map">
+		<!--#include virtual='culture.inc.html'-->
+        <h1> Celebrate</h1>
+			<img class="imgRight" src="Media/Pictures/Culture/21.jpg" alt="Liberation Day!">
+            <p>The people of Guam celebrate Liberation Day on July 21st.  The Liberation Day is a festival that Guam became free from Japan’s control.</p>
+            <p>They follow most America’s holiday; such as, Christmas, Martin Luther King, Jr. Day, Memorial Day, President’s Day, and also All Soul’s Day, which is Guam’s own holiday.</p>
+            <p>Every month, either one or two of the villages will have their own fiesta.</p>
+    </div>  <!-- End Content -->
+    <script>
+		document.getElementById("Celebration").style.backgroundColor = "#95dce2";
+	</script>
+<!--#include virtual='footer.inc.html' -->
