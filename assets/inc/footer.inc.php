@@ -20,6 +20,7 @@
             });
         });
         // alert('hello world');
+        console.log('update from FTP client!');
     </script>
 
     <!-- Contact Valdiation -->
