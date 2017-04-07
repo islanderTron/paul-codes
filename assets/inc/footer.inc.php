@@ -20,8 +20,8 @@
             });
         });
         // alert('hello world');
-        console.log('update from FTP client!');
-        console.log('hello world via GIT!');
+        // console.log('update from FTP client!');
+        // console.log('hello world via GIT!');
     </script>
 
     <!-- Contact Valdiation -->
