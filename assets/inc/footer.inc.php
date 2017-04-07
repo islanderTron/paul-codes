@@ -20,6 +20,7 @@
             });
         });
         // alert('hello world');
+        console.log('hello world via GIT!');
     </script>
 
     <!-- Contact Valdiation -->
