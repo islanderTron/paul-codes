@@ -25,8 +25,11 @@
         console.log('GRRRR');
         console.log('FTP');
         console.log('lalala');
+<<<<<<< HEAD
         alert('hello world');
         
+=======
+>>>>>>> bd70e65d7c04a749053f0ef716a3e3bee2f16c65
     </script>
 
     <!-- Contact Valdiation -->
