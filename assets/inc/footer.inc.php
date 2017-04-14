@@ -24,6 +24,7 @@
         // console.log('hello world via GIT!');
         console.log('GRRRR');
         console.log('lalala');
+        alert('hello world');
     </script>
 
     <!-- Contact Valdiation -->
