@@ -25,7 +25,6 @@
         console.log('GRRRR');
         console.log('FTP');
         console.log('lalala');
-        alert('hello world');
     </script>
 
     <!-- Contact Valdiation -->
