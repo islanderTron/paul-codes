@@ -23,6 +23,7 @@
         // console.log('update from FTP client!');
         // console.log('hello world via GIT!');
         console.log('GRRRR');
+        console.log('FTP');
     </script>
 
     <!-- Contact Valdiation -->
