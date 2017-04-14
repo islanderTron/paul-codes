@@ -19,6 +19,13 @@
                 });
             });
         });
+        // alert('hello world');
+        // console.log('update from FTP client!');
+        // console.log('hello world via GIT!');
+        console.log('GRRRR');
+        console.log('FTP');
+        console.log('lalala');
+        alert('hello world');
     </script>
 
     <!-- Contact Valdiation -->
