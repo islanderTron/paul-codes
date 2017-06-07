@@ -10,7 +10,10 @@
 	require_once __DIR__ . '/functions/tpl-init.php';
 	require_once  JPATH_LIBRARIES  . '/constants.php';
 	require_once  JPATH_LIBRARIES  . '/recaptcha/recaptchalib.php';
- 	$this->setTitle('PerfectGift');
+	$doc = JFactory::getDocument(); 
+	$page_title = $doc->getTitle(); 
+ 	$this->setTitle($page_title);
+
  	include_once "components/com_createmessage/controller.php";
 ?>
 <!DOCTYPE html>
@@ -40,9 +43,6 @@
 <link rel="stylesheet" href="<?php echo getDebugAssetUrl($tplUrl . '/css/jquery.datepick.css'); ?>">
 <?php if (@filesize('templates/' . $this->template . '/css/custom.css') > 5): ?>
 <link rel="stylesheet" href="<?php echo $tplUrl; ?>/css/custom.css" type="text/css" media="screen" />
-
-<link rel="stylesheet" href="<?php echo $tplUrl; ?>/css/custom.css" type="text/css" media="screen" />
-
 <link rel="stylesheet" href="<?php echo $tplUrl; ?>/css/gift_box.css" type="text/css" media="screen" />
 <!--link rel="stylesheet" href="<?php //echo $tplUrl; ?>/css/tinycarousel.css" type="text/css" media="screen" /-->
 <?php endif; ?>
@@ -55,9 +55,11 @@
 <script src="<?php echo getDebugAssetUrl($tplUrl . '/js/jquery-migrate.min.js'); ?>" type="text/javascript"></script>
 <script src="<?php echo JUri::base() . 'components/com_createmessage/js/ajax.js'; ?> " type="text/javascript"></script>
 <script src="<?php echo getDebugAssetUrl($tplUrl . '/js/jquery.inview.js'); ?>"></script>
+<script src="<?php echo getDebugAssetUrl($tplUrl . '/js/retina.js'); ?>"></script>
 <?php elseif ($loadJquery == 2) : ?>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<meta name="google-site-verification" content="BqzCgGi5zhD86Qn7FhzaJ5qI3Wz7bUdqPE7xOxLIzRs" />
 <?php endif; ?>
 <jdoc:include type="head" />
 <?php if ($loadBootstrap == 1) : ?>
@@ -69,12 +71,12 @@
 			<script src="<?php echo $tplUrl; ?>/js/html5shiv.js" type="text/javascript"></script>
 			<script src="<?php echo $tplUrl; ?>/js/respond.min.js" type="text/javascript"></script>
 		<![endif]-->
-<!-- <script src="<?php echo $tplUrl; ?>/js/modernizr.custom.js" type="text/javascript"></script> -->
+<script src="<?php echo $tplUrl; ?>/js/modernizr.custom.js" type="text/javascript"></script>
 <script src="<?php echo $tplUrl; ?>/js/jquery.mmenu.min.js" type="text/javascript"></script>
 <script src="<?php echo $tplUrl; ?>/js/jquery.mmenu.header.min.js" type="text/javascript"></script>
 <script src="<?php echo $tplUrl; ?>/js/template.js" type="text/javascript"></script>
 <script src="<?php echo $tplUrl; ?>/js/j-backbone.js" type="text/javascript"></script>
-<!-- <script type="text/javascript" src="<?php echo JURI::base()?>media/editors/tinymce/tinymce.min.js"></script> -->
+<script type="text/javascript" src="<?php echo JURI::base()?>media/editors/tinymce/tinymce.min.js"></script>
 <script src="<?php echo $tplUrl; ?>/js/jquery.plugin.js" type="text/javascript"></script>
 <script src="<?php echo $tplUrl; ?>/js/jquery.datepick.js" type="text/javascript"></script>
 <script src="<?php echo $tplUrl; ?>/js/bootstrap-file.js" type="text/javascript"></script>
@@ -212,17 +214,32 @@
 				}
 			}
 		</style>
+		 
+
 <?php include "tracking.php"; ?>
 </head>
 <script type="text/javascript">
 		LOAD_HOMEPAGE_GIFTS = false;
 	</script>
-<body id="main" <?php if(@$_GET['task']=='giftassistant') { ?> class="gift_assistant_body <?php echo  $loggedin. " " .$rtl_detection; ?>" 
-<?php } 
-	if(@$_SERVER['REQUEST_URI'] == '/ojolie') { ?> 
-		class="ojlie-body 
+<body id="main" 
+<?php 
+	if(@$_GET['task']=='giftassistant') { ?> 
+		class="gift_assistant_body 
 		<?php echo  $loggedin. " " .$rtl_detection; ?>"
-<?php } if(@$_SERVER['REQUEST_URI'] == '/flash-sale') { ?> class="flash-sale-body <?php echo  $loggedin. " " .$rtl_detection; ?>" <?php } else {?> class="<?php echo $bodyclass. " " .$pageclass. " parentid-" .$parentId. " " .$parentName. " " .$option. " view-" .$view. " " .$frontpage. " itemid-" .$itemid. " " .$loggedin. " " .$rtl_detection; ?>" } <?php } ?> >
+
+<?php } 
+	if(@$_SERVER['REQUEST_URI'] == '/flash-sale') { ?> 
+		class="flash-sale-body 
+		<?php echo  $loggedin. " " .$rtl_detection; ?>"
+<?php } 
+	if(@$_SERVER['REQUEST_URI'] == '/ojolie-beta') { ?> 
+		class="ojlie-body com_createmessage 
+		<?php echo  $loggedin. " " .$rtl_detection; ?>"
+<?php } 
+	else {?> 
+	class="<?php echo $bodyclass. " " .$pageclass. " parentid-" .$parentId. " " .$parentName. " " .$option. " view-" .$view. " " .$frontpage. " itemid-" .$itemid. " " .$loggedin. " " .$rtl_detection; ?>" } <?php } ?>
+
+>
 <div class="font_preload" style="opacity: 0"> <span style="font-family: 'Open Sans', Helvetica, Arial, sans-serif;"></span> </div>
 <span style="display:none;" class="alert" id="NotificationBar"></span>
 <?php
@@ -252,8 +269,8 @@
     <div class="nav-header col-md-12" >
       <div class="nav-header-test custom-container no-padding">
         
-        <div class="col-xs-12 col-md-4 inclusiveprices"> <span><a href="<?php echo JURI::root();?>customer-service-shipping-policy">All Gifts include Tax and Shipping *  | PERFECT GIFT</a><span> </div>
-        <div id="above-content-below" class="col-md-8 mobile-nav hidden-sm"> 
+        <div class="col-xs-12 col-lg-4 col-md-6 inclusiveprices"> <span><a href="<?php echo JURI::root();?>customer-service-shipping-policy">All Gifts include Tax and Shipping *  | PERFECT GIFT</a><span> </div>
+        <div id="above-content-below" class="col-lg-8 col-md-6 mobile-nav hidden-sm"> 
          
 
          <jdoc:include type="modules" name="above-content-below" style="standard"/>
@@ -262,6 +279,7 @@
 												<a href="perfectgift.uk"><img src="<?php echo JURI::base();?>images/logos/gb.png" width="20"></a>
 												<a href="perfectgift.in"><img src="<?php echo JURI::base();?>images/logos/in.png" width="20"></a> -->
           </div>
+          
         </div>
       </div>
     </div>
@@ -281,7 +299,7 @@
     </nav>
     <div class="custom-container">
     <!-- Logo -->
-    <div class="col-md-3 col-xs-4 sillogo"> <a href="<?php echo JURI::root();?>"> <img  class="img-responsive manual-desktop-logo" src="images/logo_new_final.png" alt="PerfectGift" title="PerfectGift" /> <img class="img-responsive manual-mobile-logo hidden-lg hidden-md" src="images/logo-mobile.png" alt="PerfectGift" title="PerfectGift"> </a> </div>
+    <div class="col-lg-3 col-md-3 col-sm-8 sillogo"> <a href="<?php echo JURI::root();?>"> <img  class="img-responsive manual-desktop-logo" src="images/logo_new_final.png" alt="PerfectGift" title="PerfectGift" /> <img class="img-responsive manual-mobile-logo hidden-lg hidden-md" src="images/logo-mobile.png" alt="PerfectGift" title="PerfectGift"> </a> </div>
     <!-- Navigation: Desktop -->
     <div class="col-xs-6 navDesktop">
       <ul id='nav'>
@@ -295,7 +313,7 @@
                 <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,49">Electronics</a></li>
                 <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,110">Kitchen</a></li>
                 <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,112">Sports and Outdoors</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,1030">Games</a></li>
+                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,53">Games</a></li>
               </div>
             </ul>
             <ul class="col-sm-6" style="padding: 15px;">
@@ -373,7 +391,7 @@
               <div class="col-sm-12">
                 <li style="color:black;"><strong>Gifts</strong></li>
                 <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,53">Toys and Games</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235">Babies & Toddlers</a></li>
+                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231235">Babies & Toddlers</a></li>
                 <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,234">Gifts for Teens</a></li>
                 <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,49">Electronics</a></li>
                 <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,241">Gifts for Under $50</a></li>
@@ -937,7 +955,7 @@ if ($this->countModules('above-content')): ?>
           <ul>
          <li>
           <div class="unique_gift_img first_img">
-<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="dropdownwrapper"> <img class=" dropdownbtn" src="<?php echo JURI::base();?>images/BC-Logotype.png">
+<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="dropdownwrapper"> <img class=" dropdownbtn" src="<?php echo JURI::base();?>images/First.jpg">
          </div>
          <div class="unique_gift_txt"><p style="text-align: center;">Wallet & Bitcoins</p></div>
           <div class="dropdown-content">
@@ -947,7 +965,7 @@ if ($this->countModules('above-content')): ?>
          </li>
 <li>
 <div class="unique_gift_img second_img">
- <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class=" dropdownwrapper"> <img class=" dropdownbtn" src="<?php echo JURI::base();?>images/starbuckswithgoldnew.png"></div>
+ <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class=" dropdownwrapper"> <img class=" dropdownbtn" src="<?php echo JURI::base();?>images/second.jpg"></div>
           <div class="unique_gift_txt"><p style="text-align: center;">Gold/Fractional Shares </br> in a Favorite Company</p></div>
           <div class="dropdown-content">
             <p>The ability to send fractional shares (less than the price of a full share) or any amount of gold.</p>
@@ -955,20 +973,20 @@ if ($this->countModules('above-content')): ?>
           </a>
 </li>
 <li>
- <div class="unique_gift_img third_img"><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class=" dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/cashnew.png">
+ <div class="unique_gift_img third_img"><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class=" dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/ojolie/cash-image-.jpg">
 </div>
           <div class="unique_gift_txt"><p style="text-align: center;">Cash</p></div>
           <div class="dropdown-content">
             <p>Send cash in the form of a certified check</p>
           </div>
-          </a> </li><li> <div class="unique_gift_img fourth_img"><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class=" dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/experience.png"></div>
+          </a> </li><li> <div class="unique_gift_img fourth_img"><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class=" dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/Fourth.jpg"></div>
          <div class="unique_gift_txt"> <p style="text-align: center;">Experiences</p></div>
           <div class="dropdown-content">
             <p>Give the gift of kayaking down the Nile or rappelling down a waterfall in the Amazon</p>
           </div>
           </a> </li><li>
 <div class="unique_gift_img fifth_img">
-<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class=" dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/online_class.png">
+<a href="<?php echo JURI::base();?>coming-soon" class=" dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/ojolie/online-classes-image-.jpg">
 </div>
           <div class="unique_gift_txt"><p style="text-align: center;">Online Classes</p></div>
           <div class="dropdown-content">
@@ -976,7 +994,7 @@ if ($this->countModules('above-content')): ?>
           </div>
           </a> </li><li>
 <div class="unique_gift_img sixth_img">
-<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/giftcards.png">
+<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/Sixth.jpg">
 </div>
           <div class="unique_gift_txt"><p style="text-align: center;">Gift Cards</p></div>
           <div class="dropdown-content">
@@ -1005,69 +1023,69 @@ if ($this->countModules('above-content')): ?>
       </div>-->
       
       <div class="row">
-        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs spacer-bottom-20 top-gift-box"> 
+        <div class="col-lg-4 col-md-4 spacer-bottom-20 top-gift-box"> 
           <div class="collection_div">
 <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img1.png"></a> 
 <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232">Gifts for Him</a>
          </div>
         </div>
-        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs spacer-bottom-20  top-gift-box"> 
+        <div class="col-lg-4 col-md-4 spacer-bottom-20  top-gift-box"> 
           <div class="collection_div">
 <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img2.png" style="padding-top: 15px;"></a> 
 <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233">Gifts for Her</a>
            </div>
         </div>
-        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs spacer-bottom-20  top-gift-box"> 
+        <div class="col-lg-4 col-md-4 spacer-bottom-20  top-gift-box"> 
          <div class="collection_div">
    <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img3.png" style="padding-top: 10px;padding-left: 43px;"></a>
 <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238">Gifts for Athletes</a>
         </div>
        </div>
 
-        <div class="hidden-md hidden-lg col-sm-6 col-xs-12 spacer-bottom-20"> 
+        <div class="hidden-md hidden-lg hidden-sm col-sm-6 col-xs-12 spacer-bottom-20"> 
          <div class="collection_div">
 <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img1.png"></a> 
 <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232">Gifts for Him</a>
          </div>
       </div>
-        <div class="hidden-md hidden-lg col-sm-6 col-xs-12 spacer-bottom-20">
+        <div class="hidden-md hidden-lg hidden-sm hidden-xs col-sm-6 col-xs-12 spacer-bottom-20">
         	<div class="collection_div">
          <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/GIFT-FOR-HER.png"></a><a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233">Gifts for Her</a> </div> </div>
-         <div class="hidden-md hidden-lg col-sm-6 col-xs-12 spacer-bottom-20"> 
+         <div class="hidden-md hidden-lg hidden-sm col-sm-6 col-xs-12 spacer-bottom-20"> 
          <div class="collection_div">
    <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/GIFRT-FOR-ATHLETES.png"></a>
 <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238">Gifts for Athletes</a>
         </div>
        </div>
-        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs spacer-bottom-20">
+        <div class="col-lg-4 col-md-4 spacer-bottom-20">
           <!-- <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=237"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/Assets_Collection_Geeks.jpg"></a> -->
           <div class="collection_div">
           <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=1016,232,233"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img4.png" style="padding-top: 15px;"></a> 
 <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=1016,232,233">Gifts for Love Ones</a>
           </div>
 </div>
-<div class="hidden-md hidden-lg col-sm-6 col-xs-12 spacer-bottom-20">
+<div class="hidden-md hidden-lg hidden-sm hidden-xs col-sm-6 col-xs-12 spacer-bottom-20">
         	<div class="collection_div">
          <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=1016,232,233"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/GIFT-FOR-LOVE-ONCES.png"></a> 
 <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=1016,232,233">Gifts for Love Onces</a> </div> </div>
-        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs spacer-bottom-20"> 
+        <div class="col-lg-4 col-md-4  spacer-bottom-20"> 
          <div class="collection_div">
 <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img5.png"></a> 
 <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234">Gifts for Teens</a>
          </div>
         </div>
-        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs spacer-bottom-20">
+        <div class="col-lg-4 col-md-4 spacer-bottom-20">
 <div class="collection_div">
  <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img6.png" style="padding-top: 60px;padding-left: 15px;"></a>
 <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235">Gift for Kids</a>
 </div>
  </div>
- <div class="hidden-lg hidden-md col-sm-6 col-xs-12 spacer-bottom-20">
+ <div class="hidden-lg hidden-md hidden-sm hidden-xs col-sm-6 col-xs-12 spacer-bottom-20">
 <div class="collection_div">
   <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/GIFT-FOR-TEENS.png"></a><a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234">Gifts for Teens</a> 
 </div>
   </div>
- <div class="hidden-lg hidden-md col-sm-6 col-xs-12 spacer-bottom-20">
+ <div class="hidden-lg hidden-md hidden-sm hidden-xs col-sm-6 col-xs-12 spacer-bottom-20">
  <div class="collection_div">
   <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/GIFT-FOR-KIDS.png"></a> <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235">Gifts for Kids</a>
 </div>
@@ -1199,11 +1217,11 @@ if ($this->countModules('above-content')): ?>
   <?php endif; ?>
   <!-- How it works changes for mobile -->
   <?php if ($this->countModules('menu')): ?>
-  <nav id="menu" class="clearfix">
+ <!--  <nav id="menu" class="clearfix">
     <div class="navbar-collapse collapse">
       <jdoc:include type="modules" name="menu" style="basic" />
     </div>
-  </nav>
+  </nav> -->
   <?php endif; ?>
   <?php if ($this->countModules('slideshow')): ?>
   <div id="slider">
@@ -1246,9 +1264,9 @@ if ($this->countModules('above-content')): ?>
 						
 						endif; ?>
   <?php if ($this->countModules('above')): ?>
-  <div class="clearfix clearBoth hidden-xs">
+  <!-- <div class="clearfix clearBoth hidden-xs">
     <jdoc:include type="modules" name="above" style="standard" />
-  </div>
+  </div> -->
   <?php endif; ?>
   <?php if ($this->countModules('above-content-custom')): ?>
   <jdoc:include type="modules" name="above-content-custom" style="standard" />
@@ -1424,7 +1442,7 @@ if ($this->countModules('above-content')): ?>
       <!-- Footer Subscribe section -->
 <div class="footer_subscribe_data">
 <?php if ($this->countModules('footer1')): ?>
-       <div class="col-xs-12 hidden-sm hidden-xs">
+       <div class="col-xs-12">
       <div class="footer-social-icons">
         <jdoc:include type="modules" name="footer1" style="standard" />
       </div>
@@ -1443,6 +1461,26 @@ if ($this->countModules('above-content')): ?>
   </div>
 </div>
 <!-- Footer ends -->
+<div class="footer-mobile hidden-lg hidden-md col-xs-12">
+	<!-- social media -->
+	<div class="col-xs-12 hidden-lg hidden-md">
+		<div class="footer-social-icons">
+			<jdoc:include type="modules" name="footer1" style="standard" />
+		</div>
+	</div>
+	<!-- mobile footer list -->
+	<div class="footer_links">
+		<?php if ($this->countModules('bottom1')): ?> 
+			<jdoc:include type="modules" name="bottom1" style="standard" />
+		<?php endif; ?>
+	</div>
+	<!-- logo -->
+	<div class="footer_contact_info">
+		<?php if ($this->countModules('footer')): ?>
+			<jdoc:include type="modules" name="footer" style="standard" />
+		<?php endif; ?>
+	</div>
+</div>
 <div id="send_msg" class="modal fade custom-modal">
   <div class="modal-dialog">
     <div class="modal-content">
