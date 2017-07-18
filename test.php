@@ -1489,7 +1489,7 @@
 		.nav-main li{
 			display:inline-block;
 			vertical-align:top;
-			border-right:2px solid #e1e1e1;
+	background: #e0ebee;
 			padding:0;
 			position:static;
 		}
@@ -1778,7 +1778,7 @@
 		}
 		.products-section{
 			margin-top:20px;
-			width:100%;
+			float: right !important;
 			position:relative;
 			z-index:5;
 		}
@@ -8981,7 +8981,7 @@
 		}
 
 		.filters-container{
-			max-height:235px;
+			max-height:600px;
 			overflow-y: scroll;
 			padding: 10px;
 		}
@@ -9002,20 +9002,21 @@
 		}
 
 		.filters-container li a.custom-filter div.filter-selector{
-			display: inline;
-			border: 2px solid #e1e1e1;
-		    padding: 2px 12px;
-		    color: white;
-		    font-size: 14px;
-		    margin-right: 10px;
+	display: inline;
+	border: 2px solid #777;
+	padding: 1px 9px;
+	color: white;
+	font-size: 14px;
+    margin-right: 10px;
 		}
 
 		.filters-container li a.custom-filter div.filter-selector.selected{
 		    /*color: #2ab6e1;*/
 			background-image: url(../../../images/create_message/icons/check1.png)!important;
 			background-repeat: no-repeat!important;
-			background-position-x: 0px!important;
-			background-position-y: 2px!important;
+			background-position-x: 3px!important;
+			background-position-y: 6px!important;
+			background-size: 12px;
 		}
 
 		div.sort-name{
@@ -9053,12 +9054,8 @@
 		}
 
 		.search-main.fixed-search-main{
-			position: fixed;
+			
 		    background: white;
-		    top: 0px;
-		    left: 0px;
-		    z-index: 1001;
-		    margin: 0;
 		}
 
 		#editFieldsLink{
@@ -9344,7 +9341,7 @@
 		.allready_text {text-align: center; margin-bottom: 20px; font-size: 15.83px; color: #b3b3b3; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;}
 		.btn-signin {background: #fff; border-radius: 8px; padding: 0px 20px; border: 1px solid #cacaca;color: #2c2c2c;font-size: 23.86px;font-family: "ArnoPro"; width: 100%; height: 66px; line-height: 66px;}
 		.user-banner-img > img {width: 100%;}
-		.gift_assistant_body .user-banner-img > img{width: 80%; display: none;}
+		.gift_assistant_body .user-banner-img > img{width: 80%;display: none;}
 		.gift_assistant_body #prodList{
 			width: 75%;
 		}
@@ -9510,7 +9507,7 @@ right: 0;*/
 		/*Gift Assistant*/ 
 	.gift_assistant .banner-img {background: #e0eddd;padding-bottom: 350px;}
 .gift_assistant {background: hsla(0, 0%, 0%, 0) url("../../../images/pettern.jpg") repeat scroll center center;border-bottom: 1px solid hsl(90, 2%, 80%);border-left: 1px solid hsl(90, 2%, 80%);border-right: 1px solid hsl(90, 2%, 80%);float: left;margin-top: -379px;padding-top: 10px;width: 80.3%; margin-left: 133px;}
-.gift_assistant .gift_assistant_left_title h4 {color: hsl(34, 3%, 48%);font-family: "ArnoPro";font-size: 35px;font-weight: normal;line-height: normal;padding-left: 30px;text-align: left;}
+.gift_assistant .gift_assistant_left_title h4 {color: hsl(34, 3%, 48%);font-family: "ArnoPro";font-size: 59.41px;font-weight: normal;line-height: normal;padding-left: 30px;text-align: left;}
 .col-sm-4.gift_assistant_left_title {width: 27%;}
 .gift_assistant .gift_progress, .gift_assistant .gift_gifting {color: hsl(34, 3%, 48%);font-family: "ArnoPro";font-size: 30px;}
 .gift_assistant .img-container { cursor: pointer; background: #f5f4f1; border:1px solid #d1d1d1; float: left;height: 80px;line-height: 50px;margin-right: 20px;padding-left: 25px;text-align: left;width: 45%;font-family:"opensanslight",sans-serif; font-size: 16px;}
@@ -9518,7 +9515,7 @@ right: 0;*/
 .gift_assistant .ga_back_btn  {  background: #e1eaef;border: 1px solid #98a1a6;  border-radius: 4px;  color:black;  float: left;  font-family: "ArnoPro";  font-size: 24px;  line-height: 68px;  height: 68px;  margin-left: 40px;  margin-right: 23px;  text-align: center;width: 210px;float: left;}
 .gift_assistant .ga_next_btn  {  background: #e1eaef;border: 1px solid #98a1a6;  border-radius: 4px;  color:black;  float: right;  font-family: "ArnoPro";  font-size: 24px;  line-height: 68px;  height: 68px;  margin-left: 40px;  margin-right: 23px;  text-align: center;width: 210px;float: left;}
 .gift_assistant .see-results {  background: #fff;  border-radius: 4px;  color: #333;  float: right;  font-family: "ArnoPro";  font-size: 24px;  line-height: 68px;  height: 68px;  margin-left: 40px;  margin-right: 23px;  text-align: center;width: 279px;float: left;}
-#steps {margin-bottom: 10px;padding-bottom: 15px;}
+#steps {margin-bottom: 40px;}
 .gift_assistant .gift_assistant_form_right {margin-bottom: 40px}
 .gift_assistant .btn-default.disabled.focus, .gift_assistant .btn-default.disabled:focus, .gift_assistant .btn-default.disabled:hover, .gift_assistant .btn-default.focus[disabled], .gift_assistant .btn-default[disabled]:focus, .gift_assistant .btn-default[disabled]:hover, .gift_assistant fieldset[disabled] .btn-default.focus, .gift_assistant fieldset[disabled] .btn-default:focus, .gift_assistant fieldset[disabled] .btn-default:hover {background: #678a73; color: #333;}
 
@@ -9857,8 +9854,8 @@ input[type="search"] {visibility: inherit;}
 .gift_assistant .step-number{width:16%}
 .gift_assistant .img-container {width: 48%;}
 .gift_assistant .col-sm-3.gift_assistant_left_title{width:auto;}
-.gift_assistant .img-container{
-  	margin-right: 10px;
+.gift_assistant .img-container:nth-child(3), .gift_assistant .img-container:nth-child(5) {
+  margin-right: 0;
 }
 .gift_assistant .gift_progress {padding: 0; margin: 0;}
 .position-change .nicescrollelement .row{margin:0}
@@ -9973,9 +9970,8 @@ input[type="search"] {visibility: inherit;}
 /*Gift Assinment*/
 .gift_assistant .gift_assistant_left_title h4{font-size: 40px; padding-left: 0}
 .ga_heading { font-family: "ArnoPro"; font-size: 40px; color: hsl(30, 3%, 48%)}
-.gift_assistant .img-container {width: 45%; font-weight: bold; margin: 0 5px 5px 0;padding: 0;text-align: center;
-}
-.gift_assistant_form_right .col-xs-4.text-center {width: 50%!important;}
+.gift_assistant .img-container {width: 100%;font-weight: bold;}
+.gift_assistant_form_right .col-xs-4.text-center {width: 100%}
 .gift_assistant .ga_back_btn {margin-left: 0; margin-bottom: 20px}
 .ga_back_btn.hidden-xs {display:none !important;}
 .ga_next_btn.hidden-xs {display:none !important;}
@@ -9984,8 +9980,7 @@ input[type="search"] {visibility: inherit;}
 .gift_assistant .gift_progress, .gift_assistant .gift_gifting {
   color: hsl(30, 3%, 48%);
   font-family: "ArnoPro";
-  font-size: 22px;
-  margin-bottom: 10px;
+  font-size: 25px;
 }
 .gift_assistant .step-number {
   /*width: 100%;*/
@@ -10017,7 +10012,7 @@ input[type="search"] {visibility: inherit;}
   width: 44px;
 }
 .customize_right_bar .schedule_calender.scrolling li {width:50% !important}
-.schedule_calender.scrolling li, .gift_assistant_form_right .col-xs-4{width:33% !important}
+.schedule_calender.scrolling li, .gift_assistant_form_right .col-xs-4{width:33% !important;}
 .com_createmessage .schedule_calender figure.text-center{  height: 50px; overflow: hidden;}
 .com_createmessage .schedule_calender .occasion-block p{font-size:17px;}
 .view-login .hidden-element{float:left;}
@@ -10037,8 +10032,7 @@ input[type="search"] {visibility: inherit;}
 .custom-product-img-container img{margin:0 auto}
 .com_createmessage .schedule_calender figure.text-center, .com_createmessage .schedule_calender .occasion-block img:nth-child(3), .com_createmessage .schedule_calender .occasion-block img:nth-child(4){height:inherit;}
 .com_createmessage .occasion-block{min-height:170px !important}
-.ga_heading{font-size:30px; margin-bottom: 0;}
-.gift_assistant .gift_progress, .gift_assistant .gift_gifting{margin-top: 0;}
+.ga_heading{font-size:30px}
 .aboutus_section .perfect_gift_img > img {
   padding: 12px;
 }
@@ -10279,7 +10273,7 @@ input[type="search"] {visibility: inherit;}
 }*/
 /* iPhone  6 or newer + */
 @media screen and (max-width:767px){
-	.gp_title{margin-top: 15px!important;}
+	.gp_title{margin-top: 0;}
 	.gift_assistant .step-number{font-size: 22px !important}
 	#mainbody{float: left;}
 	.post-info .form-control{width: 83.33%}
@@ -10360,9 +10354,6 @@ input[type="search"] {visibility: inherit;}
 }
 
 @media screen and (max-width:414px){
-	.result_button{margin-top: 15px!important; margin-bottom: 0!important;}
-	.btn.btn-lg.see-results{margin-bottom: 0;}
-	.check-box{width: 35px !important;height: 35px !important;}
 	.post-date, .user-records{padding: 0 15px;}
 	.MessageMain .custom-heading{ font-size: 30pt; }
 	.perfect_gift_img{ width: 100%; float: none; }
@@ -10569,15 +10560,6 @@ input[type="search"] {visibility: inherit;}
 }
 /* iPhone 5 version */
 @media screen and (max-width:320px){
-	.gift_assistant .img-container{font-size: 12px;line-height: 80px;}
-	#steps{padding-bottom: 0;}
-	.gift_assistant .step-number{font-size: 17px!important;}
-	.check-box{width: 21px !important;height: 21px !important;}
-	.gift_assistant_form_right .btn.see-results, .gift_assistant .ga_back_btn, .gift_assistant .ga_next_btn{font-size: 17px;height: 50px; line-height: initial;}
-	.gift_assistant .gift_progress, .gift_assistant .gift_gifting{
-		font-size: 17px;
-	}
-	.gift_assistant .ga_next_btn{margin-top: 0;}
 	/* Calendar */
 	.banner_col2 .sale_text{
 		font-size: 19px;
@@ -10744,7 +10726,7 @@ input:focus, button:focus{box-shadow: none!important; border-color: #e0eddd!impo
 /* end filter section for mobile */
 
 /* start filter section for desktop */
-.custom-filter-dropdown .dropdown-menu .filters-container li {width: 33%; float: left; white-space: nowrap;}
+.custom-filter-dropdown .dropdown-menu .filters-container li {width: 48%; float: left;}
 /* End filter section for desktop */
 
 /* Dashboard */
@@ -10804,7 +10786,7 @@ input:focus, button:focus{box-shadow: none!important; border-color: #e0eddd!impo
     -o-transition-timing-function: ease-in;
     transition-timing-function: ease-in;
 }
-.stickybottom .col-md-4.text-center {left: 34%;width: 15%;}
+.stickybottom .col-xs-4.text-center {left: 34%;width: 15%;}
 /* Ojolie */
 
 .o_header{margin-bottom: 10px; margin-top: 27px;}
@@ -11051,9 +11033,7 @@ input:focus, button:focus{box-shadow: none!important; border-color: #e0eddd!impo
 }
 
 @media only screen and (max-width:375px){
-	.nav-footer li{
-		padding: 0 2%;
-	}
+	
 }
 
 
@@ -11183,4 +11163,9 @@ a.hikashop_cart_button{border: 1px solid #98a1a6;background: #e1eaef none repeat
 .productJuly .hikashop_product.col-md-4.col-xs-6{max-height: 705px;}
 .karinsultan_img{width: 100%;}
 .ks_bg{height: inherit;width: 100%;}
-.steps_categories{padding-right:0;padding-left:13px;}
+ul.dropdown-filter-inner {padding:0; margin: 0;}
+.custom-filter-dropdown a {background-color: #f9f9f9; margin: 4px;}
+.custom-filter-dropdown .filters-container  a {background: none; margin: 0;}
+.custom-filter-dropdown {margin-bottom: 20px; border-bottom:3px solid #aaa;}
+.dropdown-filter-inner a {background: none; margin: 0;}
+.steps_categories{padding-right:15px;padding-left:15px;}
