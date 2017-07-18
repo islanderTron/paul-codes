@@ -1,1795 +1,3571 @@
 <?php
+	// No direct access to this file
+	defined('_JEXEC') or die('Restricted access');
+	
+	// Include dependancy of the main model form
+	jimport('joomla.application.component.modelform');
+	// import Joomla modelitem library
+	jimport('joomla.application.component.modelitem');
+	// Include dependancy of the dispatcher
+	jimport('joomla.event.dispatcher');
+	
 	/**
-		* @package     Joostrap.Template
-		* @subpackage  JoostrapBase v3.4
-		*
-		* @copyright   Copyright (C) 2005 - 2014 Joostrap. All rights reserved.
-		* @license     GNU General Public License version 2 or later; see LICENSE.txt
+		* create message Model
 	*/
-	defined('_JEXEC') or die;
-	require_once __DIR__ . '/functions/tpl-init.php';
-	require_once  JPATH_LIBRARIES  . '/constants.php';
-	require_once  JPATH_LIBRARIES  . '/recaptcha/recaptchalib.php';
-	$doc = JFactory::getDocument(); 
-	$page_title = $doc->getTitle(); 
- 	$this->setTitle($page_title);
-
- 	include_once "components/com_createmessage/controller.php";
-?>
-<!DOCTYPE html>
-<!--[if IE 8]>
-    <html class="no-js lt-ie9" lang="<?php echo $htmlLang; ?>" >
-<![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js" lang="<?php echo $htmlLang; ?>" >
-<!--<![endif]-->
-<head>
-<meta name="viewport" content="initial-scale=1 user-scalable=0" />
-<?php if ($loadBootstrap == 1) : ?>
-<link rel="stylesheet" href="<?php echo getDebugAssetUrl($tplUrl . '/css/bootstrap.min.css'); ?>">
-<?php elseif ($loadBootstrap == 2) : ?>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-<?php endif; ?>
-<?php if ($loadFontawesome == 1) : ?>
-<link rel="stylesheet" href="<?php echo getDebugAssetUrl($tplUrl . '/css/font-awesome.css'); ?>" type="text/css" media="screen" />
-<?php elseif ($loadFontawesome == 2) : ?>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
-<?php endif; ?>
-<link rel="stylesheet" href="<?php echo getDebugAssetUrl($tplUrl . '/css/animate.css'); ?>" type="text/css" media="screen" />
-<link rel="stylesheet" href="<?php echo getDebugAssetUrl($tplUrl . '/css/j-backbone.css'); ?>" type="text/css" media="screen" />
-<?php if (@filesize('templates/' . $this->template . '/css/style' . $color_style . '.css') > 50): ?>
-<link rel="stylesheet" href="<?php echo $tplUrl . 'file:///css/style' . $color_style . '.css'; ?>" type="text/css" media="screen" />
-<?php endif; ?>
-<link rel="stylesheet" href="<?php echo getDebugAssetUrl($tplUrl . '/css/jquery.datepick.css'); ?>">
-<?php if (@filesize('templates/' . $this->template . '/css/custom.css') > 5): ?>
-<link rel="stylesheet" href="<?php echo $tplUrl; ?>/css/custom.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="<?php echo $tplUrl; ?>/css/gift_box.css" type="text/css" media="screen" />
-<!--link rel="stylesheet" href="<?php //echo $tplUrl; ?>/css/tinycarousel.css" type="text/css" media="screen" /-->
-<?php endif; ?>
-<link rel="stylesheet" href="<?php echo getDebugAssetUrl($tplUrl . '/css/jquery.mmenu.all.css'); ?>">
-<link rel="stylesheet" href="<?php echo getDebugAssetUrl($tplUrl . '/css/jquery.mmenu.header.css'); ?>">
-<?php if ($loadJquery == 1) : ?>
-<script src="<?php echo getDebugAssetUrl($tplUrl . '/js/jquery.min.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo getDebugAssetUrl($tplUrl . '/js/jquery.lazyload.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo getDebugAssetUrl($tplUrl . '/js/jquery-noconflict.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo getDebugAssetUrl($tplUrl . '/js/jquery-migrate.min.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo JUri::base() . 'components/com_createmessage/js/ajax.js'; ?> " type="text/javascript"></script>
-<script src="<?php echo getDebugAssetUrl($tplUrl . '/js/jquery.inview.js'); ?>"></script>
-<script src="<?php echo getDebugAssetUrl($tplUrl . '/js/retina.js'); ?>"></script>
-<?php elseif ($loadJquery == 2) : ?>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<meta name="google-site-verification" content="BqzCgGi5zhD86Qn7FhzaJ5qI3Wz7bUdqPE7xOxLIzRs" />
-<?php endif; ?>
-<jdoc:include type="head" />
-<?php if ($loadBootstrap == 1) : ?>
-<script src="<?php echo getDebugAssetUrl($tplUrl . '/js/bootstrap.min.js'); ?>" type="text/javascript"></script>
-<?php elseif ($loadBootstrap == 2) : ?>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<?php endif; ?>
-<!--[if lt IE 9]>
-			<script src="<?php echo $tplUrl; ?>/js/html5shiv.js" type="text/javascript"></script>
-			<script src="<?php echo $tplUrl; ?>/js/respond.min.js" type="text/javascript"></script>
-		<![endif]-->
-<script src="<?php echo $tplUrl; ?>/js/modernizr.custom.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/jquery.mmenu.min.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/jquery.mmenu.header.min.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/template.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/j-backbone.js" type="text/javascript"></script>
-<script type="text/javascript" src="<?php echo JURI::base()?>media/editors/tinymce/tinymce.min.js"></script>
-<script src="<?php echo $tplUrl; ?>/js/jquery.plugin.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/jquery.datepick.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/bootstrap-file.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/jquery.confirm.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/jquery.nicescroll.js" type="text/javascript"></script>
-<?php if (@filesize('templates/' . $this->template . '/js/analytics-head.js') > 5): ?>
-<?php include_once 'templates/' . $this->template . '/js/analytics-head.js'; ?>
-<?php endif; ?>
-<script src="<?php echo $tplUrl; ?>/js/custom.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/jquery.transit.min.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/jquery.confetti.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/gift_box.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/jquery.cloudinary.js" type="text/javascript"></script>
-<script type="text/javascript" src="plugins/slider/js/jquery.bxslider.js"></script>
-<link rel="stylesheet" type="text/css" href="plugins/slider/css/jquery.bxslider.css">
-<script type="text/javascript" src="https://cdn.ywxi.net/js/1.js" async></script>
-<script src="<?php echo $tplUrl; ?>/js/constants.js" type="text/javascript"></script>
-<!--script src="<?php //echo $tplUrl; ?>/js/jquery.tinycarousel.min.js" type="text/javascript"></script-->
-<script src="<?php echo $tplUrl; ?>/js/jquery.creditCardValidator.js" type="text/javascript"></script>
-<script src="<?php echo $tplUrl; ?>/js/jquery.tablesorter.min.js" type="text/javascript"></script>
-
-
-
-<!--<link rel="icon" type="image/png" sizes="512x512"  href="/images/fav_new/android-chrome-512x512.png">
- <link rel="icon" type="image/png" sizes="32x32" href="/images/fav_new/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="/images/fav_new/android-chrome-192x192.png">
-<link rel="apple-touch-icon" sizes="57x57" href="/images/fav_new/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/images/fav_new/favicon-16x16.png"> -->
-<!-- <link rel="manifest" href="/images/fav_new/manifest.json"> -->
-
-<meta name="msapplication-TileColor" content="#ffffff">
-<!-- <meta name="msapplication-TileImage" content="/images/fav/ms-icon-144x144.png" /> -->
-
-<meta name="theme-color" content="#016e8b" />
-<meta name="msapplication-navbutton-color" content="#016e8b">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#016e8b">
-<style type="text/css">
-			.module.testimonials{
-				background-image: url(<?php echo JURI::root(); ?>images/quotes_bg.png);
-				background-repeat: repeat;
-			}
-			.module.testimonials .module-content .showbiz-container{
-				margin-top: 0px !important;
-			}
-			.showbiz .overflowholder ul{
-				padding-top: 20px !important;
-			}
-			p.txt-center{
-				color: white !important;
-				font-size: 16px !important;
-				min-width: 60% !important;
-				margin: auto !important;
-			}
-			#showbiz_2_1 .showbiz-title, #showbiz_2_1 .showbiz-title a, #showbiz_2_1 .showbiz-title a:visited, #showbiz_2_1 .showbiz-title a:hover{
-				color: white !important;
-			}
-			.showbiz .mediaholder img{
-				display: none !important;
-			}
-			#showbiz_2_1  ul li{
-				height: 200px !important;
-			}
-			.menusample3{
-				background-color: rgba(0, 0, 0, 0.3); width:100%; height:90px; color:white;
-			}
-			@media screen and (max-width: 767px){
-				.menusample3{
-					background-color: rgba(0, 0, 0, 0); width:100%; height:90px; color:white;
-				}
-			}
-			a:hover{
-				color: #18baea;
-			}
-			.justify-text{
-				text-align: justify;
-				text-align-last: justify;
-				-moz-text-align-last: justify;
-			}
-			.justify-text:after{
-				content: "";
-				display: inline-block;
-				width: 100%;
-			}
-			.unjustify {
-			    word-spacing: -2.5rem;
-			}
-			.custom-container {
-			    padding-right: 15px;
-			    padding-left: 15px;
-			    margin-right: auto;
-			    margin-left: auto;
-			}
-			.margin-auto{
-				margin: auto;
-			}
-			@media (min-width: 768px){
-				.custom-container {
-				    width: 750px;
-				}
-				.unjustify {
-				    word-spacing: -5px;
-				}
-			}
-			@media (min-width: 850px){
-				.custom-container {
-				    width: 850px;
-				}
-				.unjustify {
-				    word-spacing: -10px;
-				}
-			}
-			@media (min-width: 970px){
-				.custom-container {
-				    width: 970px;
-				}
-				.unjustify {
-				    word-spacing: -15px;
-				}
-			}
-			@media (min-width: 1070px){
-				.custom-container {
-				    width: 1070px;
-				}
-				.unjustify {
-				    word-spacing: -25px;
-				}
-			}
-			@media (min-width: 1200px){
-				.custom-container {
-				    width: 1380px;
-				}
-				.unjustify {
-				    word-spacing: -2.5rem;
-				}
-			}
-		</style>
-		 
-
-<?php include "tracking.php"; ?>
-</head>
-<script type="text/javascript">
-		LOAD_HOMEPAGE_GIFTS = false;
-	</script>
-<body id="main" 
-<?php 
-	if(@$_GET['task']=='giftassistant') { ?> 
-		class="gift_assistant_body 
-		<?php echo  $loggedin. " " .$rtl_detection; ?>"
-
-<?php } 
-	if(@$_SERVER['REQUEST_URI'] == '/flash-sale') { ?> 
-		class="flash-sale-body 
-		<?php echo  $loggedin. " " .$rtl_detection; ?>"
-<?php } 
-	if(@$_SERVER['REQUEST_URI'] == '/ojolie-beta') { ?> 
-		class="ojlie-body com_createmessage 
-		<?php echo  $loggedin. " " .$rtl_detection; ?>"
-<?php } 
-	else {?> 
-	class="<?php echo $bodyclass. " " .$pageclass. " parentid-" .$parentId. " " .$parentName. " " .$option. " view-" .$view. " " .$frontpage. " itemid-" .$itemid. " " .$loggedin. " " .$rtl_detection; ?>" } <?php } ?>
-
->
-<div class="font_preload" style="opacity: 0"> <span style="font-family: 'Open Sans', Helvetica, Arial, sans-serif;"></span> </div>
-<span style="display:none;" class="alert" id="NotificationBar"></span>
-<?php
-			$language = JFactory::getLanguage();
-			$language->load('com_customlanguage');
-			$constantsValue =  constants::getInstance();
-			$is_international_delivery_enable = $constantsValue -> getConstantValues("IS_INTERNATIONAL_DELIVERY");
-		?>
-<div class="wrapper" id="page">
-<div class="content-container">
-<div> <span style="display: none;" class="alert alert-success" id="NotificationBar">You already Have some information on create message box</span> </div>
-<?php		
-							if($_SERVER['REQUEST_URI'] == "/home-page-sample"){ ?>
-<div class="container top-menu_content menusample2 menusample3">
-<?php }else{ ?>
-<!-- <div class="container top-menu_content">
- -->
-<?php } ?>
-<?php		
-							if($_SERVER['REQUEST_URI'] == "/home-page-sample-2"){ ?>
-<div class="container top-menu_content li.active a menusample" style="width:100%; height:100px;" >
-<?php }else{ ?>
-<div class="top-menu_content">
-  <?php } ?>
-  <?php if ($this->countModules('above-content-below')): ?>
-  <div class="nav-header col-md-12 no-padding">
-    <div class="nav-header col-md-12" >
-      <div class="nav-header-test custom-container no-padding">
-        
-        <div class="col-xs-12 col-lg-4 col-md-6 inclusiveprices"> <span><a href="<?php echo JURI::root();?>customer-service-shipping-policy">All Gifts include Tax and Shipping *  | PERFECT GIFT</a><span> </div>
-        <div id="above-content-below" class="col-lg-8 col-md-6 mobile-nav hidden-sm"> 
-         
-
-         <jdoc:include type="modules" name="above-content-below" style="standard"/>
-          <div style="float: right;margin-top: 5px;">
-            <!--<a href="<?php echo JURI::base();?>"><img src="<?php echo JURI::base();?>images/logos/us.png" width="20"></a>
-												<a href="perfectgift.uk"><img src="<?php echo JURI::base();?>images/logos/gb.png" width="20"></a>
-												<a href="perfectgift.in"><img src="<?php echo JURI::base();?>images/logos/in.png" width="20"></a> -->
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  <?php endif; ?>
-  <?php if ($this->countModules('navbar-brand')) : ?>
-  <div>
-    <jdoc:include type="modules" name="navbar-brand" style="standard" />
-  </div>
-  <?php else: ?>
-  <div class="logo-main col-xs-12">
-    <!-- Navigation: Mobile part 1 -->
-    <nav id="navbar-example" class="navbar col-xs-4" role="navigation">
-      <div class="navbar-header" style="padding: 0;">
-        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-js-navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-      </div>
-    </nav>
-    <div class="custom-container">
-    <!-- Logo -->
-    <div class="col-lg-3 col-md-3 col-sm-8 sillogo"> <a href="<?php echo JURI::root();?>"> <img  class="img-responsive manual-desktop-logo" src="images/logo_new_final.png" alt="PerfectGift" title="PerfectGift" /> <img class="img-responsive manual-mobile-logo hidden-lg hidden-md" src="images/logo-mobile.png" alt="PerfectGift" title="PerfectGift"> </a> </div>
-    <!-- Navigation: Desktop -->
-    <div class="col-xs-6 navDesktop">
-      <ul id='nav'>
-        <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242">MEN</a>
-          <div class="sub-nav">
-            <ul class="col-sm-6" style="padding: 15px;">
-              <div class="col-sm-12">
-                <li style="color:black;"><strong>Gifts</strong></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242">For Him</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,221">Books</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,49">Electronics</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,110">Kitchen</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,112">Sports and Outdoors</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,53">Games</a></li>
-              </div>
-            </ul>
-            <ul class="col-sm-6" style="padding: 15px;">
-              <div class="col-sm-12">
-                <li style="color:black;"><strong>By Price</strong></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=0_25&categories=242">Under $25</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=25_50&categories=242">$25-$50</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=50_100&categories=242">$50-$100</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=100_250&categories=242">$100-$250</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=250_500&categories=242">$250-$500</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=500_1000&categories=242">$500-$1000</a></li>
-              </div>
-            </ul>
-            <div class="col-sm-12 byInterests" style="padding: 15px;">
-              <p class="col-sm-12"><strong>By Interest</strong></p>
-              <div class="col-sm-3">
-                <p>Market</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,240"><img src="<?php echo JURI::base();?>images/marker.jpg" class="interest-cat"></a> </div>
-              <div class="col-sm-3">
-                <p>Athletes</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,238"><img src="<?php echo JURI::base();?>images/athletes.jpg" class="interest-cat"></a> </div>
-              <div class="col-sm-3">
-                <p>Bookworms</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,239"><img src="<?php echo JURI::base();?>images/bookworms.jpg" class="interest-cat"></a> </div>
-              <div class="col-sm-3">
-                <p>Geeks</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242,237"><img src="<?php echo JURI::base();?>images/geeks.jpg" class="interest-cat"></a> </div>
-            </div>
-          </div>
-        </li>
-        <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243">WOMEN</a>
-          <div class="sub-nav">
-            <ul class="col-sm-6" style="padding: 15px;">
-              <div class="col-sm-12">
-                <li style="color:black;"><strong>Gifts</strong></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243">For Her</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,54">Beauty & Wellness</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,254">Jewelry</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,49">Electronics</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,110">Kitchen</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,104">Flowers</a></li>
-              </div>
-            </ul>
-            <ul class="col-sm-6" style="padding: 15px;">
-              <div class="col-sm-12">
-                <li style="color:black;"><strong>By Price</strong></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=0_25&categories=243">Under $25</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=25_50&categories=243">$25-$50</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=50_100&categories=243">$50-$100</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=100_250&categories=243">$100-$250</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=250_500&categories=243">$250-$500</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=500_1000&categories=243">$500-$1000</a></li>
-              </div>
-            </ul>
-            <div class="col-sm-12 byInterests" style="padding: 15px;">
-              <p class="col-sm-12"><strong>By Interest</strong></p>
-              <div class="col-sm-3">
-                <p>Market</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,240"><img src="<?php echo JURI::base();?>images/marker.jpg" class="interest-cat"></a> </div>
-              <div class="col-sm-3">
-                <p>Athletes</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,238"><img src="<?php echo JURI::base();?>images/athletes.jpg" class="interest-cat"></a> </div>
-              <div class="col-sm-3">
-                <p>Bookworms</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,239"><img src="<?php echo JURI::base();?>images/bookworms.jpg" class="interest-cat"></a> </div>
-              <div class="col-sm-3">
-                <p>Geeks</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,237"><img src="<?php echo JURI::base();?>images/geeks.jpg" class="interest-cat"></a> </div>
-            </div>
-          </div>
-        </li>
-        <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231">KIDS</a>
-          <div class="sub-nav">
-            <ul class="col-sm-6" style="padding: 15px;">
-              <div class="col-sm-12">
-                <li style="color:black;"><strong>Gifts</strong></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,53">Toys and Games</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231235">Babies & Toddlers</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,234">Gifts for Teens</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,49">Electronics</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,241">Gifts for Under $50</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=241,101">Chocolates and Sweets</a></li>
-              </div>
-            </ul>
-            <ul class="col-sm-6" style="padding: 15px;">
-              <div class="col-sm-12">
-                <li style="color:black;"><strong>By Price</strong></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=0_25&categories=231">Under $25</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=25_50&categories=231">$25-$50</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=50-100&categories=231">$50-$100</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=100_250&categories=231">$100-$250</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=250_500&categories=231">$250-$500</a></li>
-                <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&price=500_1000&categories=231">$500-$1000</a></li>
-              </div>
-            </ul>
-            <div class="col-sm-12 byInterests" style="padding: 15px;">
-              <p class="col-sm-12"><strong>By Interest</strong></p>
-              <div class="col-sm-3">
-                <p>Market</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,240"><img src="<?php echo JURI::base();?>images/marker.jpg" class="interest-cat"></a> </div>
-              <div class="col-sm-3">
-                <p>Athletes</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,238"><img src="<?php echo JURI::base();?>images/athletes.jpg" class="interest-cat"></a> </div>
-              <div class="col-sm-3">
-                <p>Bookworms</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,239"><img src="<?php echo JURI::base();?>images/bookworms.jpg" class="interest-cat"></a> </div>
-              <div class="col-sm-3">
-                <p>Geeks</p>
-                <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,237"><img src="<?php echo JURI::base();?>images/geeks.jpg" class="interest-cat"></a> </div>
-            </div>
-          </div>
-        </li>
-        <li><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=244">FEATURED</a></li>
-        <li><a href="<?php echo JURI::base();?>flash-sale">FLASH SALE</a></li>
-        <li><a href="<?php echo JURI::base();?>component/createmessage?task=giftassistant">GIFTING ASSISTANT</a></li>
-
-
-      </ul>
-    </div>
-    <?php 
-											function filterProducts(){
-												// $app = JFactory::getApplication();
-												// $jinput = $app->input;
-												// $user = JFactory::getUser();
-												$session = JFactory::getSession();
-												$search = $_POST['search'];
-												$filters = json_decode($_POST['filters'],true);
-												$sort = $_POST['sort'];
-												if(isset($_POST['start'])){
-													$start = $_POST['start'];
-												}
-												else{
-													$start = 0;
-												}
-												if(isset($_POST['isLoadMoreRedeem']) && $_POST['isLoadMoreRedeem'] == 1){
-													$view = $this->getView('loadproducts', 'raw'); // get the view
-													$view->assign('isLoadMoreRedeem',$_POST['isLoadMoreRedeem']);
-												} else {
-													$view = $this->getView('redeemproducts', 'raw'); // get the view
-												}
-												$model  = $this->getModel('createmessage');
-												$productList = $model->getFilteredProducts($search, $filters, $sort, $start);
-												$session->set("productList",$productList['data']);
-												echo json_encode($productList);
-											}
-										?>
-    <!-- Search bar -->
-    <div class="col-md-3 col-xs-4 searchBar">
-      <input type="search" name="search" id='searchbox' placeholder="find the PerfectGift" class="searchBarTest" value="" />
-      <!-- <button class="search-icon" onclick="searchproduct("", 0, "submit");"><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts"></a></button> -->
-      <!-- Set if statement to check there's value in search bar and then this button will become cickable -->
-      <button class="search-icon""></button>
-    </div>
-  </div>
-  </div>
-  <!-- Mobile Navigation  -->
-  <div class="navbar-collapse bs-js-navbar-collapse collapse col-xs-12" style="height: 0.8px;padding: 0px;text-align: center;width: 100%;background: white;margin-top: -1px; z-index: 11111;">
-    <div class="col-xs-12" style="padding: 10px 0;text-align:left;background: #f5f5f5;">
-      <div class="col-xs-4"><a href="<?php echo JURI::base()?>login?view=registration">Sign Up</a></div>
-      <div class="col-xs-4" style="border-left:1px solid black;border-right:1px solid black;"><a href="<?php echo JURI::base()?>login">Log In</a></div>
-      <div class="col-xs-4"><a href="<?php echo JURI::base()?>about">About Us</a></div>
-    </div>
-    <ul class="nav navbar-nav col-xs-12">
-      <li class="col-xs-12 dropdown"> <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Men <b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242">For Him</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=221">Books</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=     ">Electronics</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=110">Kitchen</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=112">Sports and Outdoors</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories= ">Games</a></li>
-        </ul>
-      </li>
-      <li class="col-xs-12 dropdown"> <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Women<b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243">For Her</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=54">Beauty & Wellness</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=254">Jewelry</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,49">Electronics</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,110">Kitchen</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243,104">Flowers</a></li>
-        </ul>
-      </li>
-      <li class="col-xs-12 dropdown"> <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Kids<b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=53">Toys and Games</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=235">Babies & Toddlers</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234">Gifts for Teens</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,49">Electronics</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,241">Gifts for Under $50</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=241,101">Chocolates and Sweets</a></li>
-        </ul>
-      </li>
-      <li class="col-xs-12"> <a id="drop1" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=244" role="button">Featured</a> </li>
-      <li class="col-xs-12"> <a id="drop1" href="<?php echo JURI::base();?>flash-sale" role="button">Flash Sale</a> </li>
-      <li class="col-xs-12"> <a id="drop1" href="<?php echo JURI::base();?>component/createmessage?task=giftassistant" role="button">Gifting Assistant</a></li>
-
-
-    </ul>
-    <?php endif; ?>
-  </div>
-</div>
-<?php 
-$app = JFactory::getApplication();
-$menu = $app->getMenu();
-$lang = JFactory::getLanguage();
-?>
-
-<header class="banner-img <?php if(isset($_REQUEST['id']) && $_REQUEST['id']=='432') { ?> flash-sale-background <?php } ?>">
-<?php 
-
-if ($menu->getActive() == $menu->getDefault($lang->getTag())) : ?>
-									
-<jdoc:include type="modules" name="position-7" style="standard" />
-
-<?php 
-endif;
-
- ?>
-<div class="clearfix">
-<div class="custom-container">
-  <div <?php if(JRequest::getVar('view') != 'login' && JRequest::getVar('view') != 'registration' && @$_GET['task']!='giftassistant') {?> class="row" <?php } else { ?> class="" <?php }?> >
-<?php 
-
-
-if ($menu->getActive() == $menu->getDefault($lang->getTag())) : ?>
-    <div class="col-md-9 col-xs-12">
-<?php else : ?>
-<div class="col-xs-12 no-inner_space">
-<?php endif;
-
-if(@$_GET['task']=='giftassistant')
-{ ?>
-	<div class="select-as-gift-img">
-	<div class="gift-banner-content">
-		<div class="user-banner-img"><img src="images/gift_assistant_banner.jpg"></div>
-	</div>
-</div>
-<?php } else {
-
-if ($this->countModules('above-content')): ?>
-      <jdoc:include type="modules" name="above-content" style="standard" />
-<?php endif;
-}
- ?>
-    </div>
-
-<?php if ($menu->getActive() == $menu->getDefault($lang->getTag())) :  ?>
-    <div class="col-md-3 col-xs-12 padding_none">
-      <a href="<?php echo JURI::base();?>flash-sale"><div class="banner_col1 col-md-12 col-xs-6"><img src="<?php echo JURI::base();?>/images/flash-mobile.png">
-        <div class="sale_text">Flash Sale</div >
-      </div></a>
-      <a href="<?php echo JURI::base();?>component/createmessage?task=giftassistant">
-      	<div class="banner_col2 col-md-12 col-xs-6">
-      		<!-- <img src="<?php echo JURI::base();?>/images/Perfect-gift-finer-logo-A_Fotor.png"> -->
-      		<img src="<?php echo JURI::base();?>/images/gift_finder.png">
-        	<button class="sale_text">Perfect Gift Finder <span style="font-size:10px;">TM</span></button>
-        </div>
-        </a>
-      </div>
-<?php endif;?>
-    </div>
-  </div>
-  
-  </header>
-  <!-- Valentine Modal -->
-  <!-- <div class="row"> -->
-  <!-- Desktop Modal -->
-  <!-- <div class="modal fade confirmation-modal hidden-xs" id="valentinePopUp" role="dialog" style="background: rgba(128, 128, 128, 0.62);">
-						<div class="modal-dialog" style="width: 500px">
-							<div class="modal-content" style="width: 500px;background: #912642; border-radius: 0;">
-								<div class="modal-header">
-									<img src="<?php echo JURI::base()?>images/valentine-logo.png" style="width: 150px;">
-									<button type="button" class="close valentinePopUp" data-dismiss="modal" aria-hidden="true">&times;</button>
-								</div>
-								<div class="modal-body" style="text-align: center;">
-									<h1 style="color:white;font-family:OpenSansLight">Valentine's Day Speical</h1>
-									<img src="<?php echo JURI::base()?>images/hearts1.png">
-									<p style="color:white; padding: 10px 0;">Free Shipping and $5 off your order!</p>
-								</div>
-							</div>
-						</div>
-					</div> -->
-  <!-- Mobile Modal -->
-  <!-- <div class="modal fade confirmation-modal hidden-lg hidden-md hidden-sm" id="valentinePopUp2" role="dialog" style="background: rgba(128, 128, 128, 0.62);">
-						<div class="modal-dialog" style="width: 300px">
-							<div class="modal-content" style="width: 300px;background: #912642; border-radius: 0;">
-								<div class="modal-header">
-									<img src="<?php echo JURI::base()?>images/valentine-logo.png" style="width: 120px;">
-									<button type="button" class="close valentinePopUp" data-dismiss="modal" aria-hidden="true">&times;</button>
-								</div>
-								<div class="modal-body" style="text-align: center;">
-									<h1 style="color:white;font-family:OpenSansLight">Valentine's Day Speical</h1>
-									<img src="<?php echo JURI::base()?>images/hearts1.png">
-									<p style="color:white; padding: 10px 0;">Free Shipping and $5 off your order!</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> -->
-  <!-- FREE Main SHIPPING Popup -->
-  <!-- <div class="modal fade confirmation-modal hidden-xs" id="myMainModal" role="dialog" >
-				<div class="modal-dialog hidden-xs"  style="width:350px;">
-		      		<div class="modal-content freeshippingpopup" style="height:470px; border-color:#FCFCFC; background-image: url('<?php echo JURI::base();?>images/Assset_backgroundtruck.png');">
-		      			<div class="modal-body modal-custom_body">
-		      				<div class="modal-header" style="margin-top:-20px; margin-bottom:-20px; margin-left:287px">
-		      					<button type="button" class="close color-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		      				</div>
-		     				
-		     				<div class="modal-body modal-custom modal-custom_popup">
-		      					<div class="col-xs-12 col-md-12 text-center custom-box custom-breakpoint">
-		      						<div class="textpopup4 color-white"  style="padding-top:-100px;"><div style="margin-bottom:-20px; margin-top:-15px">FREE </div>
-		      						<div class="textpopup2 color-white">SHIPPING</div>
-		      						<div class="textpopup6 color-white" style="margin-top:-5px"> on all items</div>
-		      						<div class="textpopup3 color-white" style="padding-top:40px;">Now through Christmas</div></div>
-		      							<p class="textpopup5 color-white text-center" style="margin-top:40px; margin-bottom:-10px;">Simply create a free account, send a gift, and make someone's day special!</p>
-									</div>
-
-									<form action="//senditlater.us11.list-manage.com/subscribe/post?u=fbccf61bc03db417f438e4da7&amp;id=9c487ac506" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate subscribe-it" target="_blank" novalidate="novalidate">
-			       
-			       						<div class="col-sm-12 col-xs-12 col-md-12 spacer-top-30 mobile-center">
-				     						<input type="email" name="EMAIL" placeholder="Email" class="required email" id="mce-EMAIL" aria-required="true">
-			       						</div>
-
-			       						<div id="mce-responses" class="row">
-											<div class="response text-center center1 mce_inline_error hidden-element" id="mce-error-response"></div>
-												<div class="response text-center center1 hidden-element" id="mce-success-response"></div>				
-										</div>
+	class CreateMessageModelCreateMessage extends JModelForm
+	{
+		protected $item;
+		public function getForm($data = array(), $loadData = true)
+		{
 			
-										<div style="position: absolute; left: -5000px;">
-                               				<input type="text" name="b_fbccf61bc03db417f438e4da7_9c487ac506" tabindex="-1" value="">
-                        				</div>
-									
-									</form>
-
-		      						<div class="col-sm-12 col-xs-12 col-md-12 mobile-center">
-		      							<div class="row">
-		      								<a class="btn btn-custom-red btn-medium btn-for_popup" id="mc-embedded-subscribe" style="width:260px" href="<?php echo JURI::base();?>component/createmessage?task=showproducts">Start Gifting</a>
-		      							</div>
-		      						</div>
-		      	
-		      				</div>
-
-		      			</div>
-		      			<div class="modal-backdrop fade in"></div>
-
-		      		</div>
-		      	</div>
-		      	</div>
-
-		      	<div class="modal fade confirmation-modal hidden-sm hidden-md hidden-lg" id="myMainModal2" role="dialog" >
-				<div class="modal-dialog hidden-sm hidden-md hidden-lg">
-		      		<div class="modal-content freeshippingpopup" style="border-color:#FCFCFC; background-image: url('<?php echo JURI::base();?>images/Assset_backgroundtruck.png');">
-		      			<div class="modal-body modal-custom_body">
-		      				<div class="modal-header" style="margin-top:-20px; margin-bottom:-20px; margin-left:287px; margin:auto;">
-		      					<button type="button" class="close color-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		      				</div>
-		     				
-		     				<div class="modal-body modal-custom modal-custom_popup">
-		      					<div class="col-xs-12 col-md-12 text-center custom-box custom-breakpoint">
-		      						<div class="textpopup4 color-white"  style="margin-top:-60px;"><div style="margin-bottom:-20px; margin-top:-15px">FREE</div>
-
-		      						<div class="textpopup2 color-white">SHIPPING</div>
-		      						<div class="textpopup6 color-white" style="margin-top:-5px"> on all items</div>
-
-		      						<div class="textpopup3 color-white" style="padding-top:30px;">Now through Christmas</div></div>
-		      							<p class="textpopup5 color-white text-center" style="margin-top:30px; margin-bottom:-10px;">Simply create a free account, send a gift, and make someone's day special!</p>
-									</div>
-
-									<form action="//senditlater.us11.list-manage.com/subscribe/post?u=fbccf61bc03db417f438e4da7&amp;id=9c487ac506" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate subscribe-it" target="_blank" novalidate="novalidate">
-			       
-			       						<div class="col-sm-12 col-xs-12 col-md-12 spacer-top-30 mobile-center">
-				     						<input type="email" name="EMAIL" placeholder="Email" class="required email" id="mce-EMAIL" aria-required="true">
-			       						</div>
-
-			       						<div id="mce-responses" class="row">
-											<div class="response text-center center1 mce_inline_error hidden-element" id="mce-error-response"></div>
-												<div class="response text-center center1 hidden-element" id="mce-success-response"></div>				
-										</div>
-			
-										<div style="position: absolute; left: -5000px;">
-                               				<input type="text" name="b_fbccf61bc03db417f438e4da7_9c487ac506" tabindex="-1" value="">
-                        				</div>
-									
-									</form>
-		      		
-		      						<div class="col-sm-12 col-xs-12 col-md-12 mobile-center" style="margin-bottom: -50px">
-		      							<div class="row">
-		      								<button class="btn btn-custom-red btn-medium btn-for_popup" id="mc-embedded-subscribe" vstyle="width:auto;" onclick="window.location.href='<?php echo JURI::base();?>component/createmessage?task=showproducts'">Start Gifting</button>
-		      							</div>
-		      						</div>
-		      	
-		      				</div>
-
-		      			</div>
-
-
-		      			<div class="modal-backdrop fade in"></div>
-
-		      		</div>
-		      	</div>
-		      	</div> -->
-  <!-- End Main FREE SHIPPING Popup -->
-  <!-- How it works changes for mobile -->
-  <!-- <div id="myHowitWorksModal" class="modal fade confirmation-modal" role="dialog">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-body modal-custom_body">
-								<div class="modal-header" style="margin-top:-20px; margin-bottom:-10px; margin-left:277px; margin: auto;">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
-								</div>
-							<div class="row">
-								<div class="col-sm-12">
-									<p class="module-heading">How it Works</p>
-								</div>
-							</div>
-
-
-								<div class="row section-post_work spacer-top-20">
-									<div class="col-xs-12" style="text-align: center; margin-top: 4%;">
-
-									<button class="btn btn-danger" style="color: white; font-size: 16px; min-width: 240px;margin-bottom: 5%; margin: auto;" data-toggle="modal" data-target="#myVidModal">Watch the Video!</button>
-
-										<div id="myVidModal" class="modal fade" role="dialog">
-											<div class="modal-dialog" role="document">
-												<div class="modal-content">
-													<div class="modal-body modal-custom_body">
-														<button id="innerVid" type="button" class="close close-btn" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-													<div class="row" style="margin-top:20px">
-														<div class="col-sm-12">
-															<div style="margin-top: 15px; position:relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;" >
-																	<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" class="videoFrame" width="98%" height="auto" src="https://www.youtube.com/embed/fZmRttM4zOo" frameborder="0" allowfullscreen>
-																	</iframe>
-															</div>
-														</div>
-													</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<script type="text/javascript">
-											
-												jQuery("#innerVid").click(function(){
-												    jQuery('#myVidModal').modal('hide');
-												});
-												
-										</script>
-							
-											<div class="col-md-1 hidden-xs" style="width: 3.5%; display: inline-block; float: none;"> </div>
-					
-										<a id="storyButton" class="btn btn-featured" style="min-width: 240px; font-size: 16px; margin-top:10px" href="#demo" data-toggle="collapse">Read Our Story</a>
-					
-											<div id="demo" class="collapse" style="height: 0px;">
-												<p class="color-black" style="margin-top: 2%;">It started with a simple, but powerful e-gifting idea:</p>
-												<h3 class="banner-heading color-black" style="margin-top: 1%;">Be there when you can't.</h3>
-										
-												<div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-													<p style="padding: 2% 5% 2% 5%; font-family: 'OpenSansLight'; font-size: 0.7; text-align: left; height: 100%;">SendItLater was born from a place of love, and remains true to that purpose today. We want you to connect with the people in your life during the times that matter most. We want you to give something special to your loved ones – something they’ll never forget.<br /> <br /> At SendItLater you’re doing so much more than just sending a gift. You’re gifting an experience; a memory that can last a lifetime. You can schedule a gift to be delivered a few weeks before an important event, or even 10 years in the future. No matter the time, occasion, or distance between you, we guarantee that you will be present during those important moments for the people you care about most.</p>
-												</div>
-												
-												<div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-													<p style="padding: 2% 5% 2% 5%; font-family: 'OpenSansLight'; font-size: 0.7; text-align: left; height: 100%;">We want your e-gifting experience to do more. No matter what you decide to send, your friends and family will always get the perfect gift. Choose from thousands of items from over 100 countries. Send anything from cash or bitcoins, to a beautiful bouquet or a trip to Paris. Or, if they’d like, let them choose from our thousands of carefully curated products and services. With SendItLater, you always send the perfect gift.<br /> <br /> SendItLater’s service enables you to cross remembering off your to-do list with our free e-card service as well. Write any message you want, schedule it today, and it will arrive right on time. We’re bringing a physical gifting experience to the digital world, and perfecting it so that you always give your loved one something perfect. Try out e-gifting today – we guarantee you’ll love it.</p>
-												</div>
-											</div>
-									</div>
-
-										<div class="col-sm-4 col-md-4 col-xs-12 text-center space-top-10 section-post_item" style="margin-top:30px;"><img style="margin-bottom: 23px;" src="images/create_message/notepad.png" alt="" />
-											<p>1. Create message. Include an optional gift.</p>
-										</div>
-									<div class="col-sm-4 col-md-4 col-xs-12 text-center space-top-10 section-post_item"><img class="spacer-bottom-20" src="images/create_message/note-2.png" alt="" />
-											<p>2. Schedule message to arrive now or in the future.</p>
-								</div>
-									<div class="col-sm-4 col-md-4 col-xs-12 text-center space-top-10 section-post_item no-bottom_space-mobile"><img class="spacer-bottom-20 remove-on_mobile space-fix" style="margin-top: -33px;" src="images/create_message/note3.png" alt="" />
-											<p>3. Surprise! Recipient receives message and select their gifts.</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> -->
-  <?php if ($this->countModules('collection-1')): ?>
-  <div style="padding-top: 20px;">
-    <div class="custom-container">
-      <!-- <div class="row">
-							<h3 class="module-heading hidden-lg hidden-md">Shop by <b>Recipient</b></h3>
-							<div class="col-xs-12 hidden-lg hidden-md justify-text">
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242">MEN</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243">WOMAN</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235">CHILD</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234">TEEN</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=236">SENIOR</a>
-							</div>
-							<div class="col-lg-12 hidden-sm hidden-xs justify-text">
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242">MEN</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243">WOMAN</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235">CHILD</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234">TEEN</a>
-								&#124;
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=236">SENIOR</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=244">FEATURED</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232" class="unjustify">FOR HIM</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233" class="unjustify">FOR HER</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=237" class="unjustify">FOR GEEKS</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238" class="unjustify">FOR ATHLETES</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=240" class="unjustify">FOR MAKERS</a>
-							</div>
-						</div> -->
-      <div class="row hidden-sm hidden-xs">
-        <div class="col-lg-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=244"><img class="img-responsive " src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Featured.jpg"></a> </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/GIFT-FOR-HIM.png.png"></a>
-
-         </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/collection_forher.png"></a> </div>
-        <div class="col-lg-3 col-md-6 hidden-sm hidden-xs spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=237"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Geeks.jpg"></a> </div>
-        <div class="col-lg-3 col-md-6 hidden-sm hidden-xs spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/collection_Athletes.jpg"></a> </div>
-        <div class="hidden-lg hidden-md col-sm-6 col-xs-6 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/collection_Kids.jpg"></a> </div>
-        <div class="hidden-lg hidden-md col-sm-6 col-xs-6 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/collection_Teens.jpg"></a> </div>
-      </div>
-      <div class="row hidden-xs spacer-bottom-20">
-        <div class="col-lg-12"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=230"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_PromoBanner.jpg"></a> </div>
-      </div>
-      <div class="row hidden-sm hidden-md hidden-lg spacer-bottom-20">
-        <div class="col-xs-12"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=230"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_PromoBannerMobile.jpg"></a> </div>
-      </div>
-      <div class="row">
-        <h3 class="module-heading hidden-lg hidden-md">Shop by <b>Interest</b></h3>
-        <div class="col-xs-12 hidden-lg hidden-md justify-text"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=237">GEEKS</a> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238">ATHLETES</a> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=240">MAKERS</a> </div>
-        <div class="col-xs-12 col-sm-6 hidden-md hidden-lg spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=237"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Geeks.jpg"></a> </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=240"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Makers.jpg"></a> </div>
-        <!-- <div class="col-lg-4 col-md-4 hidden-sm hidden-xs spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=0_50"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Under50.jpg"></a> </div> -->
-        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=239"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Bookworms.jpg"></a> </div>
-        <div class="col-xs-6 col-sm-6 hidden-md hidden-lg spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Athletes.jpg"></a> </div>
-        <div class="col-xs-6 col-sm-6 hidden-md hidden-lg spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=239"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Bookworms.jpg"></a> </div>
-      </div>
-      <div class="row hidden-sm hidden-xs">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Kids.jpg"></a> </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=236"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Seniors.jpg"></a> </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Teens.jpg"></a> </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=256"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_LastMinuteShoppers.jpg"></a> </div>
-      </div>
-      <div class="row hidden-xs">
-        <div class="col-lg-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=giftassistant"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Gift-Assistant.jpg"></a> </div>
-      </div>
-      <div class="row hidden-sm hidden-md hidden-lg">
-        <div class="col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=giftassistant"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-1-desktop/Assets_Collection_Gift-AssistantMobile.jpg"></a> </div>
-      </div>
-    </div>
-  </div>
-  <div class="hidden-xs hidden-sm" style="padding:20px;box-shadow: 0 35px 27px -23px #ccc inset, 0 0px 27px -23px #ccc inset;-moz-box-shadow: 0 35px 27px -23px #ccc inset, 0 0px 27px -23px #ccc inset;-webkit-box-shadow: 0 35px 27px -23px #ccc inset, 0 0px 27px -23px #ccc inset;">
-    <div class="custom-container">
-      <div class="row">
-        <div class="col-lg-2 col-md-2"> <img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/target.png"> </div>
-        <div class="col-lg-2 col-md-2"> <img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/amazon.png"> </div>
-        <div class="col-lg-2 col-md-2"> <img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/walmart.png"> </div>
-        <div class="col-lg-2 col-md-2"> <img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/beanbox.png"> </div>
-        <div class="col-lg-2 col-md-2"> <img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/samsung.png"> </div>
-        <div class="col-lg-2 col-md-2"> <img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/stockpile.png"> </div>
-      </div>
-    </div>
-  </div>
-  <div style="background:#484C53;padding-top: 40px;padding-bottom: 40px;color:white;font-family: OpenSansLight;">
-    <div class="custom-container">
-      <div class="row hidden-sm hidden-xs">
-        <div class="col-lg-12">
-          <h3 style="color:white;font-family: OpenSansLight;font-size: 24px;    margin-bottom: 15px;margin-top: 15px;">What We Do</h3>
-        </div>
-        <div class="col-lg-6" style="font-family: OpenSans-Semibold;">SendItLater was born from the difficulty of finding the perfect gift. We've all been there - you THINK the gift will be perfect, but you're just not sure. It's stressful - no one wants to give a dissapointing gift! We decided there is no benefit in the guessing game of gift giving. Why not create a service that allows you to send the perfect gift everytime, hasslefree?</div>
-        <div class="col-lg-6" style="font-family: OpenSansLight;">Send It Later™ enables anyone to schedule messages and gifts now and into the future. Simply choose a gift, select a date, and send! We'll take care of everything else. There is no need to worry - if your recipient doesn't love your gift, they can exchange it for any other gift on our website. Guessing is a thing of the past - choose a gift from your heart, without the pressure of the gift not being perfect. This is SendItLater.</div>
-      </div>
-      <div class="row hidden-md hidden-lg" style="padding-left: 20px;padding-right: 20px;">
-        <div class="col-xs-12 text-center">
-          <h3 style="color:white;font-family: OpenSansLight;font-size: 24px;margin-bottom: 15px;margin-top: 15px;">What We Do</h3>
-        </div>
-        <div class="col-xs-12 text-center" style="font-family: OpenSans-Semibold;margin-bottom: 15px;">SendItLater was born from the difficulty of finding the perfect gift. We've all been there - you THINK the gift will be perfect, but you're just not sure. It's stressful - no one wants to give a dissapointing gift! We decided there is no benefit in the guessing game of gift giving. Why not create a service that allows you to send the perfect gift everytime, hasslefree?</div>
-        <div class="col-xs-12 text-center" style="font-family: OpenSansLight;">Send It Later™ enables anyone to schedule messages and gifts now and into the future. Simply choose a gift, select a date, and send! We'll take care of everything else. There is no need to worry - if your recipient doesn't love your gift, they can exchange it for any other gift on our website. Guessing is a thing of the past - choose a gift from your heart, without the pressure of the gift not being perfect. This is SendItLater.</div>
-      </div>
-    </div>
-  </div>
-  <?php endif; ?>
-  <?php if ($this->countModules('collection-2')): ?>
-  <div style="padding-top: 20px;">
-    <div class="custom-container">
-      <!-- <div class="row">
-							<div class="col-xs-12 hidden-lg hidden-md justify-text">
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242">MEN</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243">WOMAN</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235">CHILD</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234">TEEN</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=236">SENIOR</a>
-							</div>
-							<div class="col-lg-12 hidden-sm hidden-xs justify-text">
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=242">MEN</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=243">WOMAN</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235">CHILD</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234">TEEN</a>
-								&#124;
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=236">SENIOR</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=244">FEATURED</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232" class="unjustify">FOR HIM</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233" class="unjustify">FOR HER</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=237" class="unjustify">FOR GEEKS</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238" class="unjustify">FOR ATHLETES</a>
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=240" class="unjustify">FOR MAKERS</a>
-							</div>
-						</div> -->
-      <div class="row">
-       <div class="col-lg-12">
-        <div class=" how_it_work hidden-sm hidden-xs">
-          <div class="how_it_work_one">You choose a gift and schedule the message <strong>informing the recipient</strong> to arrive any day.</div>
-          <div class="how_it_work_one">He or she can keep the gift or choose something else they would like.</div>
-          <div class="how_it_work_one" style="padding-right: 0;">Always give the <strong>Perfect</strong> Gift.</div>
-          <div class="hidden-md hidden-lg icon-first-img">
-                <img src="<?php echo JURI::base();?>images/icon-first.png">
-                <img src="<?php echo JURI::base();?>images/icon-second.png">
-                </div>
-          <div class="how_it_work_four"><button id="SILVideoPopup" style="float: none; cursor: auto; margin: auto;">Watch How it Works.</button></div>
-        </div>
-        </div>
-        <div class="col-lg-12">
-        <div class=" how_it_work hidden-lg hidden-md">
-          <div class="how_it_work_one">You choose a gift and schedule the message <strong>informing the recipient</strong> to arrive any day. He or she can keep the gift or choose something else they would like. Always give the <strong>Perfect</strong> Gift.</div>
-          <div class="hidden-md hidden-lg icon-first-img">
-                <img src="<?php echo JURI::base();?>images/icon-first.png">
-                <img src="<?php echo JURI::base();?>images/icon-second.png">
-                </div>
-          <div class="how_it_work_four"><button id="SILVideoPopup" style="float: none; cursor: auto; margin: auto;">Watch How it Works.</button></div>
-        </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="unique_gift">
-		  <div class="unique_gif_section">
-          <div class="unique_gift_left">Unique Gifts for Yourself and for a Special Person.</div>
-          <div class="unique_gift_right"><a href="<?php echo JURI::base();?>component/createmessage?task=giftassistant">Choose a Gift</a></div>
-		  </div>
-          <ul>
-         <li>
-          <div class="unique_gift_img first_img">
-<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="dropdownwrapper"> <img class=" dropdownbtn" src="<?php echo JURI::base();?>images/First.jpg">
-         </div>
-         <div class="unique_gift_txt"><p style="text-align: center;">Wallet & Bitcoins</p></div>
-          <div class="dropdown-content">
-            <p>Establish and send a wallet with a designated number or bitcoins.</p>
-          </div>
-          </a>
-         </li>
-<li>
-<div class="unique_gift_img second_img">
- <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class=" dropdownwrapper"> <img class=" dropdownbtn" src="<?php echo JURI::base();?>images/second.jpg"></div>
-          <div class="unique_gift_txt"><p style="text-align: center;">Gold/Fractional Shares </br> in a Favorite Company</p></div>
-          <div class="dropdown-content">
-            <p>The ability to send fractional shares (less than the price of a full share) or any amount of gold.</p>
-          </div>
-          </a>
-</li>
-<li>
- <div class="unique_gift_img third_img"><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class=" dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/ojolie/cash-image-.jpg">
-</div>
-          <div class="unique_gift_txt"><p style="text-align: center;">Cash</p></div>
-          <div class="dropdown-content">
-            <p>Send cash in the form of a certified check</p>
-          </div>
-          </a> </li><li> <div class="unique_gift_img fourth_img"><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class=" dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/Fourth.jpg"></div>
-         <div class="unique_gift_txt"> <p style="text-align: center;">Experiences</p></div>
-          <div class="dropdown-content">
-            <p>Give the gift of kayaking down the Nile or rappelling down a waterfall in the Amazon</p>
-          </div>
-          </a> </li><li>
-<div class="unique_gift_img fifth_img">
-<a href="<?php echo JURI::base();?>coming-soon" class=" dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/ojolie/online-classes-image-.jpg">
-</div>
-          <div class="unique_gift_txt"><p style="text-align: center;">Online Classes</p></div>
-          <div class="dropdown-content">
-            <p>Send one gift card that the recipient can exchange for one of 200 popular gift cards, including Amazon, Target, Visa, etc.</p>
-          </div>
-          </a> </li><li>
-<div class="unique_gift_img sixth_img">
-<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="dropdownwrapper"> <img class="dropdownbtn" src="<?php echo JURI::base();?>images/Sixth.jpg">
-</div>
-          <div class="unique_gift_txt"><p style="text-align: center;">Gift Cards</p></div>
-          <div class="dropdown-content">
-            <p>Enable your loved ones to learn online with the best courses from the top institutions. Anytime. Anywhere.</p>
-          </div>
-          </a> </li></ul>
-     </div>
-     </div>
-      </div>
-      <!--<div class="row hidden-lg hidden-md hidden-sm">
-        <div class="col-xs-12 spacer-bottom-20">
-          <!-- <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=244"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/Assets_Collection500x500_Popular.jpg"></a> 
-          <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="col-xs-6"><img class="col-xs-12" src="<?php echo JURI::base();?>images/BC_Logotype.png">
-          <p style="text-align: center;">Wallet & Bitcoins</p>
-          </a> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="col-xs-6"><img class="col-xs-12" src="<?php echo JURI::base();?>images/starbuckswithgold.png">
-          <p style="text-align: center;">Gold/Fractional Shares in a Favorite Company</p>
-          </a> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="col-xs-6"><img class="col-xs-12" src="<?php echo JURI::base();?>images/cash.png">
-          <p style="text-align: center;">Cash</p>
-          </a> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="col-xs-6"><img class="col-xs-12" src="<?php echo JURI::base();?>images/argentina.png">
-          <p style="text-align: center;">Experiences</p>
-          </a> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="col-xs-6"><img class="col-xs-12" src="<?php echo JURI::base();?>images/mit-dome.png">
-          <p style="text-align: center;">Online Classes</p>
-          </a> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&brand=40" class="col-xs-6"><img class="col-xs-12" src="<?php echo JURI::base();?>images/gift_card_1.png">
-          <p style="text-align: center;">Gift Cards</p>
-          </a> </div>
-      </div>-->
-      
-      <div class="row">
-        <div class="col-lg-4 col-md-4 spacer-bottom-20 top-gift-box"> 
-          <div class="collection_div">
-<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img1.png"></a> 
-<a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232">Gifts for Him</a>
-         </div>
-        </div>
-        <div class="col-lg-4 col-md-4 spacer-bottom-20  top-gift-box"> 
-          <div class="collection_div">
-<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img2.png" style="padding-top: 15px;"></a> 
-<a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233">Gifts for Her</a>
-           </div>
-        </div>
-        <div class="col-lg-4 col-md-4 spacer-bottom-20  top-gift-box"> 
-         <div class="collection_div">
-   <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img3.png" style="padding-top: 10px;padding-left: 43px;"></a>
-<a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238">Gifts for Athletes</a>
-        </div>
-       </div>
-
-        <div class="hidden-md hidden-lg hidden-sm col-sm-6 col-xs-12 spacer-bottom-20"> 
-         <div class="collection_div">
-<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img1.png"></a> 
-<a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=232">Gifts for Him</a>
-         </div>
-      </div>
-        <div class="hidden-md hidden-lg hidden-sm hidden-xs col-sm-6 col-xs-12 spacer-bottom-20">
-        	<div class="collection_div">
-         <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/GIFT-FOR-HER.png"></a><a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=233">Gifts for Her</a> </div> </div>
-         <div class="hidden-md hidden-lg hidden-sm col-sm-6 col-xs-12 spacer-bottom-20"> 
-         <div class="collection_div">
-   <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/GIFRT-FOR-ATHLETES.png"></a>
-<a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=238">Gifts for Athletes</a>
-        </div>
-       </div>
-        <div class="col-lg-4 col-md-4 spacer-bottom-20">
-          <!-- <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=237"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/Assets_Collection_Geeks.jpg"></a> -->
-          <div class="collection_div">
-          <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=1016,232,233"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img4.png" style="padding-top: 15px;"></a> 
-<a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=1016,232,233">Gifts for Love Ones</a>
-          </div>
-</div>
-<div class="hidden-md hidden-lg hidden-sm hidden-xs col-sm-6 col-xs-12 spacer-bottom-20">
-        	<div class="collection_div">
-         <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=1016,232,233"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/GIFT-FOR-LOVE-ONCES.png"></a> 
-<a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=1016,232,233">Gifts for Love Onces</a> </div> </div>
-        <div class="col-lg-4 col-md-4  spacer-bottom-20"> 
-         <div class="collection_div">
-<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img5.png"></a> 
-<a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234">Gifts for Teens</a>
-         </div>
-        </div>
-        <div class="col-lg-4 col-md-4 spacer-bottom-20">
-<div class="collection_div">
- <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/home-detail-img6.png" style="padding-top: 60px;padding-left: 15px;"></a>
-<a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235">Gift for Kids</a>
-</div>
- </div>
- <div class="hidden-lg hidden-md hidden-sm hidden-xs col-sm-6 col-xs-12 spacer-bottom-20">
-<div class="collection_div">
-  <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/GIFT-FOR-TEENS.png"></a><a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234">Gifts for Teens</a> 
-</div>
-  </div>
- <div class="hidden-lg hidden-md hidden-sm hidden-xs col-sm-6 col-xs-12 spacer-bottom-20">
- <div class="collection_div">
-  <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/GIFT-FOR-KIDS.png"></a> <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235">Gifts for Kids</a>
-</div>
-  </div> 
-         
-        <!-- <div class="hidden-lg hidden-md col-sm-12 col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=241"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/Mobile_Assets_under50.jpg"></a> </div> -->
-        <!-- <div class="hidden-lg hidden-md col-sm-6 col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/collection_Kids.png"></a> <a class="collection_text" href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=231,235">Gift for Kids</a></div> -->
-        <!-- <div class="hidden-lg hidden-md col-sm-6 col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=234"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/Mobile_Assets_Collection_Teens.jpg"></a> </div> -->
-      </div>
-<!--<div class="row">
-      <div class="col-lg-7 spacer-bottom-20"> 
-			<div class="home_custom_img">
-				<a href="<?php echo JURI::root();?>component/createmessage?task=showproducts&categories=244">
-					<img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/1-4.jpg">
-					<div class="home_custom_img_inner">
-						<a href="https://www.senditlater.com/component/createmessage?task=showproducts&categories=244"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/16.png"></a>
-					</div>
-				</a>
-			</div>
-	 </div>
-	<div class="col-lg-5 spacer-bottom-20"> 
-		<div class="home_custom_img_sec">
-			<a href="<?php echo JURI::root();?>component/createmessage?task=showproducts&categories=244">
-				<img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/head-phone.png">
-				<div class="home_custom_img_inner">
-					<a href="<?php echo JURI::root();?>component/createmessage?task=showproducts&categories=244">
-						<img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/19.png">
-					</a>
-				</div>
-			</a>
-		</div>
-	</div>
-</div>-->
-      <div class="row hidden-xs spacer-bottom-20">
-        <div class="col-lg-12"> <div class="experience_img"><a href="<?php echo JURI::base();?>component/createmessage?task=showproducts&categories=99">
-			Give the Experience of a Lifetime<br/>
-			Shop the collection 
-		</a></div> </div>
-      </div>
-      <div class="row hidden-lg hidden-md hidden-sm">
-        <div class="col-xs-12 spacer-bottom-20"> 
-        <div class="experience_img">
-        <a href="<?php echo JURI::root();?>component/createmessage?task=showproducts&amp;categories=99">
-			Give the Experience of a Lifetime<br>
-			Shop the collection 
-		</a></div> </div>
-      </div>
-      <!-- <div class="row spacer-bottom-20">
-							<div class="col-xs-4">
-								<hr style="border-top: 2px solid #eee;">
-							</div>
-							<div class="col-xs-4 text-center">
-								<a href="<?php echo JURI::base();?>component/createmessage?task=showproducts" style="border-radius: 0px;padding: 5px 30px;" class="btn btn-featured">Find the Perfect Gift</a>
-							</div>
-							<div class="col-xs-4">
-								<hr style="border-top: 2px solid #eee;">
-							</div>
-						</div> -->
-     <!--  <div class="row hidden-sm hidden-md hidden-lg">
-        <div class="col-xs-12 spacer-bottom-20"> <a href="<?php echo JURI::base();?>component/createmessage?task=giftassistant"><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/col-2-desktop/Mobile_Asset_500x500banner.jpg"></a> </div>
-      </div> -->
-    </div>
-  </div>
- 
-    <div class="custom-container">
-      <div class="row">
-       <div class="col-lg-12">
-        <div class="brandlist">
-			<ul>
-				<li><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/target.png"> </li>
-				<li><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/amazon.png"></li>
-				<li><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/walmart.png"></li>
-				<li><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/beanbox.png"> </li>
-				<li><img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/samsung.png"> </li>
-				<li> <img class="img-responsive margin-auto" src="<?php echo JURI::base();?>images/partners/stockpile.png"></li>
-			</ul>
-      </div>
-      </div>
-    </div>
-  </div>
-  <!-- <div style="background:#484C53;padding-top: 40px;padding-bottom: 40px;color:white;font-family: OpenSansLight;">
-					<div class="custom-container">
-						<div class="row hidden-sm hidden-xs">
-							<div class="col-lg-12">
-								<h3 style="color:white;font-family: OpenSansLight;font-size: 24px;    margin-bottom: 15px;margin-top: 15px;">What We Do</h3>
-							</div>
-							<div class="col-lg-4" style="font-family: OpenSans-Semibold;">SendItLater™ enables anyone, from a busy mom to a soldier deployed overseas, to schedule messages and gifts from our partners now and into the future.</div>
-							<div class="col-lg-8" style="font-family: OpenSansLight;">You are a busy person and sometimes it's hard to remember all the birthdays, anniversaries and other big days for all the special people in your life. SendItLater allows you to "premember" all of those events and to take care of everything months or even years in advance. Write them a personal message, include a gift, and we'll deliver everything on schedule. Just let us know who to send it to and when to send it.</div>
-
-						</div>
-						<div class="row hidden-md hidden-lg" style="padding-left: 20px;padding-right: 20px;">
-							<div class="col-xs-12 text-center">
-								<h3 style="color:white;font-family: OpenSansLight;font-size: 24px;margin-bottom: 15px;margin-top: 15px;">What We Do</h3>
-							</div>
-							<div class="col-xs-12 text-center" style="font-family: OpenSans-Semibold;margin-bottom: 15px;">SendItLater™ enables anyone, from a busy mom to a soldier deployed overseas, to schedule messages and gifts from our partners now and into the future.</div>
-							<div class="col-xs-12 text-center" style="font-family: OpenSansLight;">You are a busy person and sometimes it's hard to remember all the birthdays, anniversaries and other big days for all the special people in your life. SendItLater allows you to "premember" all of those events and to take care of everything months or even years in advance. Write them a personal message, include a gift, and we'll deliver everything on schedule. Just let us know who to send it to and when to send it.</div>
-						</div>
-					</div>
-				</div> -->
-  <script type="text/javascript">
-					// Stockpile Ad Video
-					jQuery("#stockpileAd").mouseenter(function() {
-						  jQuery(this).css("cursor", "pointer");
-						}).mouseleave(function() {
-						     jQuery(this).css("cursor", "auto");
-						}).click(function(){
-							var id = 'stockpileVid';
-						var headerText = '<h2 style="color: #19b9ea;" class="text-center">Learn How Stockpile Works</h2>';
-						var stockpileVid = '<div class="videoFrame" style="margin-top: 15px; position:relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;"><video controls autoplay width="100%" height="auto" controls poster="<?php echo JURI::root();?>images/stockpile_thumbnail.png"><source src="<?php echo JURI::root();?>images/video/stockpile.mp4" type="video/mp4">Your browser does not support the video tag.</video></div>';
-						var closeHtml = '<button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-						jQuery('#articles-view-popUp .modal-custom_body').html(closeHtml+headerText+stockpileVid);
-						jQuery('#articles-view-popUp').modal('show');
-						hideShowNiceScrolls('',id,false);
-						bodyFixedPosition();
-						jQuery(document).click(function(){
-							if(jQuery('.modal').is(':visible')){
-								jQuery('.videoFrame').remove();
-							}
-						});
-						jQuery('.modal-dialog').click(function(e){
-							e.stopPropagation();
-						});
-						jQuery('.close.close-btn').click(function(){
-							jQuery('#articles-view-popUp').trigger('click');
-						});
-
-					});
-				</script>
-  <?php endif; ?>
-  <!-- How it works changes for mobile -->
-  <?php if ($this->countModules('menu')): ?>
- <!--  <nav id="menu" class="clearfix">
-    <div class="navbar-collapse collapse">
-      <jdoc:include type="modules" name="menu" style="basic" />
-    </div>
-  </nav> -->
-  <?php endif; ?>
-  <?php if ($this->countModules('slideshow')): ?>
-  <div id="slider">
-    <jdoc:include type="modules" name="slideshow" style="standard" />
-  </div>
-  <?php endif; ?>
-  <?php if ($this->countModules('carousel')): ?>
-  <div id="carousel">
-    <jdoc:include type="modules" name="carousel" style="standard" />
-  </div>
-  <?php endif; ?>
-  <?php if ($this->countModules('strapline')): ?>
-  <div id="strapline">
-    <jdoc:include type="modules" name="strapline" style="standard" />
-  </div>
-  <?php endif; ?>
-  <?php if ($this->countModules('top')): ?>
-  <div id="top" class="clearfix">
-    <jdoc:include type="modules" name="top" style="standard" />
-  </div>
-  <?php endif; ?>
-  <?php if ($this->countModules('middle')): ?>
-  <section class="middle">
-    <jdoc:include type="modules" name="middle" style="standard" />
-  </section>
-  <?php endif; ?>
-  <?php if ($this->countModules('breadcrumbs')): ?>
-  <div id="breadcrumbs">
-    <jdoc:include type="modules" name="breadcrumbs" style="standard" />
-  </div>
-  <?php endif; ?>
-  <?php if ($this->countModules('above-content-below')):
-						 $modules = JModuleHelper::getModules('above-content-below');
-							foreach($modules as $module):
-								if(isset($is_international_delivery_enable) && $is_international_delivery_enable == 1 ):?>
-  <div id="above-content-below" class="container">
-    <jdoc:include type="modules" name="above-content-below" style="standard" />
-  </div>
-  <?php  endif;  endforeach;
-						
-						endif; ?>
-  <?php if ($this->countModules('above')): ?>
-  <!-- <div class="clearfix clearBoth hidden-xs">
-    <jdoc:include type="modules" name="above" style="standard" />
-  </div> -->
-  <?php endif; ?>
-  <?php if ($this->countModules('above-content-custom')): ?>
-  <jdoc:include type="modules" name="above-content-custom" style="standard" />
-  <div class="steps-section ">
-    <?php		
-							if($_SERVER['REQUEST_URI'] == "/home-page-sample" || $_SERVER['REQUEST_URI'] == "/home-page-sample-2"){ ?>
-    <div style="margin-top:-32px;"></div>
-    <?php }else{ ?>
-    <!-- <div class="row spacer-top-10"> -->
-    <!-- <div class="col-xs-12" style="margin-top:40px;"> -->
-    <!-- <h2 class="module-heading no-margin" id="gift-page-title"><?php echo 'Send a Gifts'; ?> -->
-    <?php
-									if( (isset($pageToDisplay) && $pageToDisplay == 'giftSelection') || isset($_GET['prevstate']) ){ ?>
-    <!-- <button type="button" class="btn btn-custom-red module-space_sm" id="sendOnlyMessageBtn">
-											<?php echo JText::_('COM_CREATE_MESSAGE_SEND_ONLY_MESSAGE_BTN_TEXT');?>
-										</button> -->
-    <?php } ?>
-    <!-- </h2>
-
-								<p class="description text-center"><?php echo 'Choose a gift, Schedule delivery, Be a hero.'; ?></p>
-								
-							</div> -->
-    <!-- </div> -->
-    <?php } ?>
-    <?php		
-							if($_SERVER['REQUEST_URI'] == "/home-page-sample" || $_SERVER['REQUEST_URI'] == "/home-page-sample-2"){ ?>
-    <!-- <div class="module-space container" style="width:100%"> -->
-    <?php }else{ ?>
-    <!-- <div class="module-space container"> -->
-    <?php } ?>
-    <!-- <div id="product-listing" class="MessageMain">
-									<div id='products-loader' class="text-center">
-										<img  src="<?php echo JURI::root();?>images/aaaa.gif" />&nbsp;Please Wait...
-									</div>
-									<jdoc:include type="modules" name="slideshow2" style="standard" />
-								</div> -->
-    <!-- </div>
-						</div> -->
-    <?php endif; ?>
-    <?php if ($this->countModules('slideshow2')): ?>
-    <div id="slider">
-      <jdoc:include type="modules" name="slideshow2" style="standard" />
-    </div>
-    <?php endif; ?>
-    <!-- Mainbody -->
-<?php $articleID = JRequest::getVar('id');?>
-    <div id="mainbody" class="clearfix <?php if($articleID !='1') { ?> custom-container <?php } ?>">
-      <!-- Content Block -->
-      <div class="row row-desktop">
-        <div id="content" class="col-md-<?php echo $span;?> no-inner_space">
-          
-          <?php
-									$app = JFactory::getApplication();
-									$menu = $app->getMenu();
-									if ($frontpageshow)
-									{
-									?>
-          <div id="LoadingOverlay" class="overlay" style="display:none; text-align:center;padding-right:50px;">
-            <div class="overlay-container" style="position: absolute;"><img src="<?php echo JURI::root();?>media/media/images/ajax-loader-large.png" width="100"></div>
-          </div>
-		  <?php $top_url=explode("/",$_SERVER['REQUEST_URI']);
-		  $page_name_top=$top_url[count($top_url)-1];
-		 $topPageName=explode("?",$top_url[count($top_url)-1]);
-		$topURL=@$topPageName[count($topPageName)-2];
-		 if($topURL!="login"  && $page_name_top!="login"){?>
-		  <div id="message-component" class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 hidden-element">
-            <jdoc:include type="message" />
-          </div>
-		 <?php }?>
-          <div id="content-area" class="no-inner_space">
-		 
-            <jdoc:include type="component" />
-			<?php 
-			 if($topURL=="login"  || $page_name_top=="login"){?>
-		  <div id="message-component" class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 hidden-element">
-            <jdoc:include type="message" />
-          </div>
-		 <?php }?>
-          </div>
-          <?php
-									}
-									else
-									{ 
-										if ($menu->getActive() !== $menu->getDefault())
-										{
-											// show on all pages but the default page
-										?>
-          <div id="content-area" class="container">
-            <jdoc:include type="component" />
-          </div>
-          <?php
-										}
-									}
-								?>
-          <?php if ($this->countModules('below-content')): ?>
-          <div id="below-content">
-            <jdoc:include type="modules" name="below-content" style="standard" />
-          </div>
-          <?php endif; ?>
-        </div>
-      </div>
-      <?php if ($this->countModules('right')) : ?>
-      <aside class="sidebar-right col-md-<?php echo $right; ?>">
-        <jdoc:include type="modules" name="right" style="standard" />
-      </aside>
-      <?php endif; ?>
-    </div>
-  </div>
-  <div id="mm-sidebar" class="hidden-element">
-    <div id="panel-overview">
-      <div style="text-align: center;"><a href="<?php echo $this->baseurl ?>/" class="<?php echo $icon1; ?>"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#page" class="<?php echo $icon6; ?>"></a></div>
-      <?php if ($this->countModules('mob-menu-above')): ?>
-      <div class="mob-menu-above">
-        <jdoc:include type="modules" name="mob-menu-above" style="standard" />
-      </div>
-      <?php endif; ?>
-      <?php if ($this->countModules('menu')): ?>
-      <jdoc:include type="modules" name="menu" style="none" />
-      <?php endif; ?>
-      <?php if ($this->countModules('mob-menu-below')): ?>
-      <div class="mob-menu-below">
-        <jdoc:include type="modules" name="mob-menu-below" style="standard" />
-      </div>
-      <?php endif; ?>
-    </div>
-  </div>
-  <?php if ($totop) : ?>
-  <a href="#" class="go-top backToTop">
-  <?php if ($totoptext) : ?>
-  <?php echo $gotoptext; ?>
-  <?php  else : ?>
-  <?php echo JText::_('TPL_JOOSTRAP_GOTOP_TEXT');?>
-  <?php endif; ?>
-  <?php if ($totopicon) : ?>
-  <i class="<?php echo $gotopicon; ?>"></i>
-  <?php  else : ?>
-  <i class="<?php echo JText::_('TPL_JOOSTRAP_GOTOP_ICON');?>"></i>
-  <?php endif; ?>
-  </a>
-  <?php endif; ?>
-</div>
-<!-- Footer starts -->
-<div class="footer">
-  <div class="custom-container">
-    <!-- Cant get enough hear more -->
-    <!-- Contact with us -->
-    <!-- Let Us Help You -->
-    <!-- About SenditLater -->
-    <!-- Categories -->
-    <div class="row footer-section">
-   <div class="col-sm-8">
-      <div class="footer_contact_info">
-        <?php if ($this->countModules('footer')): ?>
-        
-          <jdoc:include type="modules" name="footer" style="standard" />
-        
-        <?php endif; ?>
-      </div>
-      <div class="footer_links">
-        <?php if ($this->countModules('bottom1')): ?>
-        
-          <jdoc:include type="modules" name="bottom1" style="standard" />
-        
-        <?php endif; ?>
-      </div>
-       
-      <?php if ($this->countModules('bottom2')): ?>
-      <jdoc:include type="modules" name="bottom2" style="standard" />
-      <?php endif; ?>
-    
-  </div>
-<div class="col-sm-4">
-      <!-- Footer Subscribe section -->
-<div class="footer_subscribe_data">
-<?php if ($this->countModules('footer1')): ?>
-       <div class="col-xs-12">
-      <div class="footer-social-icons">
-        <jdoc:include type="modules" name="footer1" style="standard" />
-      </div>
-       </div>
-      <?php endif; ?>
-      <?php if ($this->countModules('footer2')): ?>
-      <jdoc:include type="modules" name="footer2" style="standard" />
-      <?php endif; ?>
-</div>
-      <!-- Footer Subscribe section -->
-
-    </div>
-
-    
-</div>
-  </div>
-</div>
-<!-- Footer ends -->
-<div class="footer-mobile hidden-lg hidden-md col-xs-12">
-	<!-- social media -->
-	<div class="col-xs-12 hidden-lg hidden-md">
-		<div class="footer-social-icons">
-			<jdoc:include type="modules" name="footer1" style="standard" />
-		</div>
-	</div>
-	<!-- mobile footer list -->
-	<div class="footer_links">
-		<?php if ($this->countModules('bottom1')): ?> 
-			<jdoc:include type="modules" name="bottom1" style="standard" />
-		<?php endif; ?>
-	</div>
-	<!-- logo -->
-	<div class="footer_contact_info">
-		<?php if ($this->countModules('footer')): ?>
-			<jdoc:include type="modules" name="footer" style="standard" />
-		<?php endif; ?>
-	</div>
-</div>
-<div id="send_msg" class="modal fade custom-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p class="text-center"><?php echo JText::_('COM_CREATE_MESSAGE_POPUP_TEXT');?></p>
-      </div>
-      <div class="modal-footer">
-        <div class="row"> <a class="btn btn-modal text-uppercase btn-signup spacer-bottom-30" href="javascript:void(0);" onClick="loadNextForm('gift');" data-dismiss="modal"><?php echo JText::_('COM_CREATE_MESSAGE_CONFIRM_TEXT');?></a> </div>
-        <div class="row"> <a class="btn btn-modal text-uppercase btn-signup" href="javascript:void(0);" onClick="sendOnlyMsgCheckLogin('msg');" data-dismiss="modal"><?php echo JText::_('COM_CREATE_MESSAGE_CLOSE_TEXT');?></a> </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="send_msgOnly" class="modal fade custom-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p class="text-center"><?php echo JText::_('COM_CREATE_MESSAGE_POPUP_TEXT');?></p>
-      </div>
-      <div class="modal-footer">
-        <div class="row"> <a class="btn btn-modal text-uppercase btn-signup spacer-bottom-30" href="<?php echo JURI::base()?>/component/createmessage?task=showproducts"  data-dismiss="modal"><?php echo JText::_('COM_CREATE_MESSAGE_CONFIRM_TEXT');?></a> </div>
-        <div class="row"> <a class="btn btn-modal text-uppercase btn-signup createMsgBtn" id="closeSendMsgOnlyModal" href="<?php echo JURI::base()?>component/createmessage"  ><?php echo JText::_('COM_CREATE_MESSAGE_CLOSE_TEXT');?></a> </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="doNotEmailWarning" class="modal fade custom-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p class="text-center donNotMail"><?php echo JText::sprintf('COM_CREATE_MESSAGE_DO_NOT_EMAIL','recipient');?></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-modal text-uppercase okBtn" data-dismiss="modal" aria-label="Close" ><?php echo JText::_('COM_CREATE_MESSAGE_DO_NOT_EMAIL_OK_BTN');?></button>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="warningModal" class="modal fade custom-modal  in" style="display: none;" aria-hidden="false">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p class="text-center"><?php echo JText::_('COM_CREATE_MESSAGE_SELECT_IMAGE_WARNING'); ?></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-modal text-uppercase okBtn" data-dismiss="modal" aria-label="Close" ><?php echo JText::_('COM_CREATE_MESSAGE_DO_NOT_EMAIL_OK_BTN');?></button>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="loginModalRedeem" class="modal fade custom-modalbox hidden-element"></div>
-<div id="orderConfirmRedeem" class="modal fade custom-modal hidden-element "></div>
-<!--pop up for prompting user to create account 
-	<div id="create_account" class="modal fade custom-modal ">-->
-<div id="sign_up_confirmation_popup" class="modal custom-modalbox hidden-element"></div>
-<!--pop up for articles-->
-<div class="modal fade" id="articles-view-popUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog banner3Height" role="document">
-    <div class="modal-content banner3Background">
-      <div class="modal-body modal-custom_body"></div>
-    </div>
-  </div>
-</div>
-<!--pop up for career positions-->
-<div class="modal fade" id="careerPosition-popUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body modal-custom_body"></div>
-    </div>
-  </div>
-</div>
-<?php 
-		$session = JFactory::getSession();
-		$selectedLanguage = $session->get('langaugedata');
-		$user = JFactory::getUser();
-		$lang = str_replace('-GB', '', $language->getTag());
-		$lang = str_replace('-ES', '', $lang);
-	?>
-<input type="hidden" name="isUserLogin" id="isUserLogin" value="<?php echo $user->id;?>" />
-<input type="hidden" name="currentLanguage" id="currentLanguage" value="<?php echo $lang;?>" />
-<input type="hidden" name="isDone" id="isDone" />
-<input type="hidden" value="yes" id="isScrollRequired" />
-<input type="hidden" value="<?php echo JURI::root(); ?>" id="baseUrl" />
-<script type="text/javascript">
-		var token = '<?php echo JHtml::_('form.token');?>',
-			selectedLanguage = "<?php echo $selectedLanguage; ?>";
-		
-		/* bootstrap tooltip */
-		jQuery(document).ready(function () {
-			window.onresize = function() {
-			    jQuery('#youtube_iframe').css({'height':(parseInt(jQuery('#youtube_iframe').width())*0.5625)+'px'});
+			$app = JFactory::getApplication('site');
+			$form = $this->loadForm('com_createmessage.createmessage', 'createmessage', array('control' => 'jform', 'load_data' => true));
+			if (empty($form)) {
+				return false;
 			}
-			jQuery('#youtube_iframe').css({'height':(parseInt(jQuery('#youtube_iframe').width())*0.5625)+'px'});
-		
-			jQuery('.tooltip').tooltip({
-				html: true
-			});
-			
-			var get_url = "<?php echo JURI::base()?>login?view=registration&layout=complete";
-			if(window.location.href == get_url) {
-				jQuery(".sourcecoast ").hide();
-			}
-		
-		/* 	if(jQuery('.sign-up-fields').length){
-				jQuery('.sign-up-fields').append(token);
-			} */
-
-			jQuery("[rel=tooltip], #attachedFileName").tooltip();
-			jQuery('#loginModalMsgOnlyModal').click(function(){
-				jQuery('#loginModalMsgOnly').modal('hide');
-			});
-		
-			jQuery(".main-nav li a").on('click', function(){
-				var url= jQuery(this).attr("href");
-				getAnalytics(url);
-			});
-	        
-	        jQuery('.navbar-toggle').click(function(){
-	          jQuery(this).toggleClass('open');
-	        });
-		});
-
-
-		if(LOAD_HOMEPAGE_GIFTS){
-			jQuery(window).bind("load", function($) {
-				//jQuery(".nicescrollelement").niceScroll();
-				loadProductsSection();
-			});
+			return $form;
 		}
-	</script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-
-$( ".item-771" ).removeClass( "divider" );
-
-        if($.cookie('mainpopup') != null && $.cookie('mainpopup') != "")
-        {
-            $("div#valentinePopUp.modal, .modal-backdrop").hide();
-        }
-        else
-        {
-            $('#valentinePopUp').modal('show');
-            $.cookie('mainpopup', 'str');
-        }
-    });
-	</script>
-<script type="text/javascript">
-		$(document).ready(function() {
-	        if($.cookie('mainpopupmobile') != null && $.cookie('mainpopupmobile') != "")
-	        {
-	            $("div#valentinePopUp2.modal, .modal-backdrop").hide();
-	        }
-	        else
-	        {
-	            $('#valentinePopUp2').modal('show');
-	            $.cookie('mainpopupmobile', 'str');
-	        }
-	    });
-	</script>
-<script type="text/javascript">
-		sliderBanner();
-		// $(document).ready(function() {
-  //       if($.cookie('mainpopup') != null && $.cookie('mainpopup') != "")
-  //       {
-  //           $("div#myMainModal.modal, .modal-backdrop").hide();
-  //       }
-  //       else
-  //       {
-  //           $('#myMainModal').modal('show');
-  //           $.cookie('mainpopup', 'str');
-  //       }
-  //   });
 		
-	</script>
-<script type="text/javascript">
-		// $(document).ready(function() {
-  //       if($.cookie('mainpopupmobile') != null && $.cookie('mainpopupmobile') != "")
-  //       {
-  //           $("div#myMainModal2.modal, .modal-backdrop").hide();
-  //       }
-  //       else
-  //       {
-  //           $('#myMainModal2').modal('show');
-  //           $.cookie('mainpopupmobile', 'str');
-  //       }
-  //   });
-	</script>
-<script src='https://www.google.com/recaptcha/api.js'></script>
-<script type="text/javascript">
-		function turnOnOffSearch(){
-			var navBar = jQuery(".navbar "),
-			searchbar = jQuery(".searchBar"),
-			searchInput = jQuery("#searchbox"),
-			searchIcon = jQuery(".search-icon"),
-			mobileLogo = jQuery('.sillogo');
-
-			if(jQuery(this).hasClass("open")){
-				searchInput.css('visibility','hidden');
-				searchbar.css({"width": "33.33%"});
-				mobileLogo.css('visibility','visible');
-				navBar.css({"width":"33.33%"});
-				jQuery(this).removeClass("open");
-			}else{
-				mobileLogo.css('visibility','hidden');
-				searchInput.css({'visibility':'visible',"outline":"none", "border":"none"});
-				searchbar.css({"width": "85%","transition": ".5s ease-in-out", "position":"absolute", "right":"5px"});
-				searchIcon.addClass("open");
-				navBar.css({"width":"10%", "transition": ".5s ease-in-out"});
+		/**
+			* Get the message
+			* @return object The message to be displayed to the user
+		*/
+		function &getItem()
+		{
+			
+			if (!isset($this->_item))
+			{
+				$cache = JFactory::getCache('com_createmessage', '');
+				$id = $this->getState('createmessage.id');
+				$this->_item =  $cache->get($id);
+				if ($this->_item === false) {
+					
+				}
+			}
+			return $this->_item;
+			
+		}
+		public function getUserListCount($searchQuery){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  " SELECT COUNT(*) as total FROM sl_users INNER JOIN sl_user_usergroup_map on sl_user_usergroup_map.user_id=sl_users.id  where sl_user_usergroup_map.group_id=2 $searchQuery";
+			
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			return $data[0]->total;
+		}
+		public function getUserList($startpoint,$endpoint,$searchQuery){
+			
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  " SELECT sl_users.*,sl_user_usergroup_map.* FROM sl_users INNER JOIN sl_user_usergroup_map on sl_user_usergroup_map.user_id=sl_users.id  where sl_user_usergroup_map.group_id=2 $searchQuery LIMIT $startpoint , $endpoint";
+			
+			$db->setQuery($query);
+			$db->query();
+			$num_rows = $db->getNumRows();
+			if($num_rows>0){
+				$data = $db->loadObjectList();
+				return $data;
+				}else{
+				return false;
+			}
+			
+		}
+		public function updItem($data)
+		{
+			// set the variables from the passed data
+			$id = $data['id'];
+			$greeting = $data['greeting'];
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			$query->clear();
+			$query->update(' #__helloworld ');
+			$query->set(' greeting = '.$db->Quote($greeting) );
+			$query->where(' id = ' . (int) $id );
+			
+			$db->setQuery((string)$query);
+			
+			if (!$db->query()) {
+				JError::raiseError(500, $db->getErrorMsg());
+				return false;
+				} else {
+				return true;
 			}
 		}
-		function searchAction(){
-			var currentURLValdiate = document.URL.substring(0, document.URL.lastIndexOf("&") +0),
-				giftingPageValdiate = '<?php echo JURI::base();?>component/createmessage?task=showproducts',
-				cagName = jQuery('.searchBarTest');
+		
+		
+		/***********
+			Function used to store message information in jommla's session table in json format.
+		**************/
+		public function insertItem($data)
+		{
+			$db = JFactory::getDbo();
+			$object = new stdClass();
+			$user = JFactory::getUser();
+			$query  =  ' SELECT * FROM sl_user_session where userid='.$user->id;
+			$db->setQuery($query);
+			$db->query();
+			$num_rows = $db->getNumRows();
 			
-			jQuery(".search-icon").on("click", function(){
-				// If this url is currently on gifting page, it would not reload page	
-				if(currentURLValdiate == giftingPageValdiate){
-					console.log('on gifting page!');
-					searchproduct('',0,'submit');
+			$object->json_data = $data;
+			$object->userid = $user->id;
+			if($num_rows>0){
+				if (! JFactory::getDbo()->updateObject('#__user_session', $object, 'userid')) {
+					echo "error"; die;
+					} else {
+					return true;
 				}
-				// If this page is not currently on gifting page, it would redirect and add 'search' in url
+				}else{
+				if (! JFactory::getDbo()->insertObject('#__user_session', $object)) {
+					echo  "error"; die;
+					} else {
+					return true;
+				}
+			}
+			if (!$db->query()) {
+				JError::raiseError(500, $db->getErrorMsg());
+				return false;
+				} else {
+				return true;
+			}
+		}
+		
+		/************
+			Function: Used to set the redemption_status
+			to 1 if recipient has viewed the gift
+		************/
+		public function setIsViwed($msgId){
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->redemption_status = 1;
+				$object->id = $msgId;
+				JFactory::getDbo()->updateObject('#__sil_message', $object,'id');
+			}
+			catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		public function setIsRedeemed($msgId){
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->redemption_status = 2;
+				$object->is_redeemed = 1;
+				$object->id = $msgId;
+				JFactory::getDbo()->updateObject('#__sil_message', $object,'id');
+				return true;
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		public function updateRedeemedMessage($data){
+			/* echo "<pre>";
+				print_r($data);
+			echo "</pre>";
+		 */
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->redemption_status = 2;
+				$object->is_redeemed = 1;
+				if(isset($data['RedeemedType']) && ($data['RedeemedType'] == "check" || $data['RedeemedType'] == "visa" || $data['RedeemedType'] == "dollar" || $data['RedeemedType'] == "bitcoin" || $data['RedeemedType'] == "money" )){
+					$object->redeemed_gift_type =  $data['Data']['ShippingMoneyInfo'][0]['new_gift_type'];
+					$object->reedemed_gift_amount = $data['redeemed_amount'];
+				}
 				else{
-					console.log('not on gifting page!');
-					jQuery(location).attr('href', '<?php echo JURI::base();?>component/createmessage?task=showproducts&search=' + cagName.val());
+					$object->redeemed_gift_type =  $data['Data']['ShippingInfo'][0]['new_gift_type'];
+					$object->reedemed_gift_amount = $data['redeemed_amount'];
+					$object->redeemed_product_id = (int)$data['Data']['ShippingInfo'][0]['productId'];
+					$object->redeemed_cat_id = (int)$data['Data']['ShippingInfo'][0]['category'];
 				}
-			});
-			jQuery(document).on('keypress', '#searchbox', function(event){
-				// If this url is currently on gifting page, it would not reload page
-				if ( event.which == 13 ) {
-					if(currentURLValdiate == giftingPageValdiate){
-						console.log('on gifting page!');
-						searchproduct('',0,'submit');
-					}
-					// If this page is not currently on gifting page, it would redirect and add 'search' in url
-					else{
-						console.log('not on gifting page!');
-						jQuery(location).attr('href', '<?php echo JURI::base();?>component/createmessage?task=showproducts&search=' + cagName.val());
-					}
+				
+				$object->id = $data['msg_id'];
+				if( JFactory::getDbo()->updateObject('#__sil_message', $object,'id')) {
+					return true;
+				} else {
+					return false;
 				}
-			});
-		}
-		if(jQuery(window).width() < 768){
-			jQuery('.search-icon').on('click', turnOnOffSearch);
-			searchAction();
-		}else{
-			searchAction();
-		}
-
-			jQuery('.homepage-banner .bx-viewport').height(514);
-	jQuery('.homebanner-slider li').height(514);
-	if (jQuery(window).width() < 900) {
-    	jQuery("#SILVideoPopup").css("margin", "auto").css("display","block").css("float","none");
-	}
-	jQuery(window).resize(function () {
-    	 if (jQuery(window).width() < 900) {
-        jQuery("#SILVideoPopup").css("margin", "auto").css("display","block").css("float","none");
-    	}
-	});
-	jQuery(document).ready(function(){
-			 if (jQuery(window).width() > 900) {
-    	jQuery("#SILVideoPopup").css("display","").css("float","none");
-		}
-	});
-	jQuery(window).resize(function () {
-    	 if (jQuery(window).width() > 900) {
-        jQuery("#SILVideoPopup").css("display","").css("float","none");
-    	}
-	});
-	jQuery("#SILVideoPopup").click(function(){
-		var id = 'SILVideoPopup';
-		var SILVideoPopup = '<div style="margin-top: 15px; position:relative; padding-bottom: 56.25%; padding-top: 25px; height: 0;" ><iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" class="videoFrame" width="98%" height="auto" src="https://www.youtube.com/embed/fZmRttM4zOo" frameborder="0" allowfullscreen></iframe></div>';
-		var closeHtml = '<button type="button" class="close close-btn" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-		jQuery('#articles-view-popUp .modal-custom_body').html(closeHtml+SILVideoPopup);
-		jQuery('#articles-view-popUp').modal('show');
-		hideShowNiceScrolls('',id,false);
-		bodyFixedPosition();
-		jQuery(document).click(function(){
-			if(jQuery('.modal').is(':visible')){
-				jQuery('.videoFrame').remove();
+			
 			}
-		});
-		jQuery('.modal-dialog').click(function(e){
-			e.stopPropagation();
-		});
-		jQuery('.close.close-btn').click(function(){
-			jQuery('#articles-view-popUp').trigger('click');
-		});
-	});
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		public function updateMsgUserId($userId,$msgId,$isDraft){
+			$db = JFactory::getDbo();
+			$object = new stdClass();
+			$object->user_id = $userId;
+			$object->id = $msgId;
+			$object->is_draft = ($isDraft= 1 ? $isDraft : 0);
+			if($isDraft== 1) {
+				$object->is_success = 0;
+				} else {
+				$object->is_success = 1;
+			}
+			
+			JFactory::getDbo()->updateObject('#__sil_message', $object,'id');
+		}
+		
+		
+		public function updateMessageOnly($data){
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->user_id = $user->id;
+				$object->sender_name = $data['sender_name'];
+				if($user->id>0){
+					$object->sender_email=$user->email; 
+				} else {
+					$object->sender_email=$data['sender_email'];
+				}
+				$object->recipient_name = $data['recipient_name'];
+				$object->recipient_email = $data['recipient_email'];
+				$object->occasion = $data['occassion'];
+				$object->recipient_relationship = $data['recipient_relationship'];
+				$originalDate = $data['date_to_deliver_message'];
+				$newDate = date("Y-m-d", strtotime($originalDate));
+				$object->date_to_deliver_message = $newDate." 00:00:00";
+				$object->message_subject = $data['message_subject'];
+				$object->message_content = $data['message_content'];
+				$object->template_name = $data['template_name'];
+				$object->template_path = $data['template_path'];
+				$object->file_attachment = $data['file_attachment'];
+				$object->json_data = $data['json_data'];
+				$object->id = $data['msg_id'];
+				
+				$isNotify = $this->isMessageUpdates($user->id);
+				if($isNotify){
+					$object->send_sender_status_updates = 1;
+				}
+	
+				if(JFactory::getDbo()->updateObject('#__sil_message', $object,'id')){
+					return true;
+				} else {
+					return false;
+				}
+				
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		
+		/*********************
+			Function: Used to save infomation
+			related to message and selected product
+		*********************/
+		public function saveMessageOnly($data)
+		{
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->sender_name = $data['sender_name'];
+				if( $user->id > 0 ) {
+					$object->sender_email = $user->email; 
+					$user_id = $user->id;
+				} else {
+					$object->sender_email = $data['sender_email'];
+					$user_id = 0;
+				}
+				$object->user_id = $user_id;
+				$object->recipient_name = $data['recipient_name'];
+				$object->recipient_email = $data['recipient_email'];
+				$object->occasion = $data['occassion'];
+				$object->recipient_relationship = $data['recipient_relationship'];
+				$originalDate = $data['date_to_deliver_message'];
+				$newDate = date("Y-m-d", strtotime($originalDate));
+				$object->date_to_deliver_message = $newDate." 00:00:00";
+				$object->message_subject = $data['message_subject'];
+				$object->message_content = $data['message_content'];
+				$object->template_name = $data['template_name'];
+				$object->template_path = $data['template_path'];
+				$object->file_attachment = $data['file_attachment'];
+				$object->is_message_only = $data['is_message_only'];
+				$object->is_gift_card = $data['is_gift_card'];
+				$object->gift_cat_id = $data['gift_cat_id'];
+				$object->selected_product_id = $data['selected_product_id'];
+				$object->gift_price = str_replace(',', '', $data['gift_price']);
+				$object->is_send_money = $data['is_send_money'];
+				$object->is_give_stock = $data['is_give_stock'];
+				$object->is_fiverr_service = $data['is_fiverr_service'];
+				$object->is_tinggly_experiences = $data['is_tinggly_experiences'];
+				$object->custom_gift_shipping_charges = $data['custom_gift_shipping_charges'];
+				$object->tax_price = $data['tax_price'];
+				$object->is_animated_card = $data['is_animated_card'];
+				$object->animated_card_price = $data['animated_card_price'];
+				if(isset($data['selected_country_to_deliver_gift'])){
+					$object->selected_country_to_deliver_gift=$data['selected_country_to_deliver_gift'];
+				} 
+				if(isset($data['money_transfer_instrument'])){
+					$object->money_transfer_instrument=$data['money_transfer_instrument'];
+					} else {
+					$object->money_transfer_instrument="";
+				}
+				if(isset($data['Bitcoin_summary'])){
+					$object->Bitcoin_summary=$data['Bitcoin_summary'];
+					} else {
+					$object->Bitcoin_summary="";
+				}
+				if(isset($data['bitcoin_balance_redeemed_extra_charges'])){
+					$object->bitcoin_balance_redeemed_extra_charges=$data['bitcoin_balance_redeemed_extra_charges'];
+					} else {
+					$object->bitcoin_balance_redeemed_extra_charges=0;
+				}
+				if(isset($data['saved_pay_type'])){
+					$object->saved_pay_type=$data['saved_pay_type'];
+					} else {
+					$object->saved_pay_type= "credit card";
+				}
+				$gift_amount = $data['Amount'];
+				$gift_amount = str_replace(',', '', $gift_amount);
+				$object->amount = $gift_amount ;
+				$object->gift_type = $data['gift_type'];
+				$object->gift_redemption_code = $data['gift_redemption_code']; 
+				$object->message_order_number = $data['message_order_number']; 
+				$object->date_message_created = $data['date_message_created']; 
+				$object->is_success = $data['is_success']; 
+				$object->is_draft = 0; 
 
-	</script>
-	<script type="text/javascript">
-	jQuery(document).ready(function(){
-	    if (jQuery(window).width() < 900) {
-	            jQuery('.content-ul').css('display','none');
-	            jQuery('.cs-title').on('click', function(){
-	                    if(jQuery('#ancillary').hasClass("open")){
-	                            jQuery('.content-ul').css('display','none');
-	                            jQuery('#ancillary').removeClass("open");
-	                    }else{
-	                            jQuery('#ancillary').addClass("open");
-	                            jQuery('.content-ul').css('display','block');
-	                            jQuery('.cs-title').css('clip', 'rect(41px,78px,58px,61px)');
-	                    }
-	                    jQuery(this).toggleClass('plus');
-	            });
-	    }
-	});
-	</script>
-</body>
-</html>
+				if(isset($data['promo_id'])){
+					$object->promo_id = $data['promo_id'];
+					if($object->promo_id==2){
+						$object->is_sent = 1;
+						$object->is_message_only = 0;
+						$object->gift_type = 'gift';
+						$object->date_to_deliver_message = date('Y-m-d H:i:s');
+					}
+				}
+				
+				if( isset( $data['full_name'] ) ){
+					$object->credit_card_full_name = $data['full_name']; 
+					$object->credit_card_billing_address = $data['billing_address']; 
+					$object->credit_card_billing_address2 = $data['billing_address2']; 
+					$object->credit_card_city = $data['city']; 
+					$object->credit_card_state = $data['state']; 
+					$object->credit_card_postal_code = $data['zipcode'];
+					$object->credit_card_country= $data['country']; 
+					$object->credit_card_number = $data['card_number'];
+					$object->credit_card_expiration_month = $data['expiration_month'];
+					$object->credit_card_expiration_year = $data['expiration_year'];
+				}
+				
+				$object->json_data = $data['json_data']; 
+				if(isset($data['payment_complete']) && $data['payment_complete']){
+					$object->payment_complete = 1;
+				}
+				if(isset($data['id'])){
+					$object->previous_version_message_id = $data['id'];
+				}
+				$isNotify = $this->isMessageUpdates($user_id);
+				if($isNotify){
+					$object->send_sender_status_updates = 1;
+				}
+				JFactory::getDbo()->insertObject('#__sil_message', $object);
+				return $db->insertid();
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}        
+		}
+		
+		/*************************
+			Function: used to  save massage as draft 
+			if message drafting is successfull than
+			templates and attachments will uploaded 
+			on amazon cloud
+		**************************/
+		public function saveAsDraft($data)
+		{
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->user_id = $user->id;
+				$object->sender_name = $data['sender_name'];
+				if($user->id>0){
+					$object->sender_email = $user->email; 
+					} else {
+					$object->sender_email = $data['sender_email'];
+				}
+				$object->recipient_name = $data['recipient_name'];
+				$object->recipient_email = $data['recipient_email'];
+				$object->occasion = $data['occassion'];
+				$object->recipient_relationship = $data['recipient_relationship'];
+				$originalDate = $data['date_to_deliver_message'];
+				$object->message_subject = $data['message_subject'];
+				$object->message_content = $data['message_content'];
+				$object->template_name = $data['template_name'];
+				$object->template_path = $data['template_path'];
+				$object->file_attachment = $data['file_attachment'];
+				$object->is_message_only = $data['is_message_only'];
+				$object->is_gift_card = $data['is_gift_card'];
+				$object->gift_cat_id = $data['gift_cat_id'];
+				$object->selected_product_id = $data['selected_product_id'];
+				$object->gift_price = str_replace(',', '', $data['gift_price']);
+				$object->is_send_money = $data['is_send_money'];
+				$object->is_give_stock = $data['is_give_stock'];
+				$object->is_fiverr_service = $data['is_fiverr_service'];
+				$object->is_tinggly_experiences = $data['is_tinggly_experiences'];
+				$object->custom_gift_shipping_charges = $data['custom_gift_shipping_charges'];
+				$object->tax_price = $data['tax_price'];
+				
+				$newDate = date("Y-m-d", strtotime($originalDate));
+				$object->date_to_deliver_message = $newDate." 00:00:00";
+				if(isset($data['selected_country_to_deliver_gift'])){
+					$object->selected_country_to_deliver_gift = $data['selected_country_to_deliver_gift'];
+				} 
+				if(isset($data['money_transfer_instrument'])){
+					$object->money_transfer_instrument = $data['money_transfer_instrument'];
+					} else {
+					$object->money_transfer_instrument = "";
+				}
+				if(isset($data['Bitcoin_summary'])){
+					$object->Bitcoin_summary = $data['Bitcoin_summary'];
+					} else {
+					$object->Bitcoin_summary = "";
+				}
+				$object->amount = str_replace(',', '',$data['Amount']);
+				$object->gift_type = $data['gift_type'];
+				$object->gift_redemption_code = $data['gift_redemption_code']; 
+				$object->message_order_number = $data['message_order_number']; 
+				$object->date_message_created = $data['date_message_created']; 
+				$object->is_draft = $data['is_draft']; 
+				$isNotify = $this->isMessageUpdates($user->id);
+				if($isNotify){
+					$object->send_sender_status_updates=1;
+				}
+				$object->json_data = $data['json_data']; 
+				if(isset($data['payment_complete']) && $data['payment_complete']){
+					$object->payment_complete = 1;
+				}
+				if(isset($data['id'])){
+					$object->previous_version_message_id=$data['id'];
+				}
+				if(isset($data['msgId'])){
+					$object->id = $data['msgId'];
+					JFactory::getDbo()->updateObject('#__sil_message', $object, 'id');
+				}
+				else{
+					JFactory::getDbo()->insertObject('#__sil_message', $object);
+					return $db->insertid();
+				}
+			}
+			catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+			}        
+		}
+		public function getCustId($uid){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  " SELECT * FROM sl_sil_processor_payment_profiles where user_id=$uid";
+			
+			$db->setQuery($query);
+			$db->query();
+			$num_rows = $db->getNumRows();
+			if($num_rows>0){
+				$data = $db->loadObjectList();
+				return $data;
+				}else{
+				return "no";
+			}
+		}
+		
+		/*********
+			Function : Used to get saved credit card data by card id
+		**********/
+		public function getCustIdByProfileId($pid){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  " SELECT * FROM sl_sil_processor_payment_profiles where id=$pid";
+			
+			$db->setQuery($query);
+			$db->query();
+			$num_rows = $db->getNumRows();
+			if($num_rows>0){
+				$data = $db->loadObjectList();
+				return $data;
+				}else{
+				return "no";
+			}
+		}
+		
+		/***********************
+			Funtion : used to save credit card
+			information for further use
+		**********************/
+		public function saveCreditCardInfo($data){
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				
+				$object->user_id = $user->id;
+				$object->processor_customer_name = $data['full_name'];
+				$object->processor_cust_id = $data['processor_cust_id'];
+				$object->processor_profile_id = $data['processor_profile_id'];
+				$object->processor_shipping_id = $data['shippingId'];
+				$object->processor_last_four_card_digits = $data['processor_last_four_card_digits'];
+				$object->processor_card_type = $data['cardType'];
+				$object->processor_customer_billing_address = $data['billing_address'];
+				$object->processor_customer_billing_address_second = $data['billing_address2'];
+				$object->processor_customer_city = $data['city'];
+				$object->processor_customer_state = $data['state'];
+				$object->processor_customer_zipcode = $data['zipcode'];
+				$object->processor_customer_country = $data['country'];
+				$object->processor_expiration_month = $data['expiration_month'];
+				$object->processor_expiration_year = $data['expiration_year'];
+				if(!isset ($data['card_id']) || $data['card_id'] == 0 ){
+					JFactory::getDbo()->insertObject('#__sil_processor_payment_profiles', $object);
+					return $db->insertid();
+				} else {
+					$object->id = $data['card_id'];
+					JFactory::getDbo()->updateObject('#__sil_processor_payment_profiles', $object,'id');
+					return $data['card_id'];
+				}
+				
+				}catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		
+		
+		/***********************
+			Funtion : used to save shipping methods
+			information for further use
+		**********************/
+		public function saveShippingMethodsInfo($data){
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->id = $data['id'];
+				$object->user_id = $user->id;
+				$object->shipping_address_holder_name = $user->name;
+				$object->shipping_address = $data['shipping_address'];
+				$object->shipping_address_second = $data['shipping_address_second'];
+				$object->shipping_city = $data['shipping_city'];
+				$object->shipping_state = $data['shipping_state'];
+				$object->shipping_postal_code = $data['shipping_postal_code'];
+				$object->shipping_country = $data['shipping_country'];
+				$object->is_preferred_address = $data['is_preferred_address'];
+				
+				if( $data['id'] == 0 ){
+					JFactory::getDbo()->insertObject('#__sil_shipping_profile', $object);
+					return $db->insertid();
+					} else {
+					JFactory::getDbo()->updateObject('#__sil_shipping_profile', $object, 'id');
+					return $data['id'];
+				}
+				}catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+			}
+		}
+		
+		/***********************
+			Funtion : used to save or update
+			the contacts
+		**********************/
+		public function saveContact($data)
+		{	
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				
+				$object->user_id = $user->id;
+				$object->first_name = $data['contact_name'];
+				$object->email = $data['contact_email'];
+				$object->relation = $data['contact_relation'];
+				if($data['type'] == 'contact') {
+					$object->is_contact = 1;
+				}
+				if( $data['id'] == 0 ){
+					JFactory::getDbo()->insertObject('#__sil_address_book', $object);
+					return $db->insertid();
+					} else {
+					$object->id = $data['id'];
+					JFactory::getDbo()->updateObject('#__sil_address_book', $object, 'id');
+					return $data['id'];
+				}
+			}
+			catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}        
+		}
+		
+		/***********************
+			Funtion : used to save or update
+			the dates
+		**********************/
+		public function saveEventDates($data)
+		{	
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->user_id = $user->id;
+				$object->contact_id = $data['contact_id'];
+				$object->occasion = $data['occasion'];
+				if(isset($data['event_date'])){
+					$newDate = date("Y-m-d", strtotime($data['event_date']));
+					$object->event_date = $newDate." 00:00:00";
+				}
+				$object->is_recurrence = $data['is_recurrence'];
+				if( $data['id'] == 0 ){
+						if($data['type'] == 'contact'){
+							if(is_array($data['contact_dates']) && !empty($data['contact_dates'])){
+								foreach($data['contact_dates'] as $date){
+									if($date != ''){
+										$newDate = date("Y-m-d", strtotime($date));
+										$object->event_date = $newDate." 00:00:00";
+										$data['event_date'] = $date; 
+										JFactory::getDbo()->insertObject('#__sil_address_book_event', $object);
+									}
+								}
+							}
+						}else{
+							JFactory::getDbo()->insertObject('#__sil_address_book_event', $object);
+							return $db->insertid();
+						}
+				} else {
+					if($data['type'] == 'contact'){
+						$query = "DELETE from sl_sil_address_book_event where contact_id=".$data['contact_id']." AND occasion = ''";
+						$db->setQuery($query);
+						$db->execute();
+						if(is_array($data['contact_dates']) && !empty($data['contact_dates'])){
+							foreach($data['contact_dates'] as $date){
+								if($date != ''){
+									$newDate = date("Y-m-d", strtotime($date));
+									$object->event_date = $newDate." 00:00:00";
+									$data['event_date'] = $date; 
+									JFactory::getDbo()->insertObject('#__sil_address_book_event', $object);
+								}
+							}
+						}
+						return $db->insertid();
+					}else{
+						$object->id = $data['id'];
+						JFactory::getDbo()->updateObject('#__sil_address_book_event', $object, 'contact_id');
+						return $data['id'];
+					}
+					
+				}
+			}
+			catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}        
+		}
+		
+		
+		public function saveCCPayPal($data){
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->user_id = $user->id;
+				$object->paypal_id=$data['paypal_id'];
+				$query  =  " SELECT * FROM sl_sil_processor_payment_profiles where user_id=$user->id and paypal_id!=''";
+				
+				$db->setQuery($query);
+				$db->query();
+				$num_rows = $db->getNumRows();
+				if($num_rows>0){
+					$records = $db->loadObjectList();
+					$object->id=$records[0]->id;
+					if (! JFactory::getDbo()->updateObject('#__sil_processor_payment_profiles', $object, 'id')) {
+						
+						echo "error"; die;
+						} else {
+						return true;
+					}
+					}else{
+					
+					JFactory::getDbo()->insertObject('#__sil_processor_payment_profiles', $object);
+					return $db->insertid();
+				}
+				}catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		public function updateBasicMessageTemplate($data)
+		{
+			
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->user_id = $user->id;
+				$object->message_subject=$data['message_subject'];
+				$object->message_content=$data['customMessage'];
+				$object->template_name=$data['imageName'];
+				$object->template_path=$data['templatePath'];
+				$object->file_attachment=$data['file_attachment'];
+				
+				
+				//$object->date_to_deliver_message=$data['date_to_deliver_message'];
+				
+				$object->id=$data['msg_id'];
+				if($user->id>0){
+					$object->sender_email=$user->email; 
+					}else{
+					$object->sender_email=$data['sender_email'];
+				}
+				
+				$object->json_data=$data['json_data']; 
+				$isNotify=$this->isMessageUpdates($user->id);
+				if($isNotify){
+					$object->send_sender_status_updates=1;
+				}
+				if (! JFactory::getDbo()->updateObject('#__sil_message', $object, 'id')) {
+					echo "error"; 
+					} else {
+					
+					return true;
+				}
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}        
+		}
+		public function confirmPaypalPayment($messageId)
+		{
+			
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$query="select * from sl_sil_message where id=$messageId";
+				$db->setQuery($query);
+				$db->query();
+				$num_rows = $db->getNumRows();
+				if($num_rows>0){
+					$data = $db->loadObjectList();
+					
+					if($data[0]->previous_version_message_id>0){
+						
+						
+						$usrMsgUpdatePayment="update sl_sil_message set is_deleted=1 where id=".$data[0]->previous_version_message_id;
+						$db->setQuery($usrMsgUpdatePayment);
+						$db->query();
+					}
+				}
+				$object->is_success=1;
+				$object->is_draft=0;
+				$object->id=$messageId;
+				
+				if (! JFactory::getDbo()->updateObject('#__sil_message', $object, 'id')) {
+					
+					echo "error"; 
+					} else {
+					return true;
+				}
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}        
+		}
+		public function updateBasicMessage($data)
+		{
+			
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->user_id = $user->id;
+				$object->sender_name=$data['sender_name'];
+				if($user->id>0){
+					$object->sender_email=$user->email; 
+					
+					}else{
+					$object->sender_email=$data['sender_email'];
+				}
+				$object->recipient_name=$data['recipient_name'];
+				$object->recipient_email=$data['recipient_email'];
+				$object->occasion=$data['occassion'];
+				$object->recipient_relationship=$data['recipient_relationship'];
+				$originalDate = $data['date_to_deliver_message'];
+				$newDate = date("Y-m-d", strtotime($originalDate));
+				
+				
+				$object->date_to_deliver_message=$newDate." 00:00:00";
+				$object->id=$data['msg_id'];
+				//$object->sender_email=$user->email;
+				
+				$object->json_data=$data['json_data']; 
+				
+				$isNotify=$this->isMessageUpdates($user->id);
+				if($isNotify){
+					$object->send_sender_status_updates=1;
+				}
+				if (! JFactory::getDbo()->updateObject('#__sil_message', $object, 'id')) {
+					echo "error"; 
+					} else {
+					return true;
+				}
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}        
+		}
+		public function changeStatus($msgId){
+			
+			$db = JFactory::getDbo();
+			$object = new stdClass();
+			$object->payment_complete=1; 
+			$object->is_success=1;
+			$object->id=$msgId;
+			
+			
+			if (! JFactory::getDbo()->updateObject('#__sil_message', $object, 'id')) {
+				
+				echo "error"; 
+				} else {
+				
+				return true;
+			}
+		}
+		
+		public function changeisDeleted($id){
+			$db = JFactory::getDbo();
+			$object = new stdClass();
+			$object->is_deleted=1; 
+			$object->is_success=0;
+			$object->id=$id;
+			
+			if (! JFactory::getDbo()->updateObject('#__sil_message', $object, 'id')) {
+				echo "error"; 
+				} else {
+				return true;
+			}
+		}
+		
+		public function updateMessage($data,$recordId){
+			
+			$db = JFactory::getDbo();
+			$object = new stdClass();
+			$user = JFactory::getUser();
+			$object->user_id = $user->id;
+			
+			$object->credit_card_billing_address=$data['billing_address']; 
+			$object->credit_card_billing_address2=$data['billing_address2']; 
+			$object->credit_card_billing_city=$data['city']; 
+			$object->credit_card_billing_state=$data['state']; 
+			$object->credit_card_phone_number=$data['zipcode'];
+			$object->credit_card_billing_country=$data['country'];
+			
+			$object->payment_complete=1; 
+			if($user->id>0){
+				$object->sender_email=$user->email; 
+			}
+			else{
+				$object->sender_email=$data['sender_email']; 
+			}
+			
+			$object->id=$recordId;
+			$isNotify=$this->isMessageUpdates($user->id);
+			if($isNotify){
+				$object->send_sender_status_updates=1;
+			}
+			try{
+				if (! JFactory::getDbo()->updateObject('#__sil_message', $object, 'id')) {
+					echo "error"; 
+					} else {
+					return true;
+				}
+			}
+			catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		
+		/*****************
+			Function: Used to update message after gift deletion
+		******************/
+		public function updateMessageAfterDelete($recordId){
+			$db = JFactory::getDbo();
+			$object = new stdClass();
+			$user = JFactory::getUser();
+			$object->user_id = $user->id;
+			$object->is_message_only = 1;
+			$object->is_gift_card = 0;
+			$object->gift_cat_id = 0;
+			$object->gift_price = 0;
+			$object->selected_product_id = 0;
+			$object->custom_gift_shipping_charges = 0;
+			$object->tax_price = 0;
+			$object->is_sent = 0;
+			$object->is_send_money = 0;
+			$object->is_give_stock = 0;
+			$object->is_fiverr_service = 0;
+			$object->amount = 0; 
+			$object->gift_type = "msg"; 
+			$object->payment_complete = 1; 
+			$object->id = $recordId;
+			
+			$isNotify = $this->isMessageUpdates($user->id);
+			if($isNotify){
+				$object->send_sender_status_updates = 1;
+			}
+			if (! JFactory::getDbo()->updateObject('#__sil_message', $object, 'id')) {
+				echo "error"; 
+				} else {
+				return true;
+			}
+		}
+		public function saveMoneyClaim($data){
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+			//	$objMsg = new stdClass();
+				$object->message_id=$data['msg_id'];
+				$object->amount=$data['amount'];
+				$object->recipient_name=$data['name'];
+				$object->recipient_email_address=$data['emailAddress'];
+				if($data['Data']['ShippingMoneyInfo'][0]['new_gift_type']=="visa" || $data['Data']['ShippingMoneyInfo'][0]['new_gift_type']=="check")
+				{
+					//$object->recipient_last_name=$data['shipLastName'];
+					$object->recipient_address_1=$data['billing1'];
+					$object->recipient_address_2=$data['billing2'];
+					$object->recipient_city=$data['city'];
+					$object->recipient_state=$data['state'];
+					$object->recipient_postal_code=$data['zip'];
+					$object->recipient_phone=$data['phoneNumber'];
+					$object->country_address=$data['shipCountry'];
+				}
+				$object->is_redeemed=1;
+				$object->redemption_date=date("Y-m-d");
+				if($db->insertObject('#__sil_money_redemption', $object))
+				{
+					/* $objMsg->id=$data['msg_id'];
+					$objMsg->is_redeemed=1;
+					$object->redemption_status = 2;
+					JFactory::getDbo()->updateObject('#__sil_message', $objMsg, 'id'); */
+					return true;
+				} else {
+					return false;
+				}
+			}
+			catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		
+		//function to save ship order deatils for hikashop products
+		public function saveOrder($data){
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$order = new stdClass();
+				$orderProduct = new stdClass();
+				$msgId=$data['msg_id'];
+				$user = JFactory::getUser();
+				
+				$productId=$data['product_id'];
+				$qry="select * from sl_sil_message where id=$msgId";
+				$db->setQuery($qry);
+				
+				$msgData = $db->loadObjectList();
+				$query="select * from sl_hikashop_product where product_id=$productId";
+				$db->setQuery($query);
+				$productData = $db->loadObjectList();
+				$user_id=$msgData[0]->user_id;
+				if(isset($data['isUserRedistered']) && $data['isUserRedistered']==1){
+					$user_id = JFactory::getUser($data['user_id']);
+				}
+				$object->address_user_id = $user_id;
+				$object->address_firstname = $data['sender_name'];
+				$object->address_title = $data['sender_email'];
+				
+				if($data['new_gift_type'] == 'gift'){
+					$object->address_lastname=$data['shipLastName'];
+					$object->address_street=$data['shipAddr'];
+					$object->address_street2=$data['shipAddr2'];
+					$object->address_post_code=$data['shipZip'];
+					$object->address_city=$data['shipCity'];
+					$object->address_telephone=$data['shipPhone'];
+					$object->address_state=$data['shipState'];
+					$object->address_country=$data['shipCountry'];
+				}
+				if( JFactory::getDbo()->insertObject('#__hikashop_address', $object) ){
+					$shippingAddrId = $db->insertid();
+					
+					$order->order_billing_address_id = $shippingAddrId;
+					if($data['new_gift_type'] != 'card'){
+						$order->order_shipping_address_id = $shippingAddrId;
+					}
+					$order->order_user_id=$user_id;
+					$order->order_status="created";
+					$order->order_number=$msgId;
+					$order->order_created=time();
+					$order->order_full_price=$data['productPrice'];
+					$order->order_payment_method="";
+					if(isset($data['order_invoice_number'])){
+						$order->order_invoice_number=$data['order_invoice_number'];
+					}
+					
+					if(JFactory::getDbo()->insertObject('#__hikashop_order', $order)){
+						$orderId=$db->insertid();
+						$orderProduct->order_id=$orderId;
+						$orderProduct->product_id=$data['product_id'];
+						$orderProduct->order_product_quantity=1;
+						$orderProduct->order_product_name=$productData[0]->product_name;
+						$orderProduct->order_product_code=$productData[0]->product_code;
+						$orderProduct->order_product_price=$data['productPrice'];
+						if( JFactory::getDbo()->insertObject('#__hikashop_order_product', $orderProduct)){
+							return true;
+						}  
+					}
+				} else {
+					return false;
+				}
+			}
+			catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		public function savePaymentDetailsIpn($data)
+		{
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				
+				$object->user_id = $data['userId'];
+				$object->message_id=$data['message_id'];
+				$object->processor_response_code=$data['processor_response_code'];
+				$object->processor_response_reason_code=$data['processor_response_reason_code'];
+				$object->processor_response_reason_text=$data['processor_response_reason_text'];
+				$object->processor_auth_code=$data['authorization_code'];
+				$object->processor_invoice_number=$data['processor_invoice_number'];
+				$object->paypal_transaction_id=$data['paypal_transaction_id'];
+				$object->paypal_type=$data['Paytype'];
+				$object->transaction_date_time= date("Y-m-d h:i:s");
+				JFactory::getDbo()->insertObject('#__sil_message_orders', $object);
+				return true;
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		
+		/****************
+			Function: used to save payment details
+			of shceduled message
+		****************/
+		public function savePaymentDetails($data , $msgId)
+		{
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				
+				$object->user_id = $user->id;
+				$object->message_id = $msgId;
+				$object->processor_response_code = $data['processor_response_code'];
+				$object->processor_response_reason_code = $data['processor_response_reason_code'];
+				$object->processor_response_reason_text = $data['processor_response_reason_text'];
+				$object->processor_auth_code = $data['authorization_code'];
+				$object->processor_invoice_number = $data['processor_invoice_number'];
+				$object->paypal_transaction_id = $data['paypal_transaction_id'];
+				if( isset($data['card_number']) && ctype_digit($data['card_number']))  {
+					$account_number = str_repeat("x", (strlen($data['card_number']) - 4)) . substr($data['card_number'],-4,4); 
+					$accountNumber =  rtrim(chunk_split($account_number, 4, '-'), "-");
+					} else {
+					if(isset($data['card_number'])) {
+						$accountNumber = $data['card_number'];
+						} else {
+						$accountNumber = $data['credit_card_account_number'];
+					}
+				}
+				$object->credit_card_account_number = $accountNumber;
+				if(isset($data['animated_card_price']) && $data['animated_card_price'] > 0  && $data['animated_card_price'] != ''){
+					$object->amount = str_replace(',', '', $data['gift_price']+$data['animated_card_price']);
+				} else {
+					$object->amount = str_replace(',', '', $data['gift_price']);
+				}
+				$object->payment_method = $data['method'];
+				$object->transaction_type = $data['transaction_type'];
+				$object->credit_card_type = $data['cardType'];
+				$object->paypal_type = "";
+				$object->transaction_date_time = date("Y-m-d h:i:s");
+				JFactory::getDbo()->insertObject('#__sil_message_orders', $object);
+				return true;
+			}
+			catch (Exception $e){
+				throw new Exception($e->getMessage(), 500);
+				return false;
+			}
+		}
+		
+		/*****************
+			Functino: Used to get basic inforamtion
+			about message and selected gift
+		*****************/
+		public function getBasicMessage($msgId){
+			$db = JFactory::getDbo();
+			$user = JFactory::getUser();
+			$query = $db->getQuery(true);
+			$query  =  " SELECT * FROM sl_sil_message where id=$msgId  AND user_id=$user->id";
+			
+			$db->setQuery($query);
+			
+			$data = $db->loadObjectList();
+			return $data;
+			
+		}
+		/**** ends here ****/
+		
+		public function getTemplateHtml(){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "SELECT introtext FROM sl_content WHERE alias = 'message-preview-template'";
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			$content=$data[0]->introtext;
+			return $content;
+		}
+		
+		/*****************
+			Function USed to get all the saved credit cards 
+			matched with the given user id
+		*****************/
+		public function getSavedCreditCardData($userId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "SELECT * FROM sl_sil_processor_payment_profiles where user_id=$userId";
+			
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			return $data;
+		}
+		
+		/*****************
+			Function USed to get all the saved shiiping
+			methods matched with the logged in user id
+		*****************/
+		public function getSavedShippingData($type, $id){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$user = JFactory::getUser();
+			
+			if($type == 'userId') {
+				$query  =  "SELECT * FROM sl_sil_shipping_profile where user_id=$id";
+				} else {
+				$userId = $user->id;
+				$query  =  "SELECT * FROM sl_sil_shipping_profile where user_id=$userId AND id=$id ";
+			}
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			return $data;
+		}
+		
+		/*****************
+			Function USed to get all the saved shiiping
+			methods matched with the logged in user id
+		*****************/
+		public function getSavedContacts($type, $id){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$user = JFactory::getUser();
+			
+			if($type == 'userId') {
+				$query  =  "SELECT * FROM sl_sil_address_book where user_id=$id AND is_contact=1";
+				} else {
+				$userId = $user->id;
+				$query  =  "SELECT * FROM sl_sil_address_book where user_id=$userId AND id=$id  AND is_contact=1";
+				
+			}
+			
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			if(!empty($data)){
+				$contact_id = $data[0]->id;
+				$query  =  "SELECT event_date FROM sl_sil_address_book_event where contact_id=$contact_id";
+				$db->setQuery($query);
+				$eventData = $db->loadObjectList();
+				if(!empty($eventData)){
+					foreach($eventData as $date){
+						$data[0]->dates[] = date( 'M d, Y',strtotime($date->event_date));
+					}
+				}
+			}
+			return $data;
+		}
+		
+		/*****************
+			Function USed to get all the saved shiiping
+			methods matched with the logged in user id
+		*****************/
+		public function getSavedEvents($type, $id){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$user = JFactory::getUser();
+			$userId = $user->id;
+			
+			if($type == 'userId') {
+				$query  =  "select sl_sil_address_book.*, sl_sil_address_book_event.* from sl_sil_address_book left join sl_sil_address_book_event on sl_sil_address_book_event.contact_id=sl_sil_address_book.id where sl_sil_address_book.user_id=$userId and sl_sil_address_book.is_contact=0";
+				} else {				
+				$query  =  "select sl_sil_address_book.*, sl_sil_address_book_event.* from sl_sil_address_book left join sl_sil_address_book_event on sl_sil_address_book_event.contact_id=sl_sil_address_book.id where sl_sil_address_book.id=$id and sl_sil_address_book.user_id=$userId and sl_sil_address_book.is_contact=0";
+			}
+			
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			foreach($data as $event){
+				$data[0]->event_date = date( 'M d, Y',strtotime($event->event_date)); 
+			}
+			return $data;
+		}
+		
+		/********* function used to delete the events ********/
+		public function deleteEvents($contactID){
+			$db = JFactory::getDbo();
+			$object = new stdClass();
+			$user = JFactory::getUser();
+			$query  =  " delete FROM sl_sil_address_book_event where contact_id= $contactID and user_id=$user->id";
+			$db->setQuery($query);
+			$db->query();
+			return true;
+		}
+		
+		public function getCardDetailById($profileId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  " SELECT * FROM sl_sil_processor_payment_profiles where id=$profileId";
+			
+			$db->setQuery($query);
+			
+			$data = $db->loadObjectList();
+			foreach ($data as $key => $cardData) {
+				if($cardData->processor_card_type == 'amex') {
+					$amexNumbers = explode('-',$cardData->processor_last_four_card_digits);
+					$data[$key]->processor_last_four_card_digits = 'xxxx-xxxx-xxxx-'.$amexNumbers[3];
+				}
+			}
+			return $data;
+		}
+		
+		/*********************
+			Function used to get product categories according to their parent category.
+			$productParentCategory = Parent_Category_ID
+		**********************/
+		public function getProductCategories($productParentCategory){
+			$sortOrder = SORT_ORDER_CATEGORY;
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  " SELECT c1.category_id as 'parent_category_id', c1.category_name as 'parent_category_name', c2.category_id, c2.category_name, c3.category_id as 'child_category_id', c3.category_name as 'child_category_id' FROM sl_hikashop_category c1 LEFT JOIN sl_hikashop_category c2 ON c2.category_parent_id = c1.category_id LEFT JOIN sl_hikashop_category c3 ON c3.category_parent_id = c2.category_id WHERE c1.category_id = ".$productParentCategory." AND (c1.category_published = 1 OR c1.category_published IS NULL) AND (c2.category_published = 1 OR c2.category_published IS NULL )AND (c3.category_published = 1 OR c3.category_published IS NULL) ORDER BY (c2.category_id*1) ".$sortOrder;
+			$db->setQuery($query);
+			$categories = $db->loadRowList();
+			return $categories;
+			
+		}//End Function 
+		
+		
+		public function getGiftCategories(){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  ' SELECT * FROM sl_hikashop_category where category_parent_id=14';
+			
+			$db->setQuery($query);
+			
+			$categories = $db->loadRowList();
+			return $categories;
+			
+		}//End Function 
+		
+		
+		public function getSearchProducts($search, $giftDisplayOrder=""){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$searchText=$search['text'];
+			$cats = array($search['parentCat'],$search['subCat']);
+			$cats = array_filter($cats);
+			$cats = implode(',',$cats);
+			$cats = explode(',',$cats);
+			$catArray =  array_filter($cats);
+			$cats =  implode(',',$catArray);
+
+			if($giftDisplayOrder=='RAND()'){
+				if(!isset($_SESSION))
+					session_start();
+				if(!isset($_SESSION['random_gift_seed']))
+					$_SESSION['random_gift_seed'] = rand(0,100);
+				$giftDisplayOrder = 'RAND('.$_SESSION['random_gift_seed'].')';
+			}
+			
+			$condition="";
+			$setValue=false;
+			if(isset($search['text']) && $search['text']!=""){
+				$condition .=" (products.product_name LIKE '%".$searchText."%' ";
+				$setValue=true;
+				$condition .=" OR  MATCH (products.product_description) AGAINST ('$searchText' IN NATURAL LANGUAGE MODE) ";
+				$condition .=" OR (sl_tags.title LIKE '%".$searchText."%' ";
+				$condition .=" AND sl_contentitem_tag_map.type_alias='com_hikashop.product'))";
+			}
+			if($cats != ''){
+				$catJoin = '';
+				$i = 0;
+				foreach($catArray as $cat){ $i++;
+					$catJoin .= " INNER JOIN sl_hikashop_product_category as c$i ON (c$i.product_id = products.product_id AND c$i.category_id = $cat)";
+				}
+				if($catJoin != ''){
+					$catJoin .= " LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = c1.category_id";
+				}
+				/*if($setValue)
+					$condition .="  AND sl_hikashop_product_category.category_id IN ($cats)";
+				else
+					$condition .="   sl_hikashop_product_category.category_id IN ($cats)";*/
+				$setValue=true;
+			}else{
+				$productParentCategoryID = PRODUCT_PARENT_CATEGORY;
+				$catJoin = " INNER JOIN sl_hikashop_product_category AS c1 ON c1.category_id = $productParentCategoryID AND c1.product_id = products.product_id
+				LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = c1.category_id ";
+				// $categoriesList=$this->getProductCategories($productParentCategoryID);
+				// $i=0;
+				// foreach($categoriesList as $value) {
+				// 	if($value[4] == '' && $value[2] == '' && $value[0] != ''){
+				// 		$productCategoryArray[]=$value[0];
+				// 	}else if($value[4] == '' && $value[2] != '' && $value[0] != ''){
+				// 		$productCategoryArray[]=$value[2];
+				// 		$productCategoryArray[]=$value[0];
+				// 	}else{
+				// 		$productCategoryArray[]=$value[4];	
+				// 		$productCategoryArray[]=$value[0];	
+				// 	}
+				// 	$i++;
+				// }
+				// $categoryIdList = implode(', ', array_unique($productCategoryArray));
+				// if($condition != '')
+				// 	$condition .=" AND sl_hikashop_category.category_id IN($categoryIdList) ";
+				// else
+				// 	$condition .=" sl_hikashop_category.category_id IN($categoryIdList) ";
+			}
+			if($search['price'] != ''){
+				$price = explode('-',$search['price']); 
+				$min = trim($price[0]);
+				$max = trim($price[1]);
+				if($condition != ''){
+					if($max == '1111')
+						$condition .=" AND sl_hikashop_price.price_value >= $min";
+					else	
+						$condition .=" AND sl_hikashop_price.price_value >= $min AND sl_hikashop_price.price_value <= $max";
+				}else{
+					if($max == '1111')
+						$condition .=" sl_hikashop_price.price_value >= $min";
+					else	
+						$condition .=" sl_hikashop_price.price_value >= $min AND sl_hikashop_price.price_value <= $max";
+				}
+			}
+			if($condition != '')
+				$condition .=" AND sl_hikashop_category.category_published = 1 AND products.product_published = 1 ";
+			else
+				$condition .=" sl_hikashop_category.category_published = 1 AND products.product_published = 1 ";
+			$limit = "LIMIT 0,".REDEEM_GIFT_RECORD_PER_PAGE;
+			//$limit = "";
+			$productQry ="SELECT products . * , files . * , sl_hikashop_price . * , sl_hikashop_category . * ,sl_contentitem_tag_map.*,sl_tags.*, GROUP_CONCAT(DISTINCT CONCAT(sl_hikashop_category.category_parent_id ,',',sl_hikashop_category.category_id)  SEPARATOR ',') as selectedCatIDs, manufacturer_category.category_name as manufacturer
+			FROM sl_hikashop_product AS products
+			LEFT JOIN sl_hikashop_category AS manufacturer_category ON products.product_manufacturer_id = manufacturer_category.category_id
+			LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+			LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+			$catJoin
+			LEFT JOIN sl_contentitem_tag_map ON sl_contentitem_tag_map.content_item_id  = products.product_id
+			LEFT JOIN sl_tags ON sl_tags.id  = sl_contentitem_tag_map.tag_id
+			WHERE $condition GROUP BY products.product_id ORDER BY $giftDisplayOrder $limit";
+			$productTotalQry ="SELECT products . * , files . * , sl_hikashop_price . * , sl_hikashop_category . * ,sl_contentitem_tag_map.*,sl_tags.*, GROUP_CONCAT(DISTINCT CONCAT(sl_hikashop_category.category_parent_id ,',',sl_hikashop_category.category_id)  SEPARATOR ',') as selectedCatIDs
+			FROM sl_hikashop_product AS products
+			LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+			LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+			$catJoin
+			LEFT JOIN sl_contentitem_tag_map ON sl_contentitem_tag_map.content_item_id  = products.product_id
+			LEFT JOIN sl_tags ON sl_tags.id  = sl_contentitem_tag_map.tag_id
+			WHERE $condition GROUP BY products.product_id";
+			$db->setQuery($productQry);
+			$prodData = $db->loadObjectList();
+			$db->setQuery($productTotalQry);
+			$totalProdData = $db->loadObjectList();
+			$finalData=array();
+			$i=0;
+			
+			foreach($prodData as $product=>$data){
+				/*$parentCategory = $this->getParentCategory($data->category_id);
+				$productType = '';
+				if(GIFT_CARD_CATEGORY_ID ==  $parentCategory){
+					$productType = 'giftCard';
+				}elseif(TINGGLY_EXPERIENCES_ID == $parentCategory){
+					$productType = 'tinggly';
+				}elseif(PRODUCT_PARENT_CATEGORY == $parentCategory){
+					$productType = 'physicalGift';
+				}elseif(GIVE_STOCK_CATEGORY_ID == $parentCategory){
+					$productType = 'stock';
+				}elseif(FIVER_CATEGORY_ID == $parentCategory){
+					$productType = 'fiver';
+				}*/
+				if($data->manufacturer==null)
+					$data->manufacturer = '';
+
+				$productType = 'physicalGift';
+				$finalData[$i]['manufacturer']=$data->manufacturer;
+				$finalData[$i]['product_likes']=$data->product_likes;
+				$finalData[$i]['product_name']=$data->product_name;
+				$finalData[$i]['product_id']=$data->product_id;
+				$finalData[$i]['image']=$data->file_path;  
+				$finalData[$i]['category_id']=$data->category_id;
+				$finalData[$i]['CatValue']=$data->price_value;  
+				$finalData[$i]['product_description']=$data->product_description;  
+				$finalData[$i]['brand']=$data->category_name;  
+				$finalData[$i]['selectedCatIDs']=$data->selectedCatIDs;  
+				$finalData[$i]['productType']=$productType;  
+				$i++;
+			}
+			return array(
+				'data'	=>	$finalData,
+				'count'	=>	count($totalProdData)
+			);
+		}
+
+		public function getFilteredProducts($search, $filters, $sort, $start=0){
+			$db = JFactory::getDbo();
+			$search = $db->escape($search);
+
+			$giftDisplayOrder = GIFT_DISPLAY_ORDER;
+
+			$condition="";
+			$setValue=false;
+			if(isset($search) && $search!=""){
+				$condition .=" (products.product_name LIKE '%".$search."%' ";
+				$setValue=true;
+				$condition .=" OR  MATCH (products.product_description) AGAINST ('$search' IN NATURAL LANGUAGE MODE) ";
+				$condition .=" OR (sl_tags.title LIKE '%".$search."%' ";
+				$condition .=" AND sl_contentitem_tag_map.type_alias='com_hikashop.product'))";
+			}
+
+			$categoryList = '';
+			$brandList = '';
+			$priceCondition = '';
+			if(isset($filters)&&is_array($filters)){
+				foreach($filters as $key => $filter){
+					if($filter['type']=='category'){
+						$cat_id = $db->escape($filter['id']);
+						if($categoryList==''){
+							$categoryList = "$cat_id";
+						}
+						else{
+							$categoryList .= ", $cat_id";
+						}
+					}
+					else if($filter['type']=='brand'){
+						$brand_id = $db->escape($filter['id']);
+						if($brandList==''){
+							$brandList = "$brand_id";
+						}
+						else{
+							$brandList .= ", $brand_id";
+						}
+					}
+					else if($filter['type']=='price'){
+						$low_price = $db->escape($filter['low']);
+						$high_price = $db->escape($filter['high']);
+						$priceCondition = " sl_hikashop_price.price_value >= $low_price AND sl_hikashop_price.price_value < $high_price ";
+					}
+				}
+				if($categoryList!=''){
+					if($condition==''){
+						$condition = " sl_hikashop_category.category_id IN($categoryList) ";
+					}
+					else{
+						$condition .= " AND sl_hikashop_category.category_id IN($categoryList) ";
+					}
+				}
+				if($brandList!=''){
+					if($condition==''){
+						$condition = " products.product_manufacturer_id IN($brandList) ";
+					}
+					else{
+						$condition .= " AND products.product_manufacturer_id IN($brandList) ";
+					}
+				}
+
+				if($priceCondition!=''){
+					if($condition==''){
+						$condition = $priceCondition;
+					}
+					else{
+						$condition .= " AND $priceCondition ";
+					}
+				}
+			}
+
+			$orderBy = "";
+			if($sort=='relevance'&&$giftDisplayOrder=='RAND()'){
+				if(!isset($_SESSION))
+					session_start();
+				if(!isset($_SESSION['random_gift_seed']))
+					$_SESSION['random_gift_seed'] = rand(0,100);
+				$giftDisplayOrder = 'RAND('.$_SESSION['random_gift_seed'].')';
+				$orderBy = $giftDisplayOrder;
+			}
+			else if($sort=='relevance'){
+				$orderBy = $giftDisplayOrder;
+			}
+			else if($sort=='low_to_high'){
+				$orderBy = "sl_hikashop_price.price_value ASC";
+			}
+			else if($sort=='high_to_low'){
+				$orderBy = "sl_hikashop_price.price_value DESC";
+			}
+
+			if($categoryList != ''){
+				$catJoin = '';
+				$i = 0;
+				$catArray = explode(', ', $categoryList);
+				foreach($catArray as $cat){ $i++;
+					if($catJoin==''){
+						$catJoin = " INNER JOIN sl_hikashop_product_category as c1 ON (c1.product_id = products.product_id AND c1.category_id = $cat)";
+					}
+					else{
+						$catJoin .= " OR (c1.product_id = products.product_id AND c1.category_id = $cat)";
+					}
+				}
+				if($catJoin != ''){
+					$catJoin .= " LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = c1.category_id";
+				}
+				$setValue=true;
+			}else{
+				$productParentCategoryID = PRODUCT_PARENT_CATEGORY;
+				$catJoin = " INNER JOIN sl_hikashop_product_category AS c1 ON c1.category_id = $productParentCategoryID AND c1.product_id = products.product_id
+				LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = c1.category_id ";
+				// $categoriesList=$this->getProductCategories($productParentCategoryID);
+				// $i=0;
+				// foreach($categoriesList as $value) {
+				// 	if($value[4] == '' && $value[2] == '' && $value[0] != ''){
+				// 		$productCategoryArray[]=$value[0];
+				// 	}else if($value[4] == '' && $value[2] != '' && $value[0] != ''){
+				// 		$productCategoryArray[]=$value[2];
+				// 		$productCategoryArray[]=$value[0];
+				// 	}else{
+				// 		$productCategoryArray[]=$value[4];	
+				// 		$productCategoryArray[]=$value[0];	
+				// 	}
+				// 	$i++;
+				// }
+				// $categoryIdList = implode(', ', array_unique($productCategoryArray));
+				// if($condition != '')
+				// 	$condition .=" AND sl_hikashop_category.category_id IN($categoryIdList) ";
+				// else
+				// 	$condition .=" sl_hikashop_category.category_id IN($categoryIdList) ";
+			}
+
+			if($condition != '')
+				$condition .=" AND sl_hikashop_category.category_published = 1 AND products.product_published = 1 ";
+			else
+				$condition .=" sl_hikashop_category.category_published = 1 AND products.product_published = 1 ";
+
+			$limit = "LIMIT $start,".REDEEM_GIFT_RECORD_PER_PAGE;
+			//$limit = "";
+			$productQry ="SELECT products . * , files . * , sl_hikashop_price . * , sl_hikashop_category . * ,sl_contentitem_tag_map.*,sl_tags.*, GROUP_CONCAT(DISTINCT CONCAT(sl_hikashop_category.category_parent_id ,',',sl_hikashop_category.category_id)  SEPARATOR ',') as selectedCatIDs, manufacturer_category.category_name as manufacturer
+			FROM sl_hikashop_product AS products
+			LEFT JOIN sl_hikashop_category AS manufacturer_category ON products.product_manufacturer_id = manufacturer_category.category_id
+			LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+			LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+			$catJoin
+			LEFT JOIN sl_contentitem_tag_map ON sl_contentitem_tag_map.content_item_id  = products.product_id
+			LEFT JOIN sl_tags ON sl_tags.id  = sl_contentitem_tag_map.tag_id
+			WHERE $condition GROUP BY products.product_id ORDER BY $orderBy $limit";
+			// $productTotalQry ="SELECT COUNT(DISTINCT products.product_id) as total
+			// FROM sl_hikashop_product AS products
+			// LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+			// LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+			// $catJoin
+			// LEFT JOIN sl_contentitem_tag_map ON sl_contentitem_tag_map.content_item_id  = products.product_id
+			// LEFT JOIN sl_tags ON sl_tags.id  = sl_contentitem_tag_map.tag_id
+			// WHERE $condition";
+			$db->setQuery($productQry);
+			$prodData = $db->loadObjectList();
+			// $db->setQuery($productTotalQry);
+			// $totalProdData = $db->loadObjectList();
+			$finalData=array();
+			$i=0;
+			
+			foreach($prodData as $product=>$data){
+				/*$parentCategory = $this->getParentCategory($data->category_id);
+				$productType = '';
+				if(GIFT_CARD_CATEGORY_ID ==  $parentCategory){
+					$productType = 'giftCard';
+				}elseif(TINGGLY_EXPERIENCES_ID == $parentCategory){
+					$productType = 'tinggly';
+				}elseif(PRODUCT_PARENT_CATEGORY == $parentCategory){
+					$productType = 'physicalGift';
+				}elseif(GIVE_STOCK_CATEGORY_ID == $parentCategory){
+					$productType = 'stock';
+				}elseif(FIVER_CATEGORY_ID == $parentCategory){
+					$productType = 'fiver';
+				}*/
+				if($data->manufacturer==null)
+					$data->manufacturer = '';
+
+				$productType = 'physicalGift';
+				$finalData[$i]['manufacturer']=$data->manufacturer;
+				$finalData[$i]['product_likes']=$data->product_likes;
+				$finalData[$i]['product_discount']=$data->product_discount;
+				$finalData[$i]['product_name']=$data->product_name;
+				$finalData[$i]['product_id']=$data->product_id;
+				$finalData[$i]['image']=$data->file_path;  
+				$finalData[$i]['category_id']=$data->category_id;
+				$finalData[$i]['CatValue']=$data->price_value;  
+				$finalData[$i]['product_description']=$data->product_description;  
+				$finalData[$i]['brand']=$data->category_name;  
+				$finalData[$i]['selectedCatIDs']=$data->selectedCatIDs;  
+				$finalData[$i]['productType']=$productType;  
+				$i++;
+			}
+			return array(
+				'data'	=>	$finalData,
+				'count'	=>	1
+				// 'count'	=>	$totalProdData[0]->total
+			);
+		}
+		/******************
+			Function: Used to get description
+			of selected product search based on array of product ids
+		*****************/
+		public function getProductDetailByIds($prodid){
+			
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$ids=implode(",",$prodid);
+			$productQry ="SELECT products . * , files . * , sl_hikashop_price . * , sl_hikashop_category . * ,GROUP_CONCAT(DISTINCT CONCAT(sl_hikashop_category.category_parent_id ,',',sl_hikashop_category.category_id)  SEPARATOR ',') as selectedCatIDs
+			FROM sl_hikashop_product AS products
+			LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+			LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+			LEFT JOIN sl_hikashop_product_category ON sl_hikashop_product_category.product_id = products.product_id
+			LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = sl_hikashop_product_category.category_id
+			WHERE products.product_id IN($ids) GROUP BY products.product_id";
+			
+			$db->setQuery($productQry);
+			$prodData = $db->loadObjectList();
+			
+			$finalData=array();
+			$i=0;
+			
+			foreach($prodData as $product=>$data){
+				$finalData[$i]['product_name']=$data->product_name;
+				$finalData[$i]['product_id']=$data->product_id;
+				$finalData[$i]['image']=$data->file_path;  
+				$finalData[$i]['category_id']=$data->category_id;
+				$finalData[$i]['CatValue']=$data->price_value;  
+				$finalData[$i]['product_description']=$data->product_description;  
+				$finalData[$i]['brand']=$data->category_name;  
+				$finalData[$i]['category_parent_id']=$data->category_parent_id;  
+				$finalData[$i]['selectedCatIDs']=$data->selectedCatIDs;  
+				$i++;
+			}
+			return $finalData;
+		}
+		/******************
+			Function: Used to get description
+			of selected product
+		*****************/
+		public function getProductDetailById($catid,$prodid,$prodType=""){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$productQry ="SELECT products . * , files . * , sl_hikashop_price . * , sl_hikashop_category . * 
+			FROM sl_hikashop_product AS products
+			LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+			LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+			LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = products.product_manufacturer_id
+			WHERE products.product_id=$prodid";
+			
+			$db->setQuery($productQry);
+			$prodData = $db->loadObjectList();
+			$finalData=array();
+			$i=0;
+			
+			foreach($prodData as $product=>$data){
+				$db->setQuery("SELECT category_name FROM sl_hikashop_category WHERE category_id='".$data->product_manufacturer_id."'");
+				$manufacturer = $db->loadObjectList();
+				if(is_array($manufacturer)&&count($manufacturer)>0){
+					$finalData[$i]['manufacturer']=$manufacturer[0]->category_name;
+				}
+				else{
+					$finalData[$i]['manufacturer']='';
+				}
+				$finalData[$i]['product_likes']=$data->product_likes;
+				$finalData[$i]['product_name']=$data->product_name;
+				$finalData[$i]['product_id']=$data->product_id;
+				$finalData[$i]['image']=$data->file_path;  
+				$finalData[$i]['category_id']=$catid;  
+				$finalData[$i]['CatValue']=$data->price_value;  
+				$finalData[$i]['product_description']=$data->product_description;  
+				$finalData[$i]['brand']=$data->category_name; 
+				if($prodType == 'tinggly'){
+					$finalData[$i]['tinggly_essential_price']=$data->tinggly_essential_price; 
+					$finalData[$i]['tinggly_premium_price']=$data->tinggly_premium_price; 
+					$finalData[$i]['tinggly_ultimate_price']=$data->tinggly_ultimate_price; 
+					$finalData[$i]['tinggly_essential_description']=$data->tinggly_essential_description; 
+					$finalData[$i]['tinggly_premium_description']=$data->tinggly_premium_description; 
+					$finalData[$i]['tingglyultimatedescription']=$data->tingglyultimatedescription;  
+				}				
+				$i++;
+			}
+			return $finalData;
+		}
+		
+		/*********************
+			Function used to  get the count of hikashop products
+			$categoryIdArray = products_category_ids
+		**********************/
+		public function getProductCount($categoryIdArray, $giftPrice=""){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$condition = "";
+			if(is_array($categoryIdArray)){
+				$categoryIdList = implode(', ', $categoryIdArray);
+			} else {
+				$categoryIdList = $categoryIdArray;
+			}
+			//$categoryIdList = implode(', ', $categoryIdArray);
+			if($categoryIdList != '')
+				$condition .=" sl_hikashop_category.category_id IN($categoryIdList)";
+			if((isset($_GET['s']) && $_GET['s'] != '')){
+				$searchText = $_GET['s'];
+				if($searchText != ''){
+					$condition .=" (products.product_name LIKE '%".$searchText."%' ";
+				
+					$setValue=true;
+					$condition .=" OR  MATCH (products.product_description) AGAINST ('$searchText' IN NATURAL LANGUAGE MODE) ";
+					$condition .=" OR (sl_tags.title LIKE '%".$searchText."%' ";
+					$condition .=" AND sl_contentitem_tag_map.type_alias='com_hikashop.product'))";
+				}
+			}
+			if($condition != '')
+				$condition .=" AND sl_hikashop_category.category_published = 1 AND products.product_published = 1";
+			else
+				$condition .=" sl_hikashop_category.category_published = 1 AND products.product_published = 1";
+			if(isset($_GET['parentCatId']) && $_GET['parentCatId']!="" && $_GET['searchType']=='price'){
+				$searchType = $_GET['searchType'];
+				$price = explode('-',$_GET['parentCatId']); 
+				$min = trim($price[0]);
+				$max = trim($price[1]);
+				if($max == '1111'){
+					$condition .=" AND sl_hikashop_price.price_value >= ".$min ;
+				}else{
+					$condition .=" AND sl_hikashop_price.price_value >= ".$min." AND sl_hikashop_price.price_value <= ".$max ;
+				}
+			}
+			if($giftPrice != ''){
+				if($condition != '')
+					$condition .= " AND sl_hikashop_price.price_value<=$giftPrice";
+				else
+					$condition .= " sl_hikashop_price.price_value<=$giftPrice";
+			}
+			$query ="SELECT COUNT(DISTINCT products.product_id) as total
+				FROM sl_hikashop_product AS products
+				LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+				LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+				LEFT JOIN sl_hikashop_product_category ON sl_hikashop_product_category.product_id = products.product_id
+				LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = sl_hikashop_product_category.category_id
+				WHERE $condition";
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			return $data[0]->total;
+		}
+		
+		/***************
+			Function: Used to get pahysical gifts 
+			by using category id and price
+		****************/
+		public function getProductByCatAndPrice($searchCriteria,$categoryIdArray, $startPoint, $endPoint, $giftDisplayOrder,$giftType="physical",$listedProducts="",$pagination=true){
+			$noOfGifts = REDEEM_GIFT_RECORD_PER_PAGE;
+			$shipping_charges = 0;
+			$tax= 0;
+			$finalProductData=array();
+			if(is_array($categoryIdArray)){
+				$categoryIdList = implode(', ', $categoryIdArray);
+			} else {
+				$categoryIdList = $categoryIdArray;
+			}
+			$db = JFactory::getDbo();
+			$limit = "";
+
+			if($giftDisplayOrder=='RAND()'){
+				if(!isset($_SESSION))
+					session_start();
+				if(!isset($_SESSION['random_gift_seed']))
+					$_SESSION['random_gift_seed'] = rand(0,100);
+				$giftDisplayOrder = 'RAND('.$_SESSION['random_gift_seed'].')';
+			}
+			
+			if($pagination){
+				if($endPoint >= $startPoint ){ 
+					if(($endPoint - $startPoint) < $noOfGifts){
+						$noOfGifts = $endPoint - $startPoint;
+					}
+				}else{
+					return $finalProductData;
+				}
+				$limit = " LIMIT $startPoint, $noOfGifts";
+			}
+			$amount = $searchCriteria['amount'] - $shipping_charges - $tax;
+			$condition = '';
+			if($categoryIdList != ''){
+				$condition .= " sl_hikashop_category.category_id IN($categoryIdList)";
+			}
+			/*if($listedProducts != ''){
+				if($condition != '')
+					$condition .= " AND products.product_id NOT IN($listedProducts)";
+				else
+					$condition .= " products.product_id NOT IN($listedProducts)";
+			}*/
+			//echo $giftType;
+			if($giftType!="giftCardProducts"){
+			if($amount != ''){
+				if($condition != '')
+					$condition .= " AND sl_hikashop_price.price_value<=$amount";
+				else
+					$condition .= " sl_hikashop_price.price_value<=$amount";
+			}
+			}
+			if($condition != '')
+					$condition .=" AND sl_hikashop_category.category_published = 1 AND products.product_published =1";
+				else
+					$condition .=" sl_hikashop_category.category_published = 1 AND products.product_published =1 ";
+			
+			if($giftType!="physical"){
+				$limit="";
+				}
+			//$limit = "";
+		 	 $productQry = "SELECT products . * , files . * , sl_hikashop_price . * , sl_hikashop_category . *, GROUP_CONCAT(DISTINCT CONCAT(sl_hikashop_category.category_parent_id ,',',sl_hikashop_category.category_id)  SEPARATOR ',') as selectedCatIDs 
+				FROM sl_hikashop_product AS products
+				LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+				LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+				LEFT JOIN sl_hikashop_product_category ON sl_hikashop_product_category.product_id = products.product_id
+				LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = sl_hikashop_product_category.category_id
+				WHERE $condition GROUP BY products.product_id ORDER BY $giftDisplayOrder $limit";
+			$db->setQuery($productQry);
+			$productDescriptionData = $db->loadObjectList();
+			
+			if(!empty($productDescriptionData)){ $i=0;
+				foreach($productDescriptionData as $product=>$data){
+					$db->setQuery("SELECT category_name FROM sl_hikashop_category WHERE category_id='".$data->product_manufacturer_id."'");
+					$manufacturer = $db->loadObjectList();
+					if(is_array($manufacturer)&&count($manufacturer)>0){
+						$finalProductData[$i]['manufacturer']=$manufacturer[0]->category_name;
+					}
+					else{
+						$finalProductData[$i]['manufacturer']='';
+					}
+					$finalProductData[$i]['product_id'] = $data->product_id;
+					$finalProductData[$i]['product_name'] = $data->product_name;
+					$finalProductData[$i]['image'] = $data->file_path;  
+					// if(is_array($categoryIdArray)){
+						// $finalProductData[$i]['category_id']=$categoryIdArray[$i];  
+					// } else {
+						// $finalProductData[$i]['category_id']=$categoryIdArray;  
+					// }
+					$finalProductData[$i]['category_id']=$data->category_id;  
+					$finalProductData[$i]['CatValue'] = $data->price_value;  
+					$finalProductData[$i]['product_description'] = $data->product_description;  
+					$finalProductData[$i]['brand'] = $data->category_name; 
+					$finalProductData[$i]['tingglyEssentialPrice']=$data->tinggly_essential_price;  
+					$finalProductData[$i]['tingglyPremiumPrice']=$data->tinggly_premium_price;
+					$finalProductData[$i]['tingglyUltimatePrice']=$data->tinggly_ultimate_price;
+					$finalProductData[$i]['selectedCatIDs']=$data->selectedCatIDs;
+					$finalProductData[$i]['product_likes']=$data->product_likes;
+					$finalProductData[$i]['productType']='physicalGift';
+					$i++;
+				}
+			}
+			
+			return $finalProductData;
+		}//End Function
+		/*********************
+			Function used to  get hikashop product's description
+			$categoryIdArray = products_category_ids
+		**********************/
+		public function getProductByCat($categoryIdArray, $startPoint, $endPoint, $giftDisplayOrder,$type="physical",$listedProducts="",$pagination=true,$isSearch=false,$searchType='',$searchText='',$price=''){
+
+			if($giftDisplayOrder=='RAND()'){
+				if(!isset($_SESSION))
+					session_start();
+				if(!isset($_SESSION['random_gift_seed']))
+					$_SESSION['random_gift_seed'] = rand(0,100);
+				$giftDisplayOrder = 'RAND('.$_SESSION['random_gift_seed'].')';
+			}
+
+			$constantsValue =  constants::getInstance();
+			$noOfGifts = $constantsValue -> getConstantValues("REDEEM_GIFT_RECORD_PER_PAGE");
+			if(is_array($categoryIdArray)){
+				$categoryIdList = implode(', ', $categoryIdArray);
+			}
+			else{
+				$categoryIdList = $categoryIdArray;
+			}
+			$db = JFactory::getDbo();
+			$finalProductData=array();
+			$limit = "";
+			if($pagination){
+				if($endPoint >= $startPoint ){ 
+					if(($endPoint - $startPoint) < $noOfGifts){
+						$noOfGifts = $endPoint - $startPoint;
+					}
+				}else{
+					return $finalProductData;
+				}
+				$limit = " LIMIT $startPoint, $noOfGifts";
+			}
+			$condition = $catJoin = '';
+			if($categoryIdList != ''){
+				if($isSearch){
+					$i = 0;
+					foreach($categoryIdArray as $cat){ $i++;
+						$catJoin .= " INNER JOIN sl_hikashop_product_category as c$i ON (c$i.product_id = products.product_id AND c$i.category_id = $cat)";
+					}
+					if($catJoin != ''){
+						$catJoin .= " LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = c1.category_id";
+					}
+				}else{
+					$condition .=" sl_hikashop_category.category_id IN($categoryIdList) ";
+					$catJoin = ' LEFT JOIN sl_hikashop_product_category ON sl_hikashop_product_category.product_id = products.product_id LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = sl_hikashop_product_category.category_id ';
+				}
+			}else{
+				$catJoin = ' LEFT JOIN sl_hikashop_product_category ON sl_hikashop_product_category.product_id = products.product_id LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = sl_hikashop_product_category.category_id ';
+			}
+			/*if($listedProducts != ''){
+				if($condition != '')
+					$condition .= " AND products.product_id NOT IN($listedProducts)";
+				else
+					$condition .= " products.product_id NOT IN($listedProducts)";
+			}*/
+			//$limit = "";
+			if($condition != '')
+				$condition .=" AND sl_hikashop_category.category_published = 1 AND products.product_published =1";
+			else
+				$condition .=" sl_hikashop_category.category_published = 1 AND products.product_published =1";
+			
+			if($isSearch){
+				if($searchText != ''){
+					if($condition != '')
+						$condition .=" AND (products.product_name LIKE '%".$searchText."%' ";
+					else	
+						$condition .=" (products.product_name LIKE '%".$searchText."%' ";
+				
+					$setValue=true;
+					$condition .=" OR  MATCH (products.product_description) AGAINST ('$searchText' IN NATURAL LANGUAGE MODE) ";
+					$condition .=" OR (sl_tags.title LIKE '%".$searchText."%' ";
+					$condition .=" AND sl_contentitem_tag_map.type_alias='com_hikashop.product'))";
+				}
+				if($price != ''){
+					$price = explode('-',$price); 
+					$min = trim($price[0]);
+					$max = trim($price[1]);
+					if($condition != ''){
+						if($max == '1111')
+							$condition .=" AND sl_hikashop_price.price_value >= $min";
+						else	
+							$condition .=" AND sl_hikashop_price.price_value >= $min AND sl_hikashop_price.price_value <= $max";
+					}else{
+						if($max == '1111')
+							$condition .=" sl_hikashop_price.price_value >= $min";
+						else	
+							$condition .=" sl_hikashop_price.price_value >= $min AND sl_hikashop_price.price_value <= $max";
+					}
+				}
+				$productQry ="SELECT products . * , files . * , sl_hikashop_price . * , sl_hikashop_category . * ,sl_contentitem_tag_map.*,sl_tags.*, GROUP_CONCAT(DISTINCT CONCAT(sl_hikashop_category.category_parent_id ,',',sl_hikashop_category.category_id)  SEPARATOR ',') as selectedCatIDs
+				FROM sl_hikashop_product AS products
+				LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+				LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+				$catJoin
+				LEFT JOIN sl_contentitem_tag_map ON sl_contentitem_tag_map.content_item_id  = products.product_id
+				LEFT JOIN sl_tags ON sl_tags.id  = sl_contentitem_tag_map.tag_id
+				WHERE $condition AND products.product_published=1 GROUP BY products.product_id ORDER BY $giftDisplayOrder $limit";
+			}else{
+				$productQry ="SELECT products . * , files . * , sl_hikashop_price . * , sl_hikashop_category . *, GROUP_CONCAT(DISTINCT CONCAT(sl_hikashop_category.category_parent_id ,',',sl_hikashop_category.category_id)  SEPARATOR ',') as selectedCatIDs 
+				FROM sl_hikashop_product AS products
+				LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+				LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+				$catJoin
+				WHERE $condition GROUP BY products.product_id ORDER BY $giftDisplayOrder $limit"; 
+			}
+			$db->setQuery($productQry);
+			
+			$productDescriptionData = $db->loadObjectList();
+			$i=0;
+			foreach($productDescriptionData as $product=>$data){
+				// Find manufacturer
+				$db->setQuery("SELECT category_name FROM sl_hikashop_category WHERE category_id='".$data->product_manufacturer_id."'");
+				$manufacturer = $db->loadObjectList();
+				if(is_array($manufacturer)&&count($manufacturer)>0){
+					$finalProductData[$i]['manufacturer']=$manufacturer[0]->category_name;
+				}
+				else{
+					$finalProductData[$i]['manufacturer']='';
+				}
+				$finalProductData[$i]['product_likes']=$data->product_likes;
+				$finalProductData[$i]['product_id']=$data->product_id;
+				$finalProductData[$i]['product_name']=$data->product_name;
+				$finalProductData[$i]['image']=$data->file_path;  
+				/*if(is_array($categoryIdArray)){
+					$finalProductData[$i]['category_id']=$categoryIdArray[$i];  
+					}else{
+					$finalProductData[$i]['category_id']=$categoryIdArray;  
+				}*/
+				$finalProductData[$i]['category_id']=$data->category_id;  
+				$finalProductData[$i]['CatValue']=$data->price_value;  
+				$finalProductData[$i]['product_description']=$data->product_description;  
+				$finalProductData[$i]['brand']=$data->category_name; 
+				$finalProductData[$i]['selectedCatIDs']=$data->selectedCatIDs; 
+				$i++;
+			}
+			return $finalProductData;
+			
+		}//End Function
+		
+		public function getProductByCategory($categoryId){
+			
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			if(is_array($categoryId)){
+				$categoryIdList = implode(', ', $categoryId);
+			}
+			else{
+				$categoryIdList = $categoryId;
+			}
+			$query  =  "SELECT * FROM sl_hikashop_product_category where category_id IN (".$categoryIdList.")";
+			
+			$db->setQuery($query);
+			$products = $db->loadRowList();
+			$productIds=array();
+			
+			foreach($products as $key=>$value){
+				$productIds[]=$value[2];
+			}
+			$finalData=array();
+
+			if(!empty($productIds)){
+				$productid=implode(",",$productIds);
+				$productQry ="SELECT products.*, files.*,sl_hikashop_price.* from sl_hikashop_product as products LEFT JOIN sl_hikashop_file as files on files.file_ref_id=products.product_id LEFT JOIN sl_hikashop_price on sl_hikashop_price.price_product_id=products.product_id where products.product_id IN($productid) AND products.product_published=1 ";
+				
+				$db->setQuery($productQry);
+				$prodData = $db->loadObjectList();
+				$i=0;
+				foreach($prodData as $product=>$data){
+					$finalData[$i]['product_name']=$data->product_name;
+					$finalData[$i]['product_id']=$data->product_id;
+					$finalData[$i]['image']=$data->file_path;  
+					$finalData[$i]['category_id']=$categoryId;  
+					$finalData[$i]['CatValue']=$data->price_value;  
+					$finalData[$i]['product_description']=$data->product_description;
+					$finalData[$i]['tingglyEssentialPrice']=$data->tinggly_essential_price;  
+					$finalData[$i]['tingglyPremiumPrice']=$data->tinggly_premium_price;
+					$finalData[$i]['tingglyUltimatePrice']=$data->tinggly_ultimate_price;
+				//	$finalData[$i]['tingglyShortDiscription']=$data->tinggly_short_discription;
+					$finalData[$i]['tinggly_essential_description']=$data->tinggly_essential_description; 
+					$finalData[$i]['tinggly_premium_description']=$data->tinggly_premium_description; 
+					$finalData[$i]['tingglyultimatedescription']=$data->tingglyultimatedescription;  
+					$i++;
+				}
+			}
+			return $finalData;
+		}//End Function
+		
+		
+		public function getMessageListPendingCount($userId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow= date("Y-m-d")." 00:00:00";
+			$query  =  " SELECT * FROM sl_sil_message WHERE user_id =$userId AND is_sent = 0 AND is_deleted=0 and is_success=1 AND (gift_type = 'msg' OR (gift_type IN ('gift','money','card','stock','fiverr','perfect gift','tinggly') AND payment_complete = 1)) order by id desc";
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			
+			return count($pendingData);
+			
+		}//End Function 
+		public function getMessageListDeliveredCount($userId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow= date("Y-m-d")." 00:00:00";
+			$query  =  " SELECT count(*) as deliveredCount FROM sl_sil_message WHERE user_id=$userId AND is_sent = 1 AND payment_complete=1 AND is_success=1 AND date_to_deliver_message <='".$datenow."' order by date_to_deliver_message DESC,id";
+			$db->setQuery($query);
+			$deliveredCount = $db->loadObjectList();
+			
+			return $deliveredCount[0]->deliveredCount;
+			
+		}//End Function 
+		
+		public function getNewInboxCount(){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow= date("Y-m-d")." 00:00:00";
+			$user = JFactory::getUser();
+			$userEmail=$user->email;
+			$query  =  " SELECT count(*) as inboxCount FROM sl_sil_message WHERE recipient_email like '$userEmail' AND is_sent = 1 AND payment_complete=1 AND is_success=1 AND date_to_deliver_message <='".$datenow."'  AND is_redeemed IS NULL AND ( (gift_type != 'msg' AND redemption_status != 2) OR (gift_type = 'msg' AND  redemption_status = 0)) order by date_to_deliver_message DESC,id";
+			$db->setQuery($query);
+			$inboxCount = $db->loadObjectList();
+			
+			return $inboxCount[0]->inboxCount;
+			
+		}//End Function
+		
+		/***************
+			Function : Used to get list of upcoming events			
+		***************/
+		public function getUpcomingDates($userId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow = new DateTime("now");
+			$format = 'Y-m-d 00:00:00'; 
+			$date = date ( $format ); 
+			$constantsValue =  constants::getInstance();
+			$upcomingDays = $constantsValue -> getConstantValues("UPCOMING_DAYS");
+			$d = date ( $format, strtotime ( $upcomingDays ) );	
+			$query="select sl_sil_address_book.*,sl_sil_address_book_event.*, CONCAT(DATE_FORMAT(now(),'%Y'),'-',DATE_FORMAT(sl_sil_address_book_event.event_date,'%m') ,'-', DATE_FORMAT(sl_sil_address_book_event.event_date,'%d'),' 00:00:00')  from sl_sil_address_book_event INNER JOIN  sl_sil_address_book on sl_sil_address_book.id=sl_sil_address_book_event.contact_id
+			where CONCAT(DATE_FORMAT(now(),'%Y'),'-',DATE_FORMAT(sl_sil_address_book_event.event_date,'%m') ,'-', DATE_FORMAT(sl_sil_address_book_event.event_date,'%d'),' 00:00:00')  BETWEEN now() AND '".$d."' AND sl_sil_address_book.is_contact = 0  AND sl_sil_address_book.user_id=$userId order by sl_sil_address_book_event.event_date ASC LIMIT 2";
+			
+			$db->setQuery($query);
+			$upcomingData = $db->loadObjectList();
+			if(!empty($upcomingData)){
+				$i = 0;
+				foreach($upcomingData as $data){
+					$upcomingData[$i]->eventDate = strtoupper(date("M j", strtotime($data->event_date)));
+					$i++;
+				}
+			}
+			return $upcomingData;
+			
+		}
+		/***************
+			Function : Used to get all dates of upcoming events			
+		***************/
+		public function getUpcomingDatesCalenderView($userId,$date){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			if(is_array($date))
+				$date = $date[0];
+			if($date == ''){
+				$datenow = new DateTime("now");
+				$format = 'Y-m-d 00:00:00';
+				$constantsValue =  constants::getInstance();
+				$upcomingDays = $constantsValue -> getConstantValues("UPCOMING_DAYS");
+				$d = date ( $format, strtotime ( $upcomingDays ) );	
+				$query="select sl_sil_address_book.*,sl_sil_address_book_event.*,CONCAT(DATE_FORMAT(now(),'%Y'),'-',DATE_FORMAT(sl_sil_address_book_event.event_date,'%m') ,'-', DATE_FORMAT(sl_sil_address_book_event.event_date,'%d'),' 00:00:00') as eventDate  from sl_sil_address_book_event INNER JOIN  sl_sil_address_book on sl_sil_address_book.id=sl_sil_address_book_event.contact_id
+				where CONCAT(DATE_FORMAT(now(),'%Y'),'-',DATE_FORMAT(sl_sil_address_book_event.event_date,'%m') ,'-', DATE_FORMAT(sl_sil_address_book_event.event_date,'%d'),' 00:00:00')  > now() AND sl_sil_address_book.is_contact = 0  AND sl_sil_address_book.user_id=$userId order by sl_sil_address_book_event.event_date ASC ";
+			}else{
+				$d = date ( 'Y-m-d', strtotime($date) ).' 00:00:00';
+				$query="select sl_sil_address_book.*,sl_sil_address_book_event.*,CONCAT(DATE_FORMAT(now(),'%Y'),'-',DATE_FORMAT(sl_sil_address_book_event.event_date,'%m') ,'-', DATE_FORMAT(sl_sil_address_book_event.event_date,'%d'),' 00:00:00') as eventDate  from sl_sil_address_book_event INNER JOIN  sl_sil_address_book on sl_sil_address_book.id=sl_sil_address_book_event.contact_id
+				where CONCAT(DATE_FORMAT(now(),'%Y'),'-',DATE_FORMAT(sl_sil_address_book_event.event_date,'%m') ,'-', DATE_FORMAT(sl_sil_address_book_event.event_date,'%d'),' 00:00:00') = '$d' AND sl_sil_address_book.is_contact = 0  AND sl_sil_address_book.user_id=$userId order by sl_sil_address_book_event.event_date ASC ";
+			}
+			
+			$db->setQuery($query);
+			$upcomingData = $db->loadObjectList();
+			$outputDates = '';
+			if($date == ''){
+				$dates = array();
+				if(!empty($upcomingData)){
+					foreach($upcomingData as $date){
+						$dates[] = $date->eventDate;
+					}
+				}
+				$outputDates = (!empty($dates) ? implode(',',$dates) : '' );
+			}
+			if(!empty($upcomingData)){
+				$i = 0;
+				foreach($upcomingData as $data){
+					$upcomingData[$i]->eventDate = strtoupper(date("M j", strtotime($data->event_date)));
+					$i++;
+				}
+			}
+			return array('dates' => $outputDates, 'data' => $upcomingData );
+			
+		}
+		/***************
+			Function : Used to get list of contacts		
+		***************/
+		public function getContacts($userId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow = new DateTime("now");
+			$format = 'Y-m-d 00:00:00'; 
+			$date = date ( $format ); 
+			$constantsValue =  constants::getInstance();
+			$upcomingDays = $constantsValue -> getConstantValues("UPCOMING_DAYS");
+			$d = date ( $format, strtotime ( $upcomingDays ) );	
+			$query="select sl_sil_address_book.*,sl_sil_address_book_event.*, CONCAT(DATE_FORMAT(now(),'%Y'),'-',DATE_FORMAT(sl_sil_address_book_event.event_date,'%m') ,'-', DATE_FORMAT(sl_sil_address_book_event.event_date,'%d'),' 00:00:00')  from sl_sil_address_book_event INNER JOIN  sl_sil_address_book on sl_sil_address_book.id=sl_sil_address_book_event.contact_id
+			where CONCAT(DATE_FORMAT(now(),'%Y'),'-',DATE_FORMAT(sl_sil_address_book_event.event_date,'%m') ,'-', DATE_FORMAT(sl_sil_address_book_event.event_date,'%d'),' 00:00:00')  BETWEEN now() AND '".$d."' AND sl_sil_address_book.is_contact = 1  AND sl_sil_address_book.user_id=$userId AND sl_sil_address_book_event.occasion = '' order by sl_sil_address_book_event.event_date ASC";
+			
+			$db->setQuery($query);
+			$upcomingData = $db->loadObjectList();
+			return $upcomingData;
+			
+		}
+		
+		public function getMsgDetail($msg_id){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow=new DateTime("now");
+			$query= "select sl_sil_message.id as msgID, sl_sil_message.*,sl_sil_message_orders.* from sl_sil_message left join sl_sil_message_orders on sl_sil_message_orders.message_id=sl_sil_message.id where sl_sil_message.id=$msg_id";
+			$db->setQuery($query);
+			$messageDetail = $db->loadObjectList();
+			return $messageDetail;
+		}
+		public function getGiftMoney($msg_id){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow=new DateTime("now");
+			$query= "select amount from sl_sil_message  where id=$msg_id";
+			$db->setQuery($query);
+			$giftMoneyDeatils = $db->loadObjectList();
+			
+			return $giftMoneyDeatils;
+		}
+		
+		public function getAuthProfile($id){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$user = JFactory::getUser();
+			$query= "select * from sl_sil_processor_payment_profiles where id=$id and user_id=$user->id";
+			$db->setQuery($query);
+			$profileDetail = $db->loadObjectList();
+			
+			return $profileDetail;
+		}
+		
+		/**************
+			Function : Used to set is_delete column to 1 
+		**************/
+		public function deleteMsg($msgId){
+			$db = JFactory::getDbo();
+			$query = "update  sl_sil_message_orders set is_deleted = 1 where message_id=$msgId";
+			$db->setQuery($query);
+			$db->query();
+			
+			$qry = "update sl_sil_message set is_deleted=1 where id=$msgId";
+			$db->setQuery($qry);
+			$db->query();
+			return true;
+		}
+		
+		/******************
+			Function: Used tp delete drafted messages
+		******************/
+		public function deleteDraftedMessage($msgId){
+			$db = JFactory::getDbo();
+			//$query = $db->getQuery(true);
+			$object = new stdClass();
+			
+			$object->id = $msgId;
+			$object->is_deleted = 1;
+			JFactory::getDbo()->updateObject('#__sil_message', $object, 'id');
+			return true;
+			
+		}
+		public function deleteSavedCC($id){
+			$db = JFactory::getDbo();
+		 	$query = "delete from  sl_sil_processor_payment_profiles where id=$id";
+			$db->setQuery($query);
+			$db->query();
+			return true;
+		}
+		
+		public function deleteSavedShippingProfiles($id){
+			$db = JFactory::getDbo();
+		 	$query = "delete from  sl_sil_shipping_profile where id=$id";
+			$db->setQuery($query);
+			$db->query();
+			return true;
+		}
+		
+		public function deleteSavedContact($id){
+			$db = JFactory::getDbo();
+		 	$query = "delete from  sl_sil_address_book where id=$id";
+			$db->setQuery($query);
+			$db->query();
+			return true;
+		}
+		public function getMessageDetailGroupByPid($id, $type="")
+		{
+			$constantsValue =  constants::getInstance();
+			
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			if($type == 'tinggly' || $type == 'card'){
+				$query = "select sl_sil_message.*, sl_hikashop_product.*, sl_hikashop_file.*,sl_hikashop_price.* FROM sl_sil_message
+				LEFT JOIN sl_hikashop_product on sl_hikashop_product.product_id = sl_sil_message.selected_product_id
+				LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = sl_sil_message.selected_product_id
+				INNER JOIN sl_hikashop_file ON sl_hikashop_file.file_ref_id = sl_sil_message.selected_product_id 
+				where   sl_sil_message.id=$id";
+			} else {
+				$query = "select sl_sil_message.*, sl_hikashop_product.*,sl_hikashop_file.*,sl_hikashop_price.*,sl_hikashop_category . *   FROM sl_hikashop_product		
+				INNER JOIN sl_sil_message on sl_sil_message.selected_product_id=sl_hikashop_product.product_id
+				INNER JOIN sl_hikashop_file ON sl_hikashop_file.file_ref_id=sl_hikashop_product.product_id 
+				INNER JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id=sl_hikashop_product.product_id 
+				LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = sl_hikashop_product.product_manufacturer_id
+				where   sl_sil_message.id=$id ";
+			}
+			
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			return $pendingData;
+			
+		}
+		public function getProductByMsgIdRecep($id)
+		{
+			$noOfGift = REDEEM_GIFT_RECORD_PER_PAGE;
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			
+			$query= "select sl_sil_message.*, sl_hikashop_product.*,sl_hikashop_file.*,sl_hikashop_price.*,sl_hikashop_category . *   FROM sl_hikashop_product		
+			INNER JOIN sl_sil_message on sl_sil_message.selected_product_id=sl_hikashop_product.product_id
+			INNER JOIN sl_hikashop_file ON sl_hikashop_file.file_ref_id=sl_hikashop_product.product_id INNER JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id=sl_hikashop_product.product_id LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = sl_hikashop_product.product_manufacturer_id
+			where   sl_sil_message.id=$id AND  sl_hikashop_product.product_published=1  Limit $noOfGift";
+			
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			return $pendingData;
+			
+		}
+		public function getMessageDetailMoney($msgId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "SELECT * from sl_sil_message WHERE id=$msgId limit 10";
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			return $pendingData;
+			
+		}//End Function 
+		public function getMessageDetail($msgId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "SELECT sl_sil_message . * , sl_hikashop_product_category. * , sl_hikashop_product. * , sl_hikashop_file . * , sl_hikashop_price . * , sl_hikashop_category . * 	FROM sl_hikashop_product_category
+			LEFT JOIN sl_sil_message ON sl_sil_message.gift_cat_id = sl_hikashop_product_category.category_id
+			RIGHT JOIN sl_hikashop_product ON sl_hikashop_product.product_id = sl_hikashop_product_category.product_id
+			RIGHT JOIN sl_hikashop_file ON sl_hikashop_file.file_id = sl_hikashop_product.product_id
+			RIGHT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = sl_hikashop_product.product_id
+			LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = sl_hikashop_product.product_manufacturer_id
+			WHERE sl_sil_message.id=$msgId limit 10";
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			return $pendingData;
+			
+		}//End Function 
+		
+		public function getProductByMsgIdRecepAjax($msgId,$start){
+			$noOfGifts = REDEEM_GIFT_RECORD_PER_PAGE;
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$qry = "select * from sl_sil_message where id=$msgId";			
+			$db->setQuery($qry);
+			$pendingData = $db->loadObjectList();
+			
+			$catId = $pendingData[0]->gift_cat_id;
+			$query = "select sl_hikashop_product_category.*,sl_hikashop_product.*,sl_hikashop_file.*,sl_hikashop_price.*,sl_hikashop_category . *   FROM sl_hikashop_product INNER JOIN sl_hikashop_product_category ON sl_hikashop_product_category.product_id = sl_hikashop_product.product_id 
+			LEFT JOIN sl_hikashop_file ON sl_hikashop_file.file_ref_id=sl_hikashop_product.product_id INNER JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id=sl_hikashop_product.product_id LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = sl_hikashop_product.product_manufacturer_id where  sl_hikashop_product_category.category_id=$catId AND sl_hikashop_product.product_published=1 Limit $start, $noOfGifts";
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			
+			return $pendingData;
+			
+		}//End Function 
+		public function getMessageDetailAjax($msgId,$start,$end){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "SELECT sl_sil_message.*, sl_hikashop_product_category . * , sl_hikashop_product . *,sl_hikashop_file.*,sl_hikashop_price.* FROM sl_hikashop_product_category
+			LEFT JOIN sl_sil_message ON sl_sil_message.gift_cat_id = sl_hikashop_product_category.category_id
+			RIGHT JOIN sl_hikashop_product ON sl_hikashop_product.product_id = sl_hikashop_product_category.product_id RIGHT JOIN sl_hikashop_file ON sl_hikashop_file.file_id=sl_hikashop_product.product_id RIGHT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id=sl_hikashop_product.product_id
+			WHERE sl_sil_message.id=$msgId limit $start,10";
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			return $pendingData;
+		}//End Function 
+		public function getProductDetailCard($msgId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			 $query  =  "SELECT sl_hikashop_product . *,sl_hikashop_file.* FROM sl_hikashop_product INNER JOIN sl_hikashop_file ON sl_hikashop_file.file_ref_id=sl_hikashop_product.product_id  WHERE sl_hikashop_product.product_id=$msgId";
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			return $pendingData;
+			
+		}//End Function 
+		public function getProductDetail($msgId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			 $query  =  "SELECT sl_hikashop_product . *,sl_hikashop_price.*,sl_hikashop_file.* FROM sl_hikashop_product INNER JOIN sl_hikashop_file ON sl_hikashop_file.file_ref_id=sl_hikashop_product.product_id INNER JOIN sl_hikashop_price on sl_hikashop_price.price_product_id=sl_hikashop_product.product_id WHERE sl_hikashop_product.product_id=$msgId";
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			return $pendingData;
+			
+		}//End Function 
+		public function getProductDetailTingly($msgId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			 $query  =  "SELECT sl_hikashop_product . *,sl_hikashop_file.* FROM sl_hikashop_product INNER JOIN sl_hikashop_file ON sl_hikashop_file.file_ref_id=sl_hikashop_product.product_id  WHERE sl_hikashop_product.product_id=$msgId";
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			return $pendingData;
+			
+		}//End Function 
+		function getUserDetail($emailId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			 $query  =  "SELECT * FROM sl_users WHERE email = '$emailId'";
+			$db->setQuery($query);
+			$userData = $db->loadObjectList();
+			return $userData;
+			}
+		/*******************
+			Function: Used to get occasion list
+		*******************/
+		public function getOccasionList(){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "select id from sl_categories where alias LIKE '%template-images%' ";
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			$parentId = $data[0]->id;
+			$query  =  "select * from sl_categories where parent_id=$parentId AND published=1 ";
+			$db->setQuery($query);
+			$result = $db->loadObjectList();
+			$catList=array();
+			foreach($result as $key=>$value){
+				$catList[$key]=$value->title;
+			}
+			
+			return $catList;
+		}
+		/*******************
+			Function: Used to pre populate contact information on create message view
+		*******************/
+		public function getPrepopulateContactData(){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$data = array();
+			if(isset($_GET['cid']) && isset($_GET['eid'])){
+				$query  =  "SELECT sl_sil_address_book . * , sl_sil_address_book_event . * FROM sl_sil_address_book_event INNER JOIN sl_sil_address_book ON sl_sil_address_book.id = sl_sil_address_book_event.contact_id WHERE sl_sil_address_book_event.id =".$_GET['eid']." AND sl_sil_address_book.id=".$_GET['cid'];
+				$db->setQuery($query);
+				$data = $db->loadObjectList();
+			}
+			return $data;
+		}
+		public function removeAttachment($msgId){
+			$db = JFactory::getDbo();
+			$query = "update  sl_sil_message set file_attachment=NULL where id=$msgId";
+			$db->setQuery($query);
+			$db->query();
+		}
+		
+		public function removeTemplate($msgId){
+			$db = JFactory::getDbo();
+			$query = "update  sl_sil_message set template_name='', template_path='' where id=$msgId";
+			$db->setQuery($query);
+			$db->query();
+		}
+		
+		public function getOccasionListAddress(){
+			
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "select id from sl_categories where alias LIKE '%template-images%' ";
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			$parentId=$data[0]->id;
+			$query  =  "select * from sl_categories where parent_id=$parentId AND published=1 and title!='All Cards'";
+			$db->setQuery($query);
+			$result = $db->loadObjectList();
+			$catList=array();
+			foreach($result as $key=>$value){
+				$catList[$key]=$value->title;
+			}
+			
+			return $catList;
+		}
+		
+		/****************
+			Function: Used to get templates associated
+			to various different occasions and value/ 
+			price if any is animated card
+		****************/
+		public function getOccasionTemplByArticleId($CatId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "select introtext, metakey, metadesc from sl_content where catid=$CatId AND state=1";
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			
+			$imageNames=array();
+			foreach($data as $key=>$value){
+				$imageNames[$key]['imageName'] = $value->introtext;
+				$imageNames[$key]['price'] = $value->metakey;
+				$imageNames[$key]['card_desc'] = $value->metadesc;
+				//$imageNames[$key]['is_animated_card'] = $value->metadata['rights'];
+			}
+			return $imageNames;
+		}
+		
+		public function getAllOccasionTemp(){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "select id from sl_categories where alias LIKE '%template-images%' AND published=1 ";
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			$parentId=$data[0]->id;
+			$query  =  "select * from sl_categories where parent_id=$parentId AND published=1 order By alias ";
+			$db->setQuery($query);
+			$result = $db->loadObjectList();
+			$catList=array();
+			foreach($result as $key=>$value){
+				$catList[$key]=$value->id;
+			}
+			$ids=implode(",",$catList);
+			//$query  =  "select introtext from sl_content where catid IN($ids) AND state=1 order by alias,introtext";
+			$query  =  "select introtext, metakey, metadesc from sl_content where catid IN($ids) AND state=1 order by alias,introtext";
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			$imageNames=array();
+			foreach($data as $key=>$value){
+				$imageNames[$key]['imageName'] = $value->introtext;
+				$imageNames[$key]['price'] = $value->metakey;
+				$imageNames[$key]['card_desc'] = $value->metadesc;
+				//$imageNames[$key]['is_animated_card'] = $value->metadata['rights'];
+			}
+			return $imageNames;
+		}
+		
+		public function getCateIdByName($occasion){
+			
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$type=addslashes($occasion);
+			$query  =  "select id from sl_categories where title LIKE '%$type%' ";
+			
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			if(!empty($data)) {
+				return $parentId=$data[0]->id;
+				} else {
+				return ;
+			}
+			
+		}
+		
+		/****************
+			Function: Used to get templates according 
+			to the selected occassion by using tag id
+		****************/
+		public function getOccasionTemplByTagId($tagid){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "select content_item_id from sl_contentitem_tag_map where tag_id IN ($tagid)";
+			$db->setQuery($query);
+			$result = $db->loadObjectList();
+			$catList=array();
+			foreach($result as $key=>$value){
+				$catList[$key]=$value->content_item_id;
+			}
+			$ids = implode(",",$catList);
+			/* $query  =  "select introtext from sl_content where id IN($ids) AND state=1 order by alias,introtext";
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			$imageNames=array();
+			foreach($data as $key=>$value){
+				$imageNames[$key]=$value->introtext;
+			} */
+			$query  =  "select introtext, metakey, metadesc from sl_content where id IN($ids) AND state=1 order by alias,introtext";
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			
+			$imageNames=array();
+			foreach($data as $key=>$value){
+				$imageNames[$key]['imageName'] = $value->introtext;
+				$imageNames[$key]['price'] = $value->metakey;
+				$imageNames[$key]['card_desc'] = $value->metadesc;
+				//$imageNames[$key]['is_animated_card'] = $value->metadata['rights'];
+			}
+			return $imageNames;
+		}
+		public function getTagIdByName($occasion){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			
+			$condition = '';
+			foreach($occasion as $tag){
+				$tag = stripslashes($tag);
+				$type=addslashes($tag);
+				$condition .= ($condition != '' ? " OR " : "")."title LIKE '%$type%'";
+			}
+			$condition = '('.$condition.')'; 
+			$query  =  "select GROUP_CONCAT(id) as tags from sl_tags where $condition AND published=1";
+			
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			if(!empty($data)) {
+				return $parentId=$data[0]->tags;
+			}
+		}
+		
+		function generate_image_thumbnail($source_image_path, $thumbnail_image_path, $max_width, $max_height)
+		{
+			/* define('THUMBNAIL_IMAGE_MAX_WIDTH', $max_width);
+			define('THUMBNAIL_IMAGE_MAX_HEIGHT', $max_height); */
+			list($source_image_width, $source_image_height, $source_image_type) = getimagesize($source_image_path);
+			switch ($source_image_type) {
+				case IMAGETYPE_GIF:
+				$source_gd_image = imagecreatefromgif($source_image_path);
+				break;
+				case IMAGETYPE_JPEG:
+				$source_gd_image = imagecreatefromjpeg($source_image_path);
+				break;
+				case IMAGETYPE_PNG:
+				$source_gd_image = imagecreatefrompng($source_image_path);
+				break;
+			}
+			if ($source_gd_image === false) {
+				return false;
+			}
+			$source_aspect_ratio = $source_image_width / $source_image_height;
+			$thumbnail_aspect_ratio = $max_width / $max_height;
+			if ($source_image_width <= $max_width && $source_image_height <= $max_height) {
+				$thumbnail_image_width = $source_image_width;
+				$thumbnail_image_height = $source_image_height;
+			} elseif ($thumbnail_aspect_ratio > $source_aspect_ratio) {
+				$thumbnail_image_width = (int) ($max_height * $source_aspect_ratio);
+				$thumbnail_image_height = $max_height;
+			} else {
+				$thumbnail_image_width = $max_width;
+				$thumbnail_image_height = (int) ($max_width / $source_aspect_ratio);
+			}
+			$thumbnail_gd_image = imagecreatetruecolor($thumbnail_image_width, $thumbnail_image_height);
+			imagecopyresampled($thumbnail_gd_image, $source_gd_image, 0, 0, 0, 0, $thumbnail_image_width, $thumbnail_image_height, $source_image_width, $source_image_height);
+			imagejpeg($thumbnail_gd_image, $thumbnail_image_path, 90);
+			return $thumbnail_image_path;
+		} 
+		
+		
+		public function setDeviceRotation($filePath)
+		{
+			$info   = getimagesize($filePath);
+			$fileType = $info[2];
+			if($fileType == '2' ){
+				$exif = exif_read_data($filePath);
+				} else {
+				$exif = 0;
+			}
+			
+			//if there is orientation change
+			$exif_orient = isset($exif['Orientation']) ? $exif['Orientation'] : 0;
+			$rotateImage = 0;
+			
+			//convert exif rotation to angles
+			if (3 == $exif_orient)
+			{
+				$rotateImage = 180;
+				$imageOrientation = 1;
+			}
+			else if (4 == $exif_orient)
+			{
+				$rotateImage = -180;
+				$imageOrientation = 1;
+			}
+			elseif (5 == $exif_orient)
+			{
+				$rotateImage = -270;
+				$imageOrientation = 1;
+			}
+			else if (6 == $exif_orient)
+			{
+				$rotateImage = 90;
+				$imageOrientation = 1;
+			}
+			else if (7 == $exif_orient)
+			{
+				$rotateImage = -90;
+				$imageOrientation = 1;
+			}
+			elseif (8 == $exif_orient)
+			{
+				$rotateImage = 270;
+				$imageOrientation = 1;
+				} else {
+				$rotateImage = 0;
+				$imageOrientation = 1;
+			}
+			//if the image is rotated
+			if ($rotateImage)
+			{
+				$rotateImage = -$rotateImage;
+				$info   = getimagesize($filePath);
+				$fileType = $info[2];
+				switch ($fileType)
+				{
+					case '2': //image/jpeg
+					$source = imagecreatefromjpeg($filePath);
+					$rotate = imagerotate($source, $rotateImage, 0);
+					imagejpeg($rotate,$filePath);
+					break;
+					case '3': //image/png
+					$source = imagecreatefrompng($filePath);
+					$rotate = imagerotate($source, $rotateImage, 0);
+					imagepng($rotate,$filePath);
+					break;
+					case '1':
+					$source = imagecreatefromgif($filePath);
+					$rotate = imagerotate($source, $rotateImage, 0);
+					imagegif($rotate,$filePath);
+					break;
+					default:
+					break;
+				}
+			}
+			return $filePath;
+			
+		}
+		
+		public function getAdminEmail(){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query  =  "select email from sl_users where sendEmail=1";
+			$db->setQuery($query);
+			$result = $db->loadObjectList();
+			return $result;
+		}
+		
+		public function isMessageUpdates($id){
+			
+			$db = JFactory::getDbo();
+			$object = new stdClass();
+			$user = JFactory::getUser();
+			
+			$query  =  "SELECT * FROM sl_user_profiles where user_id = $id AND profile_key = 'testprofile.send_status_updates' ";
+			
+			$db->setQuery($query);
+			$db->query();
+			$num_rows = $db->getNumRows();
+			
+			if($num_rows>0){
+				return true;
+				} else {
+				return false;
+			}
+			if (!$db->query()) {
+				JError::raiseError(500, $db->getErrorMsg());
+				return false;
+				} else {
+				return true;
+			}
+		}
+		public function activateUser($UserId){
+			$db = JFactory::getDbo();
+			
+			$query = "update  sl_users set block=0 where id=$UserId";
+			
+			$db->setQuery($query);
+			$db->query();
+		}
+		public function getSenderDetail($msgId){
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$query  =  "SELECT sender_name, sender_email, money_transfer_instrument FROM sl_sil_message where id = $msgId";
+				$db->setQuery($query);
+				$db->query();
+				$result = $db->loadObjectList();
+				return $result;
+				
+			}
+			catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		
+		/*******************
+			Function: Used to check if user is 
+			trying to redeem valid gift
+		*******************/
+		public function checkValidMessage($msgId,$giftType){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow=new DateTime("now");
+			//$query  =  "select is_redeemed from sl_sil_message where id=$msgId and gift_type='$giftType'  and is_sent = 1 AND is_redeemed IS NULL";
+			$query  =  "select * from sl_sil_message where id=$msgId and gift_type='$giftType'  and is_sent = 1";
+			$db->setQuery($query);
+			$messgaeData = $db->loadObjectList();
+
+			if(count($messgaeData) > 0){
+				if( $messgaeData[0]->is_redeemed != '' || $messgaeData[0]->is_redeemed!=NULL){
+					if(isset($messgaeData[0]->is_animated_card) && $messgaeData[0]->is_animated_card == 1 ){
+						return true;
+					} else {
+						return false;
+					}
+				}  else {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		}
+		
+		/**************
+			
+		**************/
+		public function checkValidRequest($msgId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow=new DateTime("now");
+			$query  =  "select is_redeemed from sl_sil_message where id=$msgId";
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			if(count($pendingData)>0){
+				if($pendingData[0]->is_redeemed != null){
+					return true;
+				} else {
+					return false;
+				} 
+			} else{
+				return true;
+			}
+		}
+		
+		public function getDoNotMail($data){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow=new DateTime("now");
+			$query  =  "SELECT * FROM  `sl_sil_do_not_email` WHERE  `email_address` LIKE  '$data'";
+			$db->setQuery($query);
+			$emailList = $db->loadObjectList();
+			if(count($emailList)>0){
+				return 'true';
+			} else {
+				return 'false';
+			} 
+		}
+		
+		public function getEditedMsgDetail($msgId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow=new DateTime("now");
+			$query= "select * from sl_sil_message_orders where message_id=$msgId";
+			$db->setQuery($query);
+			$messageDetail = $db->loadObjectList();
+			return $messageDetail;
+		}
+		
+		public function msgDetailSummary($msgId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow=new DateTime("now");
+			$query= "select * from sl_sil_message where id=$msgId";
+			$db->setQuery($query);
+			$messageDetail = $db->loadObjectList();
+			return $messageDetail;
+		}
+		/* public function insertContactEmail($email,$cid){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$user = JFactory::getUser();			
+			$query = "update  sl_sil_address_book set email='$email' where user_id=$user->id and id=$cid";
+			
+			$db->setQuery($query);
+			$db->query();
+			
+		} */
+		public static function sanitizeFileName($filename)
+		{
+			$dangerous_characters = array(" ", '"', "'", "&", "/", "\\", "?", "#");
+			return str_replace($dangerous_characters, '_', $filename);
+		}
+		
+		public function setBitcoinProfile($data)
+		{
+			try{
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$user = JFactory::getUser();	
+				$userID = $data['user_Id'];
+				$msgID=$data['MsgId'];
+				$object = new stdClass();
+				$objMsg = new stdClass();
+				$query = "select * from sl_sil_user_bitcoin_profile where user_id=$userID ";
+				
+				$db->setQuery($query);
+				$bitcoinBalanceDetail = $db->loadObjectList();
+				if(empty($bitcoinBalanceDetail)){
+					$object->user_id = $userID;
+					$object->user_email=$data['user_email'];
+					$object->BTC_balance=$data['BTC'];
+					$object->USD_balance=$data['USD'];
+					JFactory::getDbo()->insertObject('#__sil_user_bitcoin_profile', $object);
+					
+					//set msg is redeemed
+					$objMsg->id=$msgID;
+					$objMsg->is_redeemed=1;
+					JFactory::getDbo()->updateObject('#__sil_message', $objMsg, 'id');
+					
+					return true;
+					} else {
+					$total_btc = $data['BTC'] + $bitcoinBalanceDetail[0]->BTC_balance;	
+					$total_usd = $data['USD'] + $bitcoinBalanceDetail[0]->USD_balance;	
+					$object->user_id = $userID;
+					$object->user_email=$data['user_email'];
+					$object->BTC_balance=$total_btc;
+					$object->USD_balance=$total_usd;
+					JFactory::getDbo()->updateObject('#__sil_user_bitcoin_profile', $object, 'user_id');
+					
+					//set msg is redeemed
+					$objMsg->id=$msgID;
+					$objMsg->is_redeemed=1;
+					JFactory::getDbo()->updateObject('#__sil_message', $objMsg, 'id');
+					return true;
+				}
+				} catch (Exception $e){
+				throw new Exception($e->getMessage(), 500);
+				return false;				
+			}
+		}
+		
+		public function refundBitcoins($data)
+		{
+			try{
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$user = JFactory::getUser();	
+				$object = new stdClass();
+				$query = "select * from sl_sil_user_bitcoin_profile where user_id=$user->id ";
+				
+				$db->setQuery($query);
+				$bitcoinBalanceDetail = $db->loadObjectList();
+				$total_btc = $data['BTC'] + $bitcoinBalanceDetail[0]->BTC_balance;	
+				$total_usd = $data['USD'] + $bitcoinBalanceDetail[0]->USD_balance;	
+				$object->user_id = $user->id;
+				$object->user_email=$user->email;
+				$object->BTC_balance=$total_btc;
+				$object->USD_balance=$total_usd;
+				JFactory::getDbo()->updateObject('#__sil_user_bitcoin_profile', $object, 'user_id');
+				return true;
+				} catch (Exception $e){
+				throw new Exception($e->getMessage(), 500);
+				return false;				
+			}
+		}
+		
+		public function getAccountBalance($uname, $uid){
+			try{
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$user = JFactory::getUser();
+				$query = "select * from sl_sil_user_bitcoin_profile where user_id=$uid and user_email = '$uname'";
+				
+				$db->setQuery($query);
+				$bitcoinBalanceDetail = $db->loadObjectList();
+				return $bitcoinBalanceDetail;
+				} catch (Exception $e){
+				throw new Exception($e->getMessage(), 500);
+				return false;				
+			}
+		}
+		
+
+		/******************
+			Function : Used to deduct balance from sender
+			account if chose to pay using balance
+		******************/
+		public function chargeAccountBalance($newBalance,$paymentMode,$currentBitrate){
+			try{
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$user = JFactory::getUser();
+				$object = new stdClass();	
+				
+				if ($paymentMode == 'BTC') {
+					$newAmount = round(( $newBalance/ $currentBitrate ),2);
+					$object->BTC_balance = $newAmount;
+				}  else { 
+					$object->USD_balance = $newBalance;
+				} 
+				$object->user_id = $user->id;
+				$object->user_email = $user->email;
+				JFactory::getDbo()->updateObject('#__sil_user_bitcoin_profile', $object, 'user_id');
+				return true;
+			} catch (Exception $e){
+				throw new Exception($e->getMessage(), 500);
+				return false;				
+			}
+		}
+		public function createUpdateAccountBalanceRedeem($balance,$data){
+			try{
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$user = JFactory::getUser();
+				if(isset($data['isUserRedistered']) && $data['isUserRedistered']==1){
+					
+					$user = JFactory::getUser($data['user_id']);
+				}
+				
+				$object = new stdClass();	
+				$query = "select * from sl_sil_user_bitcoin_profile where user_id=$user->id ";
+				
+				$db->setQuery($query);
+				$bitcoinBalanceDetail = $db->loadObjectList();
+				$object->user_id = $user->id;
+				$object->user_email=$user->email;
+				if(isset($data['Data']['ShippingMoneyInfo'][0]['new_gift_type']) && $data['Data']['ShippingMoneyInfo'][0]['new_gift_type']=='bitcoin'){
+					$object->BTC_balance=(isset($bitcoinBalanceDetail[0]->BTC_balance)?$bitcoinBalanceDetail[0]->BTC_balance:0)+$balance;
+				} else {
+					$object->USD_balance=(isset($bitcoinBalanceDetail[0]->USD_balance)?$bitcoinBalanceDetail[0]->USD_balance:0)+$balance;
+				}
+				if(empty($bitcoinBalanceDetail)){					
+					JFactory::getDbo()->insertObject('#__sil_user_bitcoin_profile', $object);
+
+					}else{
+					JFactory::getDbo()->updateObject('#__sil_user_bitcoin_profile', $object, 'user_id');
+				}
+				
+				return true;
+				} catch (Exception $e){
+				throw new Exception($e->getMessage(), 500);
+				return false;				
+			}
+		}
+		/***********************
+			Function: Used to update user id of saved 
+			credit card when user is registered after
+			message creation 
+		***********************/
+		public function updateSavedCC($cardId,$newUserId){
+			try{
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$user = JFactory::getUser();
+				$query = "update  sl_sil_processor_payment_profiles set user_id='$newUserId' where id=$cardId ";
+				
+				$db->setQuery($query);
+				$db->query();
+				return true;
+				}catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		
+		/******************
+			Function used to update url of custom template 
+			and attachment
+		*******************/
+		public function updateAmazonUrl($fileType , $msgId, $fileUrl) {
+			try{
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				if($fileType == 'template_path'){
+					$object->template_path = $fileUrl;
+					} else {
+					$object->file_attachment = $fileUrl;
+				}
+				$object->id = $msgId;
+				JFactory::getDbo()->updateObject('#__sil_message', $object,'id');
+			}
+			catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+			}
+		}
+		
+		
+		/******************
+			Function used to get list of
+			delivered messages
+		*******************/
+		public function getMessagedelivered($userId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow = new DateTime("now");
+			$datenow = date("Y-m-d")." 00:00:00";
+			$query  =  " SELECT * FROM sl_sil_message WHERE user_id=$userId AND is_sent = 1 AND is_deleted=0 AND payment_complete=1 AND is_success=1 AND date_to_deliver_message <='".$datenow."' order by date_to_deliver_message DESC,id";
+			
+			
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			$finalData=array();
+			$i=0;
+			foreach($pendingData as $message=>$data){
+				$recipientEmail = $this->getEmailSubstring($data->recipient_email);
+				$finalData[$i]['msg_id'] = $data->id;
+				$finalData[$i]['userId'] = $data->user_id;
+				$finalData[$i]['recipient_email'] = $recipientEmail;
+				$finalData[$i]['date_to_deliver_message'] = date("F d, Y", strtotime($data->date_message_sent_to_receipient));
+				$finalData[$i]['recipient_name'] = $data->recipient_name;
+				$finalData[$i]['message_subject'] = $data->message_subject; 
+				$finalData[$i]['gift_type'] = $data->gift_type; 
+				$finalData[$i]['money_transfer_instrument'] = $data->money_transfer_instrument; 
+				$i++;
+			}
+			return $finalData;
+		}//End Function
+		
+		
+		/******************
+			Function used to get list of
+			drafted messages
+		*******************/
+		public function getMessageListPending($userId){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow= date("Y-m-d")." 00:00:00";
+			$query  =  " SELECT * FROM sl_sil_message WHERE user_id =$userId AND is_sent = 0 AND is_deleted=0 and is_success=1 AND (gift_type = 'msg' OR (gift_type IN ('gift','money','card','stock','fiverr','perfect gift', 'tinggly') AND payment_complete = 1)) order by id desc";
+			$db->setQuery($query);
+			$pendingData = $db->loadObjectList();
+			$finalData=array();
+			$i=0;
+			foreach($pendingData as $message=>$data){
+				$recipientEmail = $this->getEmailSubstring($data->recipient_email);
+				$finalData[$i]['msg_id'] = $data->id;
+				$finalData[$i]['userId'] = $data->user_id;
+				$finalData[$i]['recipient_email'] = $recipientEmail;
+				$finalData[$i]['date_to_deliver_message'] = date("F d, Y", strtotime($data->date_to_deliver_message));
+				$finalData[$i]['recipient_name'] = $data->recipient_name;
+				$finalData[$i]['message_subject'] = $data->message_subject; 
+				$finalData[$i]['payment_complete'] = $data->payment_complete; 
+				$finalData[$i]['gift_type'] = $data->gift_type; 
+				$finalData[$i]['money_transfer_instrument'] = $data->money_transfer_instrument; 
+				
+				$i++;
+			}
+			return $finalData;
+			
+		}//End Function 
+		
+		/******************
+			Function used to get list of
+			drafted messages
+		*******************/
+		public function getMessagesList($type , $userId, $userEmail){
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$datenow = date("Y-m-d")." 00:00:00";
+			
+			if( $type == 'drafts'){
+				$query  =  " SELECT * FROM sl_sil_message WHERE user_id =$userId AND is_sent = 0 AND is_deleted=0 AND is_success=0 AND is_draft=1 ORDER BY id DESC";
+				// AND date_to_deliver_message >='".$datenow."' order by id desc";
+				} else  {
+				//$query  =  "SELECT * FROM sl_sil_message WHERE recipient_email ='$userEmail' AND is_sent = 1 AND is_deleted=0 AND is_success=1 AND is_draft=0  AND date_to_deliver_message <='".$datenow."' AND is_redeemed=1 order by id desc";
+				$query  =  "SELECT * FROM sl_sil_message WHERE recipient_email ='$userEmail' AND is_sent = 1 AND is_deleted=0 AND is_success=1 AND is_draft=0 AND date_to_deliver_message <='".$datenow."' order by id desc";
+			}
+			
+			
+			$db->setQuery($query);
+			$messagesData = $db->loadObjectList();
+			$finalData = array();
+			$i = 0;
+
+			foreach( $messagesData as $message => $data ){
+				$recipientEmail = $this->getEmailSubstring($data->recipient_email);
+				$senderEmail = $this->getEmailSubstring($data->sender_email);
+				$finalData[$i]['msg_id'] = $data->id;
+				$finalData[$i]['userId'] = $data->user_id;
+				$finalData[$i]['recipient_email'] = $recipientEmail;
+				$finalData[$i]['sender_email'] = $senderEmail;
+				$finalData[$i]['date_to_deliver_message'] = date("F d, Y", strtotime($data->date_to_deliver_message));
+				$finalData[$i]['recipient_name'] = $data->recipient_name;
+				$finalData[$i]['message_subject'] = $data->message_subject; 
+				$finalData[$i]['payment_complete'] = $data->payment_complete; 
+				$finalData[$i]['gift_type'] = $data->gift_type; 
+				$finalData[$i]['redemption_status'] = $data->redemption_status; 
+				$finalData[$i]['money_transfer_instrument'] = $data->money_transfer_instrument; 
+				
+				$i++;
+			}
+			return $finalData;
+		}
+		
+		/**************
+			Function : Used to get substring if string is greater than 15 character 
+		***************/
+		public function getEmailSubstring($data){
+			if (strlen($data) > 15) {
+				// truncate string
+				$stringCut = substr($data, 0, 15);
+				// make sure it ends in a word so assassinate doesn't become ass...
+				return $stringCut."...";//substr($stringCut, 0, strrpos($stringCut, ' ')).'... '; 
+				} else {
+				return $data;
+			}
+			die;
+		}
+		
+		/**
+			*  insert profile pic url in sl_sil_profiles table
+			*  @return object The message to be displayed to the user
+		*/
+		function updateUserProfilePicture($imagePath){
+			try { 
+				$db = JFactory::getDbo();
+				$object = new stdClass();
+				$user = JFactory::getUser();
+				$object->user_id = $user->id;
+				$object->profile_key = 'sil.profilePicture';
+				$object->profile_value = $imagePath;
+				$object->ordering = 1;
+				$query = $db->getQuery(true);
+				$query = "select * from sl_user_profiles where profile_key = 'sil.profilePicture' AND user_id =".$user->id;
+				$db->setQuery($query);
+				$results = $db->loadObjectList();
+				if(empty($results) ){
+					JFactory::getDbo()->insertObject('#__user_profiles', $object);
+					return $db->insertid();
+				} else {
+					JFactory::getDbo()->updateObject('#__user_profiles', $object, array('user_id','profile_key'));
+				}	
+				return true;
+				} catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			} 
+		}
+		
+		/**
+			*  insert profile pic url in sl_sil_profiles table
+			*  @return object The message to be displayed to the user
+		*/
+		function getProfilePicture($userId){
+			try {
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$query  =  " SELECT profile_value FROM sl_user_profiles WHERE user_id =$userId AND profile_key = 'sil.profilePicture'";
+				$db->setQuery($query);
+				$profilePictureName = $db->loadObjectList();
+				return $profilePictureName;
+				} catch (Exception $e){
+				if ($e->getCode() == 500)
+				{
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+			} 
+		}
+		
+		public function getRecentProducts($userId){
+			$db = JFactory::getDbo();
+			$query="select DISTINCT * from sl_sil_recent_items_viewed where user_id=$userId";
+			$db->setQuery($query);
+			return $recentViewed = $db->loadObjectList();
+		}
+		
+		/***********************
+			Function: Used to save Recently viewed products
+		***********************/
+		function saveRecentViewed($catId,$ProductId,$userId){
+			$db = JFactory::getDbo();
+			$query="select * from sl_sil_recent_items_viewed where user_id=$userId";
+			$db->setQuery($query);
+			$recentViewed = $db->loadObjectList();
+			$data=array();
+			if(count($recentViewed)>9){
+				$firstElement=$recentViewed[0]->id;
+				
+				$qry="delete from sl_sil_recent_items_viewed where id=$firstElement";
+				$db->setQuery($qry);
+				$db->query();
+			}
+			$query="select * from sl_sil_recent_items_viewed where user_id=$userId AND product_id=$ProductId";
+			$db->setQuery($query);
+			$ifExist = $db->loadObjectList();
+			if(count($ifExist)>0 ){
+				$qry="delete from sl_sil_recent_items_viewed where product_id=$ProductId and User_id=$userId";
+				$db->setQuery($qry);
+				$db->query();
+			}
+			$object = new stdClass();
+			$object->user_id = $userId;
+			$object->product_id = $ProductId;
+			JFactory::getDbo()->insertObject('#__sil_recent_items_viewed', $object);
+			
+			
+		}
+		
+		function addtoString($str, $item) {
+			$parts = explode(',', $str);
+			$parts[] = $item;
+			
+			return implode(',', $parts);
+		}
+		
+		
+		
+		/***********************
+			Function: Used to update password of user
+		***********************/
+		public function updateUserProfile($data, $type ){
+			try {
+				$db 	= JFactory::getDbo();
+				$object	= new stdClass();
+				$user   = JFactory::getUser();
+				$object->id = $data['user_id'];
+				if( $type == 'password'){
+					$object->password = $data['new_password'];
+					$object->lastResetTime  = date("Y-m-d");
+				} else{
+					$object->name = $data['userName'];
+					$object->email  = $data['userEmail'];
+				}
+				if(JFactory::getDbo()->updateObject('#__users', $object,'id')){
+					return true;
+				} else {
+					return false;
+				}
+				
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		
+		
+		/***********************
+			Function: Used to update password of user
+		***********************/
+		public function checkValidProfile($data ){
+			try {
+				$userEmail = $data['userEmail'];
+				$userID = $data['user_id'];
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$query  = "SELECT * FROM sl_users WHERE id !=$userID AND email = '$userEmail'";
+				$db->setQuery($query);
+				$uniqueUserEmail = $db->loadObjectList();
+				if(!empty ($uniqueUserEmail) ){
+					return true;
+					} else {
+					return true;
+				}
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		/***********************
+			Function: Used to fetch author bio
+		***********************/
+		public function getArticleContent($data){
+			try{
+				$db = JFactory::getDbo();
+				$alias = $data['alias'];
+				$query="select introtext from sl_content where alias LIKE '$alias'";
+				$db->setQuery($query);
+				$msgData = $db->loadObjectList();
+				if(!empty ($msgData) ){
+					return $msgData;
+					} else {
+					return false;
+				}
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		/***********************
+			Function: Used to fetch open job positions
+		***********************/
+		public function getOpenPositions(){
+			try{
+				$db = JFactory::getDbo();
+				$language = JFactory::getLanguage();
+				$lang = str_replace('-GB', '', $language->getTag());
+				$lang = str_replace('-ES', '', $lang);
+				$query="select sl_content.title, sl_content.alias from sl_content INNER JOIN sl_categories ON (sl_content.catid = sl_categories.id) where sl_categories.alias LIKE 'open-positions' AND sl_content.alias LIKE '%-$lang'";
+				$db->setQuery($query);
+				$msgData = $db->loadObjectList();
+				if(!empty ($msgData) ){
+					return $msgData;
+					} else {
+					return false;
+				}
+			}
+			catch (Exception $e){
+				
+				if ($e->getCode() == 500)
+				{
+					// Not found
+					throw new Exception($e->getMessage(), 500);
+					return false;
+				}
+				
+			}
+		}
+		/***********************
+			Function: Used to fetch parent category
+		***********************/
+		public function getParentCategory($catgory_id){
+			$db = JFactory::getDbo();
+			$query = "SELECT category_parent_id from sl_hikashop_category where category_id = $catgory_id";
+			$db->setQuery($query);
+			$data = $db->loadObjectList();
+			if(!empty($data)){
+				if($data[0]->category_parent_id == 0 || $data[0]->category_parent_id == 1){
+					return $catgory_id;
+				}else{
+					$this->getParentCategory($data[0]->category_parent_id);
+				} 
+			}else{
+				return '';
+			}
+		}
+	}
+	
