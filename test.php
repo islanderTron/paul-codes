@@ -1336,7 +1336,248 @@
 			}
 			return $data;
 		}
-		
+		public function getFilteredProducts($search, $filters, $sort, $start=0){
+			$db = JFactory::getDbo();
+			$search = $db->escape($search);
+
+			$giftDisplayOrder = GIFT_DISPLAY_ORDER;
+
+			$condition="";
+			$setValue=false;
+			if(isset($search) && $search!=""){
+				$condition .=" (products.product_name LIKE '%".$search."%' ";
+				$setValue=true;
+				$condition .=" OR  MATCH (products.product_description) AGAINST ('$search' IN NATURAL LANGUAGE MODE) ";
+				$condition .=" OR (sl_tags.title LIKE '%".$search."%' ";
+				$condition .=" AND sl_contentitem_tag_map.type_alias='com_hikashop.product'))";
+			}
+
+			$categoryList = '';
+			$brandList = '';
+			$priceCondition = '';
+			$cats_id=array();
+			if(isset($filters)&&is_array($filters)){
+				foreach($filters as $key => $filter){
+					if($filter['type']=='category'){
+						$cat_id = $db->escape($filter['id']);
+						if($categoryList==''){
+							$categoryList = "$cat_id";
+						}
+						else{
+							$categoryList .= ", $cat_id";
+						}
+
+						$cats_id[] = $db->escape($filter['id']);
+					}
+					else if($filter['type']=='brand'){
+						$brand_id = $db->escape($filter['id']);
+						if($brandList==''){
+							$brandList = "$brand_id";
+						}
+						else{
+							$brandList .= ", $brand_id";
+						}
+					}
+					else if($filter['type']=='price'){
+						$low_price = $db->escape($filter['low']);
+						$high_price = $db->escape($filter['high']);
+						$priceCondition = " sl_hikashop_price.price_value >= $low_price AND sl_hikashop_price.price_value < $high_price ";
+					}
+				}
+				if($categoryList!='')
+				{
+					
+
+					if($condition=='')
+					{
+						$condition = " sl_hikashop_category.category_id IN($categoryList) ";
+					}
+					else{
+						$condition .= " AND sl_hikashop_category.category_id IN($categoryList) ";
+					}
+				}
+				if($brandList!=''){
+					if($condition==''){
+						$condition = " products.product_manufacturer_id IN($brandList) ";
+					}
+					else{
+						$condition .= " AND products.product_manufacturer_id IN($brandList) ";
+					}
+				}
+
+				if($priceCondition!=''){
+					if($condition==''){
+						$condition = $priceCondition;
+					}
+					else{
+						$condition .= " AND $priceCondition ";
+					}
+				}
+			}
+
+			$orderBy = "";
+			if($sort=='relevance'&&$giftDisplayOrder=='RAND()'){
+				if(!isset($_SESSION))
+					session_start();
+				if(!isset($_SESSION['random_gift_seed']))
+					$_SESSION['random_gift_seed'] = rand(0,100);
+				$giftDisplayOrder = 'RAND('.$_SESSION['random_gift_seed'].')';
+				$orderBy = $giftDisplayOrder;
+			}
+			else if($sort=='relevance'){
+				$orderBy = $giftDisplayOrder;
+			}
+			else if($sort=='low_to_high'){
+				$orderBy = "sl_hikashop_price.price_value ASC";
+			}
+			else if($sort=='high_to_low'){
+				$orderBy = "sl_hikashop_price.price_value DESC";
+			}
+
+			if($categoryList != ''){
+				$catJoin = '';
+				$i = 0;
+				$catArray = explode(', ', $categoryList);
+				foreach($catArray as $cat){ $i++;
+					if($catJoin==''){
+						$catJoin = " INNER JOIN sl_hikashop_product_category as c1 ON (c1.product_id = products.product_id AND c1.category_id = $cat)";
+					}
+					else{
+						$catJoin .= " OR (c1.product_id = products.product_id AND c1.category_id = $cat)";
+					}
+				}
+				if($catJoin != ''){
+					$catJoin .= " LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = c1.category_id";
+				}
+				$setValue=true;
+			}else{
+				$productParentCategoryID = PRODUCT_PARENT_CATEGORY;
+				$catJoin = " INNER JOIN sl_hikashop_product_category AS c1 ON c1.category_id = $productParentCategoryID AND c1.product_id = products.product_id
+				LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = c1.category_id ";
+				// $categoriesList=$this->getProductCategories($productParentCategoryID);
+				// $i=0;
+				// foreach($categoriesList as $value) {
+				// 	if($value[4] == '' && $value[2] == '' && $value[0] != ''){
+				// 		$productCategoryArray[]=$value[0];
+				// 	}else if($value[4] == '' && $value[2] != '' && $value[0] != ''){
+				// 		$productCategoryArray[]=$value[2];
+				// 		$productCategoryArray[]=$value[0];
+				// 	}else{
+				// 		$productCategoryArray[]=$value[4];	
+				// 		$productCategoryArray[]=$value[0];	
+				// 	}
+				// 	$i++;
+				// }
+				// $categoryIdList = implode(', ', array_unique($productCategoryArray));
+				// if($condition != '')
+				// 	$condition .=" AND sl_hikashop_category.category_id IN($categoryIdList) ";
+				// else
+				// 	$condition .=" sl_hikashop_category.category_id IN($categoryIdList) ";
+			}
+			if(count($cats_id)>0)
+			{
+				$sql_cat="SELECT * FROM `sl_hikashop_product_category` WHERE category_id IN (".implode(",",$cats_id).") GROUP BY product_id HAVING count( product_id ) =".count($cats_id);
+				$db->setQuery($sql_cat);
+				$resCat=$db->loadObjectList();
+				$product_ids=array();
+				for($j=0;$j<count($resCat);$j++)
+				{
+					$product_ids[]=$resCat[$j]->product_id;
+				}
+				if(count($product_ids)>0)
+				{
+					$products_Ids=implode(",",$product_ids);
+					if($condition=='')
+					{
+						$condition = " products.product_id IN($products_Ids) ";
+					}
+					else
+					{
+						$condition .= " AND products.product_id IN($products_Ids) ";
+					}
+				}
+				else
+				{
+					if($condition=='')
+					{
+						$condition = " products.product_id IN('') ";
+					}
+					else
+					{
+						$condition .= " AND products.product_id IN('') ";
+					}
+				}
+			}
+
+			if($condition != '')
+				$condition .=" AND sl_hikashop_category.category_published = 1 AND products.product_published = 1 ";
+			else
+				$condition .=" sl_hikashop_category.category_published = 1 AND products.product_published = 1 ";
+
+			$limit = "LIMIT $start,".REDEEM_GIFT_RECORD_PER_PAGE;
+			//$limit = "";
+			$productQry ="SELECT products . * , files . * , sl_hikashop_price . * , sl_hikashop_category . * ,sl_contentitem_tag_map.*,sl_tags.*, GROUP_CONCAT(DISTINCT CONCAT(sl_hikashop_category.category_parent_id ,',',sl_hikashop_category.category_id)  SEPARATOR ',') as selectedCatIDs, manufacturer_category.category_name as manufacturer
+			FROM sl_hikashop_product AS products
+			LEFT JOIN sl_hikashop_category AS manufacturer_category ON products.product_manufacturer_id = manufacturer_category.category_id
+			LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+			LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+			$catJoin
+			LEFT JOIN sl_contentitem_tag_map ON sl_contentitem_tag_map.content_item_id  = products.product_id
+			LEFT JOIN sl_tags ON sl_tags.id  = sl_contentitem_tag_map.tag_id
+			WHERE $condition GROUP BY products.product_id ORDER BY $orderBy $limit";
+			// $productTotalQry ="SELECT COUNT(DISTINCT products.product_id) as total
+			// FROM sl_hikashop_product AS products
+			// LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
+			// LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
+			// $catJoin
+			// LEFT JOIN sl_contentitem_tag_map ON sl_contentitem_tag_map.content_item_id  = products.product_id
+			// LEFT JOIN sl_tags ON sl_tags.id  = sl_contentitem_tag_map.tag_id
+			// WHERE $condition";
+			$db->setQuery($productQry);
+			$prodData = $db->loadObjectList();
+			// $db->setQuery($productTotalQry);
+			// $totalProdData = $db->loadObjectList();
+			$finalData=array();
+			$i=0;
+			
+			foreach($prodData as $product=>$data){
+				/*$parentCategory = $this->getParentCategory($data->category_id);
+				$productType = '';
+				if(GIFT_CARD_CATEGORY_ID ==  $parentCategory){
+					$productType = 'giftCard';
+				}elseif(TINGGLY_EXPERIENCES_ID == $parentCategory){
+					$productType = 'tinggly';
+				}elseif(PRODUCT_PARENT_CATEGORY == $parentCategory){
+					$productType = 'physicalGift';
+				}elseif(GIVE_STOCK_CATEGORY_ID == $parentCategory){
+					$productType = 'stock';
+				}elseif(FIVER_CATEGORY_ID == $parentCategory){
+					$productType = 'fiver';
+				}*/
+				if($data->manufacturer==null)
+					$data->manufacturer = '';
+
+				$productType = 'physicalGift';
+				$finalData[$i]['manufacturer']=$data->manufacturer;
+				$finalData[$i]['product_likes']=$data->product_likes;
+				$finalData[$i]['product_discount']=$data->product_discount;
+				$finalData[$i]['product_name']=$data->product_name;
+				$finalData[$i]['product_id']=$data->product_id;
+				$finalData[$i]['image']=$data->file_path;  
+				$finalData[$i]['category_id']=$data->category_id;
+				$finalData[$i]['CatValue']=$data->price_value;  
+				$finalData[$i]['product_description']=$data->product_description;  
+				$finalData[$i]['brand']=$data->category_name;  
+				$finalData[$i]['selectedCatIDs']=$data->selectedCatIDs;  
+				$finalData[$i]['productType']=$productType;  
+				$i++;
+			}
+			return array(
+				'data'	=>	$finalData,
+				'count'	=>	1
+				// 'count'	=>	$totalProdData[0]->total
+			);
+		}
 		/********* function used to delete the events ********/
 		public function deleteEvents($contactID){
 			$db = JFactory::getDbo();
@@ -1373,7 +1614,18 @@
 			$sortOrder = SORT_ORDER_CATEGORY;
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
-			$query  =  " SELECT c1.category_id as 'parent_category_id', c1.category_name as 'parent_category_name', c2.category_id, c2.category_name, c3.category_id as 'child_category_id', c3.category_name as 'child_category_id' FROM sl_hikashop_category c1 LEFT JOIN sl_hikashop_category c2 ON c2.category_parent_id = c1.category_id LEFT JOIN sl_hikashop_category c3 ON c3.category_parent_id = c2.category_id WHERE c1.category_id = ".$productParentCategory." AND (c1.category_published = 1 OR c1.category_published IS NULL) AND (c2.category_published = 1 OR c2.category_published IS NULL )AND (c3.category_published = 1 OR c3.category_published IS NULL) ORDER BY (c2.category_id*1) ".$sortOrder;
+
+
+			
+			if($productParentCategory==10)
+			{
+				$orderBy=' ORDER BY c2.category_name ASC';
+			}
+			else
+			{
+				$orderBy=' ORDER BY (c2.category_id*1) '.$sortOrder;
+			}
+			$query  =  " SELECT c1.category_id as 'parent_category_id', c1.category_name as 'parent_category_name', c2.category_id, c2.category_name, c3.category_id as 'child_category_id', c3.category_name as 'child_category_id' FROM sl_hikashop_category c1 LEFT JOIN sl_hikashop_category c2 ON c2.category_parent_id = c1.category_id LEFT JOIN sl_hikashop_category c3 ON c3.category_parent_id = c2.category_id WHERE c1.category_id = ".$productParentCategory." AND (c1.category_published = 1 OR c1.category_published IS NULL) AND (c2.category_published = 1 OR c2.category_published IS NULL )AND (c3.category_published = 1 OR c3.category_published IS NULL) ".$orderBy;
 			$db->setQuery($query);
 			$categories = $db->loadRowList();
 			return $categories;
@@ -1543,207 +1795,7 @@
 			);
 		}
 
-		public function getFilteredProducts($search, $filters, $sort, $start=0){
-			$db = JFactory::getDbo();
-			$search = $db->escape($search);
-
-			$giftDisplayOrder = GIFT_DISPLAY_ORDER;
-
-			$condition="";
-			$setValue=false;
-			if(isset($search) && $search!=""){
-				$condition .=" (products.product_name LIKE '%".$search."%' ";
-				$setValue=true;
-				$condition .=" OR  MATCH (products.product_description) AGAINST ('$search' IN NATURAL LANGUAGE MODE) ";
-				$condition .=" OR (sl_tags.title LIKE '%".$search."%' ";
-				$condition .=" AND sl_contentitem_tag_map.type_alias='com_hikashop.product'))";
-			}
-
-			$categoryList = '';
-			$brandList = '';
-			$priceCondition = '';
-			if(isset($filters)&&is_array($filters)){
-				foreach($filters as $key => $filter){
-					if($filter['type']=='category'){
-						$cat_id = $db->escape($filter['id']);
-						if($categoryList==''){
-							$categoryList = "$cat_id";
-						}
-						else{
-							$categoryList .= ", $cat_id";
-						}
-					}
-					else if($filter['type']=='brand'){
-						$brand_id = $db->escape($filter['id']);
-						if($brandList==''){
-							$brandList = "$brand_id";
-						}
-						else{
-							$brandList .= ", $brand_id";
-						}
-					}
-					else if($filter['type']=='price'){
-						$low_price = $db->escape($filter['low']);
-						$high_price = $db->escape($filter['high']);
-						$priceCondition = " sl_hikashop_price.price_value >= $low_price AND sl_hikashop_price.price_value < $high_price ";
-					}
-				}
-				if($categoryList!=''){
-					if($condition==''){
-						$condition = " sl_hikashop_category.category_id IN($categoryList) ";
-					}
-					else{
-						$condition .= " AND sl_hikashop_category.category_id IN($categoryList) ";
-					}
-				}
-				if($brandList!=''){
-					if($condition==''){
-						$condition = " products.product_manufacturer_id IN($brandList) ";
-					}
-					else{
-						$condition .= " AND products.product_manufacturer_id IN($brandList) ";
-					}
-				}
-
-				if($priceCondition!=''){
-					if($condition==''){
-						$condition = $priceCondition;
-					}
-					else{
-						$condition .= " AND $priceCondition ";
-					}
-				}
-			}
-
-			$orderBy = "";
-			if($sort=='relevance'&&$giftDisplayOrder=='RAND()'){
-				if(!isset($_SESSION))
-					session_start();
-				if(!isset($_SESSION['random_gift_seed']))
-					$_SESSION['random_gift_seed'] = rand(0,100);
-				$giftDisplayOrder = 'RAND('.$_SESSION['random_gift_seed'].')';
-				$orderBy = $giftDisplayOrder;
-			}
-			else if($sort=='relevance'){
-				$orderBy = $giftDisplayOrder;
-			}
-			else if($sort=='low_to_high'){
-				$orderBy = "sl_hikashop_price.price_value ASC";
-			}
-			else if($sort=='high_to_low'){
-				$orderBy = "sl_hikashop_price.price_value DESC";
-			}
-
-			if($categoryList != ''){
-				$catJoin = '';
-				$i = 0;
-				$catArray = explode(', ', $categoryList);
-				foreach($catArray as $cat){ $i++;
-					if($catJoin==''){
-						$catJoin = " INNER JOIN sl_hikashop_product_category as c1 ON (c1.product_id = products.product_id AND c1.category_id = $cat)";
-					}
-					else{
-						$catJoin .= " OR (c1.product_id = products.product_id AND c1.category_id = $cat)";
-					}
-				}
-				if($catJoin != ''){
-					$catJoin .= " LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = c1.category_id";
-				}
-				$setValue=true;
-			}else{
-				$productParentCategoryID = PRODUCT_PARENT_CATEGORY;
-				$catJoin = " INNER JOIN sl_hikashop_product_category AS c1 ON c1.category_id = $productParentCategoryID AND c1.product_id = products.product_id
-				LEFT JOIN sl_hikashop_category ON sl_hikashop_category.category_id = c1.category_id ";
-				// $categoriesList=$this->getProductCategories($productParentCategoryID);
-				// $i=0;
-				// foreach($categoriesList as $value) {
-				// 	if($value[4] == '' && $value[2] == '' && $value[0] != ''){
-				// 		$productCategoryArray[]=$value[0];
-				// 	}else if($value[4] == '' && $value[2] != '' && $value[0] != ''){
-				// 		$productCategoryArray[]=$value[2];
-				// 		$productCategoryArray[]=$value[0];
-				// 	}else{
-				// 		$productCategoryArray[]=$value[4];	
-				// 		$productCategoryArray[]=$value[0];	
-				// 	}
-				// 	$i++;
-				// }
-				// $categoryIdList = implode(', ', array_unique($productCategoryArray));
-				// if($condition != '')
-				// 	$condition .=" AND sl_hikashop_category.category_id IN($categoryIdList) ";
-				// else
-				// 	$condition .=" sl_hikashop_category.category_id IN($categoryIdList) ";
-			}
-
-			if($condition != '')
-				$condition .=" AND sl_hikashop_category.category_published = 1 AND products.product_published = 1 ";
-			else
-				$condition .=" sl_hikashop_category.category_published = 1 AND products.product_published = 1 ";
-
-			$limit = "LIMIT $start,".REDEEM_GIFT_RECORD_PER_PAGE;
-			//$limit = "";
-			$productQry ="SELECT products . * , files . * , sl_hikashop_price . * , sl_hikashop_category . * ,sl_contentitem_tag_map.*,sl_tags.*, GROUP_CONCAT(DISTINCT CONCAT(sl_hikashop_category.category_parent_id ,',',sl_hikashop_category.category_id)  SEPARATOR ',') as selectedCatIDs, manufacturer_category.category_name as manufacturer
-			FROM sl_hikashop_product AS products
-			LEFT JOIN sl_hikashop_category AS manufacturer_category ON products.product_manufacturer_id = manufacturer_category.category_id
-			LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
-			LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
-			$catJoin
-			LEFT JOIN sl_contentitem_tag_map ON sl_contentitem_tag_map.content_item_id  = products.product_id
-			LEFT JOIN sl_tags ON sl_tags.id  = sl_contentitem_tag_map.tag_id
-			WHERE $condition GROUP BY products.product_id ORDER BY $orderBy $limit";
-			// $productTotalQry ="SELECT COUNT(DISTINCT products.product_id) as total
-			// FROM sl_hikashop_product AS products
-			// LEFT JOIN sl_hikashop_file AS files ON files.file_ref_id = products.product_id
-			// LEFT JOIN sl_hikashop_price ON sl_hikashop_price.price_product_id = products.product_id
-			// $catJoin
-			// LEFT JOIN sl_contentitem_tag_map ON sl_contentitem_tag_map.content_item_id  = products.product_id
-			// LEFT JOIN sl_tags ON sl_tags.id  = sl_contentitem_tag_map.tag_id
-			// WHERE $condition";
-			$db->setQuery($productQry);
-			$prodData = $db->loadObjectList();
-			// $db->setQuery($productTotalQry);
-			// $totalProdData = $db->loadObjectList();
-			$finalData=array();
-			$i=0;
-			
-			foreach($prodData as $product=>$data){
-				/*$parentCategory = $this->getParentCategory($data->category_id);
-				$productType = '';
-				if(GIFT_CARD_CATEGORY_ID ==  $parentCategory){
-					$productType = 'giftCard';
-				}elseif(TINGGLY_EXPERIENCES_ID == $parentCategory){
-					$productType = 'tinggly';
-				}elseif(PRODUCT_PARENT_CATEGORY == $parentCategory){
-					$productType = 'physicalGift';
-				}elseif(GIVE_STOCK_CATEGORY_ID == $parentCategory){
-					$productType = 'stock';
-				}elseif(FIVER_CATEGORY_ID == $parentCategory){
-					$productType = 'fiver';
-				}*/
-				if($data->manufacturer==null)
-					$data->manufacturer = '';
-
-				$productType = 'physicalGift';
-				$finalData[$i]['manufacturer']=$data->manufacturer;
-				$finalData[$i]['product_likes']=$data->product_likes;
-				$finalData[$i]['product_discount']=$data->product_discount;
-				$finalData[$i]['product_name']=$data->product_name;
-				$finalData[$i]['product_id']=$data->product_id;
-				$finalData[$i]['image']=$data->file_path;  
-				$finalData[$i]['category_id']=$data->category_id;
-				$finalData[$i]['CatValue']=$data->price_value;  
-				$finalData[$i]['product_description']=$data->product_description;  
-				$finalData[$i]['brand']=$data->category_name;  
-				$finalData[$i]['selectedCatIDs']=$data->selectedCatIDs;  
-				$finalData[$i]['productType']=$productType;  
-				$i++;
-			}
-			return array(
-				'data'	=>	$finalData,
-				'count'	=>	1
-				// 'count'	=>	$totalProdData[0]->total
-			);
-		}
+		
 		/******************
 			Function: Used to get description
 			of selected product search based on array of product ids
@@ -1814,7 +1866,30 @@
 				$finalData[$i]['product_id']=$data->product_id;
 				$finalData[$i]['image']=$data->file_path;  
 				$finalData[$i]['category_id']=$catid;  
-				$finalData[$i]['CatValue']=$data->price_value;  
+				//	if($taskName=="getmessage" || $taskName=="paymentReview"  )
+				//{
+					 $shipping=(float)$data->shipping;
+					
+					$flat_tax=(float)$data->flat_tax;
+					$cc_processing=(float)$data->cc_processing;
+					$cc_fraud=(float)$data->cc_fraud;
+					$margin=(float)$data->margin;
+					$product_msrp=(float)$data->product_msrp;
+
+					$shipping_handlingTotal=$shipping+$flat_tax+$cc_processing+$cc_fraud;
+
+					$ActualProductPrice=(($product_msrp*$margin)/100)+$product_msrp;
+
+					$ActualTax=($product_msrp*$margin)/100;
+					
+					$ActualTotal=$ActualProductPrice+$shipping_handlingTotal;
+					$finalData[$i]['CatValue']=$data->price_value+$shipping+$cc_processing+$cc_fraud;  
+				/*}
+				else
+				{
+					$finalData[$i]['CatValue']=$data->price_value;  
+				}*/
+				$finalData[$i]['CatValue1']=$data->price_value; 
 				$finalData[$i]['product_description']=$data->product_description;  
 				$finalData[$i]['brand']=$data->category_name; 
 				if($prodType == 'tinggly'){
@@ -3382,7 +3457,7 @@
 		
 		public function getRecentProducts($userId){
 			$db = JFactory::getDbo();
-			$query="select DISTINCT * from sl_sil_recent_items_viewed where user_id=$userId";
+			$query="select DISTINCT * from sl_sil_recent_items_viewed where user_id=$userId ORDER BY id DESC";
 			$db->setQuery($query);
 			return $recentViewed = $db->loadObjectList();
 		}
